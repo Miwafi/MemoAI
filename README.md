@@ -16,7 +16,7 @@
 
 ### 使用本软件
 1. 进入MemoAI文件夹
-2. 在您的编辑器中执行“memo_ai_ui_pyqt.py”或者“”。
+2. 在您的编辑器中执行“memo_ai_ui_pyqt.py”或者“memoAI_V2_UI”。memoAI_V2_UI是目前的正式版
 
 #### 使用方法
 
