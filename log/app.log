@@ -1,0 +1,133 @@
+2025-07-11 21:08:38,274 - MemoAI - INFO - 系统自检开始...
+2025-07-11 21:08:38,275 - MemoAI - INFO - \u2713 numpy 已安装
+2025-07-11 21:08:38,275 - MemoAI - INFO - \u2713 torch 已安装
+2025-07-11 21:08:38,276 - MemoAI - INFO - \u2713 ttkbootstrap 已安装
+2025-07-11 21:08:38,276 - MemoAI - INFO - \u2713 matplotlib 已安装
+2025-07-11 21:08:38,276 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\log 存在
+2025-07-11 21:08:38,276 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\memory 存在
+2025-07-11 21:08:38,277 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\model 存在
+2025-07-11 21:08:38,277 - MemoAI - WARNING - \u2717 CUDA 不可用，将使用CPU
+2025-07-11 21:08:38,277 - MemoAI - INFO - 系统自检完成，所有必要组件已就绪
+2025-07-11 21:09:02,676 - MemoAI - INFO - 系统自检开始...
+2025-07-11 21:09:02,677 - MemoAI - INFO - \u2713 numpy 已安装
+2025-07-11 21:09:02,677 - MemoAI - INFO - \u2713 torch 已安装
+2025-07-11 21:09:02,677 - MemoAI - INFO - \u2713 ttkbootstrap 已安装
+2025-07-11 21:09:02,678 - MemoAI - INFO - \u2713 matplotlib 已安装
+2025-07-11 21:09:02,678 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\log 存在
+2025-07-11 21:09:02,678 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\memory 存在
+2025-07-11 21:09:02,678 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\model 存在
+2025-07-11 21:09:02,679 - MemoAI - WARNING - \u2717 CUDA 不可用，将使用CPU
+2025-07-11 21:09:02,679 - MemoAI - INFO - 系统自检完成，所有必要组件已就绪
+2025-07-11 21:10:31,552 - MemoAI - INFO - 系统自检开始...
+2025-07-11 21:10:31,553 - MemoAI - INFO - \u2713 numpy 已安装
+2025-07-11 21:10:31,553 - MemoAI - INFO - \u2713 torch 已安装
+2025-07-11 21:10:31,554 - MemoAI - INFO - \u2713 ttkbootstrap 已安装
+2025-07-11 21:10:31,554 - MemoAI - INFO - \u2713 matplotlib 已安装
+2025-07-11 21:10:31,554 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\log 存在
+2025-07-11 21:10:31,554 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\memory 存在
+2025-07-11 21:10:31,555 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\model 存在
+2025-07-11 21:10:31,555 - MemoAI - WARNING - \u2717 CUDA 不可用，将使用CPU
+2025-07-11 21:10:31,555 - MemoAI - INFO - 系统自检完成，所有必要组件已就绪
+2025-07-11 21:10:31,598 - MemoAI - INFO - 词汇表已加载，包含 101 个字符
+2025-07-11 21:10:31,602 - MemoAI - INFO - 模型已初始化，使用设备: cpu
+2025-07-11 21:10:32,415 - MemoAI - WARNING - 模型文件 C:\Users\19423\Desktop\MemoAI_V2_UI\model\dialog_model.pth 不存在
+2025-07-11 21:10:32,415 - MemoAI - INFO - 将使用新模型进行训练
+2025-07-11 21:11:59,847 - MemoAI - INFO - 系统自检开始...
+2025-07-11 21:11:59,847 - MemoAI - INFO - \u2713 numpy 已安装
+2025-07-11 21:11:59,848 - MemoAI - INFO - \u2713 torch 已安装
+2025-07-11 21:11:59,848 - MemoAI - INFO - \u2713 ttkbootstrap 已安装
+2025-07-11 21:11:59,848 - MemoAI - INFO - \u2713 matplotlib 已安装
+2025-07-11 21:11:59,849 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\log 存在
+2025-07-11 21:11:59,849 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\memory 存在
+2025-07-11 21:11:59,849 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\model 存在
+2025-07-11 21:11:59,849 - MemoAI - WARNING - \u2717 CUDA 不可用，将使用CPU
+2025-07-11 21:11:59,850 - MemoAI - INFO - 系统自检完成，所有必要组件已就绪
+2025-07-11 21:11:59,893 - MemoAI - INFO - 词汇表已加载，包含 101 个字符
+2025-07-11 21:11:59,897 - MemoAI - INFO - 模型已初始化，使用设备: cpu
+2025-07-11 21:12:00,723 - MemoAI - WARNING - 模型文件 C:\Users\19423\Desktop\MemoAI_V2_UI\model\dialog_model.pth 不存在
+2025-07-11 21:12:00,724 - MemoAI - INFO - 将使用新模型进行训练
+2025-07-11 21:13:23,128 - MemoAI - INFO - 系统自检开始...
+2025-07-11 21:13:23,129 - MemoAI - INFO - \u2713 numpy 已安装
+2025-07-11 21:13:23,129 - MemoAI - INFO - \u2713 torch 已安装
+2025-07-11 21:13:23,130 - MemoAI - INFO - \u2713 ttkbootstrap 已安装
+2025-07-11 21:13:23,130 - MemoAI - INFO - \u2713 matplotlib 已安装
+2025-07-11 21:13:23,130 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\log 存在
+2025-07-11 21:13:23,131 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\memory 存在
+2025-07-11 21:13:23,131 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\model 存在
+2025-07-11 21:13:23,131 - MemoAI - WARNING - \u2717 CUDA 不可用，将使用CPU
+2025-07-11 21:13:23,131 - MemoAI - INFO - 系统自检完成，所有必要组件已就绪
+2025-07-11 21:13:23,175 - MemoAI - INFO - 词汇表已加载，包含 101 个字符
+2025-07-11 21:13:23,180 - MemoAI - INFO - 模型已初始化，使用设备: cpu
+2025-07-11 21:13:23,989 - MemoAI - WARNING - 模型文件 C:\Users\19423\Desktop\MemoAI_V2_UI\model\dialog_model.pth 不存在
+2025-07-11 21:13:23,989 - MemoAI - INFO - 将使用新模型进行训练
+2025-07-11 21:15:13,236 - MemoAI - INFO - 系统自检开始...
+2025-07-11 21:15:13,236 - MemoAI - INFO - \u2713 numpy 已安装
+2025-07-11 21:15:13,236 - MemoAI - INFO - \u2713 torch 已安装
+2025-07-11 21:15:13,237 - MemoAI - INFO - \u2713 ttkbootstrap 已安装
+2025-07-11 21:15:13,237 - MemoAI - INFO - \u2713 matplotlib 已安装
+2025-07-11 21:15:13,238 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\log 存在
+2025-07-11 21:15:13,238 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\memory 存在
+2025-07-11 21:15:13,238 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\model 存在
+2025-07-11 21:15:13,238 - MemoAI - WARNING - \u2717 CUDA 不可用，将使用CPU
+2025-07-11 21:15:13,239 - MemoAI - INFO - 系统自检完成，所有必要组件已就绪
+2025-07-11 21:15:13,283 - MemoAI - INFO - 词汇表已加载，包含 101 个字符
+2025-07-11 21:15:13,288 - MemoAI - INFO - 模型已初始化，使用设备: cpu
+2025-07-11 21:15:14,116 - MemoAI - WARNING - 模型文件 C:\Users\19423\Desktop\MemoAI_V2_UI\model\dialog_model.pth 不存在
+2025-07-11 21:15:14,117 - MemoAI - INFO - 将使用新模型进行训练
+2025-07-11 21:15:16,153 - MemoAI - INFO - 系统自检开始...
+2025-07-11 21:15:16,154 - MemoAI - INFO - \u2713 numpy 已安装
+2025-07-11 21:15:16,154 - MemoAI - INFO - \u2713 torch 已安装
+2025-07-11 21:15:16,155 - MemoAI - INFO - \u2713 ttkbootstrap 已安装
+2025-07-11 21:15:16,155 - MemoAI - INFO - \u2713 matplotlib 已安装
+2025-07-11 21:15:16,155 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\log 存在
+2025-07-11 21:15:16,156 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\memory 存在
+2025-07-11 21:15:16,156 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\model 存在
+2025-07-11 21:15:16,156 - MemoAI - WARNING - \u2717 CUDA 不可用，将使用CPU
+2025-07-11 21:15:16,157 - MemoAI - INFO - 系统自检完成，所有必要组件已就绪
+2025-07-11 21:15:16,198 - MemoAI - INFO - 词汇表已加载，包含 101 个字符
+2025-07-11 21:15:16,202 - MemoAI - INFO - 模型已初始化，使用设备: cpu
+2025-07-11 21:15:16,203 - MemoAI - WARNING - 模型文件 C:\Users\19423\Desktop\MemoAI_V2_UI\model\dialog_model.pth 不存在
+2025-07-11 21:15:16,203 - MemoAI - INFO - 将使用新模型进行训练
+2025-07-11 21:15:20,868 - MemoAI - INFO - 系统自检开始...
+2025-07-11 21:15:20,869 - MemoAI - INFO - \u2713 numpy 已安装
+2025-07-11 21:15:20,870 - MemoAI - INFO - \u2713 torch 已安装
+2025-07-11 21:15:20,870 - MemoAI - INFO - \u2713 ttkbootstrap 已安装
+2025-07-11 21:15:20,871 - MemoAI - INFO - \u2713 matplotlib 已安装
+2025-07-11 21:15:20,871 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\log 存在
+2025-07-11 21:15:20,871 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\memory 存在
+2025-07-11 21:15:20,871 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\model 存在
+2025-07-11 21:15:20,872 - MemoAI - WARNING - \u2717 CUDA 不可用，将使用CPU
+2025-07-11 21:15:20,872 - MemoAI - INFO - 系统自检完成，所有必要组件已就绪
+2025-07-11 21:15:20,919 - MemoAI - INFO - 词汇表已加载，包含 101 个字符
+2025-07-11 21:15:20,924 - MemoAI - INFO - 模型已初始化，使用设备: cpu
+2025-07-11 21:15:21,761 - MemoAI - WARNING - 模型文件 C:\Users\19423\Desktop\MemoAI_V2_UI\model\dialog_model.pth 不存在
+2025-07-11 21:15:21,761 - MemoAI - INFO - 将使用新模型进行训练
+2025-07-11 21:15:23,081 - MemoAI - INFO - 应用程序已退出
+2025-07-11 21:15:23,107 - MemoAI - INFO - 系统自检开始...
+2025-07-11 21:15:23,107 - MemoAI - INFO - \u2713 numpy 已安装
+2025-07-11 21:15:23,107 - MemoAI - INFO - \u2713 torch 已安装
+2025-07-11 21:15:23,108 - MemoAI - INFO - \u2713 ttkbootstrap 已安装
+2025-07-11 21:15:23,108 - MemoAI - INFO - \u2713 matplotlib 已安装
+2025-07-11 21:15:23,108 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\log 存在
+2025-07-11 21:15:23,109 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\memory 存在
+2025-07-11 21:15:23,109 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\model 存在
+2025-07-11 21:15:23,109 - MemoAI - WARNING - \u2717 CUDA 不可用，将使用CPU
+2025-07-11 21:15:23,110 - MemoAI - INFO - 系统自检完成，所有必要组件已就绪
+2025-07-11 21:15:23,145 - MemoAI - INFO - 词汇表已加载，包含 101 个字符
+2025-07-11 21:15:23,150 - MemoAI - INFO - 模型已初始化，使用设备: cpu
+2025-07-11 21:15:23,151 - MemoAI - WARNING - 模型文件 C:\Users\19423\Desktop\MemoAI_V2_UI\model\dialog_model.pth 不存在
+2025-07-11 21:15:23,151 - MemoAI - INFO - 将使用新模型进行训练
+2025-07-11 21:16:07,334 - MemoAI - INFO - 系统自检开始...
+2025-07-11 21:16:07,334 - MemoAI - INFO - \u2713 numpy 已安装
+2025-07-11 21:16:07,335 - MemoAI - INFO - \u2713 torch 已安装
+2025-07-11 21:16:07,335 - MemoAI - INFO - \u2713 ttkbootstrap 已安装
+2025-07-11 21:16:07,336 - MemoAI - INFO - \u2713 matplotlib 已安装
+2025-07-11 21:16:07,336 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\log 存在
+2025-07-11 21:16:07,336 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\memory 存在
+2025-07-11 21:16:07,337 - MemoAI - INFO - \u2713 目录 C:\Users\19423\Desktop\MemoAI_V2_UI\model 存在
+2025-07-11 21:16:07,337 - MemoAI - WARNING - \u2717 CUDA 不可用，将使用CPU
+2025-07-11 21:16:07,338 - MemoAI - INFO - 系统自检完成，所有必要组件已就绪
+2025-07-11 21:16:07,384 - MemoAI - INFO - 词汇表已加载，包含 101 个字符
+2025-07-11 21:16:07,389 - MemoAI - INFO - 模型已初始化，使用设备: cpu
+2025-07-11 21:16:08,268 - MemoAI - WARNING - 模型文件 C:\Users\19423\Desktop\MemoAI_V2_UI\model\dialog_model.pth 不存在
+2025-07-11 21:16:08,268 - MemoAI - INFO - 将使用新模型进行训练

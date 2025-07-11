@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "C:\Users\19423\Desktop\MemoAI_V2_UI\memoAI_V2_UI.py", line 1586, in <module>
+    app = App(root)
+  File "C:\Users\19423\Desktop\MemoAI_V2_UI\memoAI_V2_UI.py", line 1341, in __init__
+    self.create_widgets()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\19423\Desktop\MemoAI_V2_UI\memoAI_V2_UI.py", line 1367, in create_widgets
+    self.chat_canvas = ttk.Canvas(chat_frame)
+                       ^^^^^^^^^^
+AttributeError: module 'tkinter.ttk' has no attribute 'Canvas'
+程序启动失败: module 'tkinter.ttk' has no attribute 'Canvas'
