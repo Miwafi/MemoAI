@@ -2,7 +2,7 @@
 
 
 ## 简介
-一个关于MemoAI的库
+MemoAI 是一个功能丰富的软件，它旨在为用户提供便捷的交互体验。该库集成了一系列实用的功能，可用于创建具备问答、样本修改等功能的软件，帮助用户更高效地处理信息和获取智能答复。<br>这将是一个非常**简单**的软件。希望你使用愉快
 
 ## 使用建议
 建议本项目在一个x86架构的个人电脑上运行，本文件至少约7MB，请确保您的电脑有足够的储存空间。
@@ -39,10 +39,10 @@
 ## 开发者信息
 本MemoAI库由bilibili up主pyro创作，S_steve辅助开发。<br>
 pyro的bilibili主页地址：
-[pyro的bilibili主页地址](https://space.bilibili.com/1201856558 "点击访问")
+[ pyro的bilibili主页地址 ](https://space.bilibili.com/1201856558 "点击访问")
 <br>
 S_steve的bilibili主页地址：
-[S_steve的bilibili主页地址](https://space.bilibili.com/1499517607 "点击访问")
+[ S_steve的bilibili主页地址 ](https://space.bilibili.com/1499517607 "点击访问")
 
 ## 法律声明
 本软件为开源软件，完全免费，任何人不得以任何理由盗用收费。我们支持：
