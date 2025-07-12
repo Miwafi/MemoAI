@@ -19,6 +19,11 @@ import matplotlib.pyplot as plt
 # ------------------------------
 # 配置和常量
 # ------------------------------
+# ------------------------------
+# 翻译文件
+# ------------------------------
+laun = {'ZHCN':{'SYSCheck':'系统自检','CREATMenu':'创建必要目录'},'ENG':{'SYSCheck':'System checking','CREATMenu':'Creating normal menu'}}
+
 class Config:
     def __init__(self):
         self.model_path = 'model/dialog_model.pth'
@@ -61,14 +66,14 @@ def log_event(message, level='info'):
 # ------------------------------
 def system_check():
     """系统环境自检"""
-    log_event("开始系统自检...")
+    log_event(laun['ENG']['SYSCheck'])
     
     # 检查必要目录
     for dir_path in [config.log_dir, config.memory_dir, 'model']:
         if not os.path.exists(dir_path):
             try:
                 os.makedirs(dir_path)
-                log_event(f"创建必要目录: {dir_path}")
+                log_event(f"laun['ENG']['CREATMenu']: {dir_path}")
             except Exception as e:
                 log_event(f"创建目录失败: {dir_path}, 错误: {str(e)}", 'error')
                 return False
