@@ -23,11 +23,13 @@
 | 操作项目 | S_steve的memo_ai_ui_pyqt.py | pyro的memoAI_V2_UI |
 | :--: | :--: | :--: |
 | 启动软件 | 双击执行“memo_ai_ui_pyqt.py | 双击执行memo_V2_UI.py
+| 进行问答 | 直接在最上方的输入框中输入问题，然后点击“获取答复” | 直接在最上方的输入框中输入问题，然后点击“AI自动回复按钮 |
 
 ## 开发者信息
 本MemoAI库由bilibili up主pyro创作，S_steve辅助开发。
 pyro的bilibili主页地址：
 [pyro的bilibili主页地址](https://space.bilibili.com/1201856558 "点击访问")
+<br>
 S_steve的bilibili主页地址：
 [S_steve的bilibili主页地址](https://space.bilibili.com/1499517607 "点击访问")
 
