@@ -131,3 +131,9 @@
 2025-07-11 21:16:07,389 - MemoAI - INFO - ģ���ѳ�ʼ����ʹ���豸: cpu
 2025-07-11 21:16:08,268 - MemoAI - WARNING - ģ���ļ� C:\Users\19423\Desktop\MemoAI_V2_UI\model\dialog_model.pth ������
 2025-07-11 21:16:08,268 - MemoAI - INFO - ��ʹ����ģ�ͽ���ѵ��
+[2025-07-12 11:20:01] [INFO] 开始系统自检...
+[2025-07-12 11:20:02] [INFO] PyTorch版本: 2.7.1+cpu, 设备: cpu
+[2025-07-12 11:20:02] [INFO] 系统自检完成
+[2025-07-12 11:20:02] [WARNING] 加载词汇表失败，使用默认词汇表: 'char_to_idx'
+[2025-07-12 11:20:04] [ERROR] 模型文件不存在: model/dialog_model.pth
+[2025-07-12 11:20:04] [INFO] 将使用新模型进行训练
