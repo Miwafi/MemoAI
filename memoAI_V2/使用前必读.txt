@@ -1,4 +1,0 @@
-1.运行MemoAI前先运行download.py
-2.本程序由B站人机Pyro编写，请勿用于商用
-3.程序持续更新中......当前版本为2.1
-4.终端运行 pip install ttkbootstrap
