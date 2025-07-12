@@ -121,7 +121,8 @@ class DataManager:
             'timestamp': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             'user': user_input,
             'ai': ai_response,
-            'is_approved': False  # 新增：答案肯定状态
+            'is_approved': False,  # 新增：答案肯定状态
+            'is_disapproved': False  # 新增：否定状态字段
         }
         self.memory.append(memory_item)
         return self.save_memory()
@@ -163,6 +164,16 @@ class DataManager:
         """更新记忆项的肯定状态"""
         if 0 <= index < len(self.memory):
             self.memory[index]['is_approved'] = approved
+            return self.save_memory()
+        return False
+
+    def update_memory_disapproval(self, index, disapproved):
+        """更新记忆项的否定状态"""
+        if 0 <= index < len(self.memory):
+            self.memory[index]['is_disapproved'] = disapproved
+            # 确保肯定和否定状态互斥
+            if disapproved:
+                self.memory[index]['is_approved'] = False
             return self.save_memory()
         return False
     
@@ -895,14 +906,23 @@ class App:
         # 调试: 打印消息内容
         print(f"添加{sender}消息: {text}")
         
-        # 添加肯定按钮（仅AI消息）
+        # 添加肯定和否定按钮（仅AI消息）
         if sender == "ai" and memory_index is not None:
+            # 否定按钮（先添加，靠右显示）
+            disapprove_btn = RoundedButton(
+                msg_frame, 
+                text="否定", 
+                command=lambda idx=memory_index: self.disapprove_answer(idx)
+            )
+            disapprove_btn.pack(side=tk.RIGHT, padx=2)
+            
+            # 肯定按钮
             approve_btn = RoundedButton(
                 msg_frame, 
                 text="肯定", 
                 command=lambda idx=memory_index: self.approve_answer(idx)
             )
-            approve_btn.pack(side=tk.RIGHT, padx=5)
+            approve_btn.pack(side=tk.RIGHT, padx=2)
 
         # 创建消息标签 - 显式设置颜色确保可见
         bg_color = '#0078d7' if sender == 'user' else '#e6e6e6'
@@ -1096,6 +1116,16 @@ class App:
         else:
             self.add_message("system", "操作失败，请重试。")
 
+    def disapprove_answer(self, memory_index):
+        """处理答案否定操作"""
+        success = self.ai.data_manager.update_memory_disapproval(memory_index, True)
+        if success:
+            self.add_message("system", "答案已否定，将优化后续回复。")
+            # 可选：触发重新生成回答逻辑
+            # self.regenerate_answer(memory_index)
+        else:
+            self.add_message("system", "操作失败，请重试。")
+
     def clear_chat(self):
         """清除聊天历史"""
         # 清空聊天历史框架
@@ -1245,25 +1275,3 @@ if __name__ == "__main__":
         root.withdraw()  # 隐藏主窗口
         messagebox.showerror("启动失败", f"程序无法启动: {str(e)}\n详细信息请查看startup_error.log")
         sys.exit(1)
-
-
-
-
-#                  _ooOoo_
-#                 (| -_- |)
-#                 O\  =  /O
-#              ____/`---'\____
-#            .'  \\|     |//  `.
-#           /  \\|||  :  |||//  \
-#          /  _||||| -:- |||||-  \
-#          |   | \\\  -  /// |   |
-#          | \_|  ''\---/''  |   |
-#          \  .-\__  `-`  ___/-. /
-#        ___`. .'  /--.--\  `. . __
-#     ."" '<  `.___\_<|>_/___.'  >'"".
-#    | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-#    \  \ `-.   \_ __\ /__ _/   .-` /  /
-#=====`-.____`-.___\_____/___.-`____.-'======
-#                  `=---='
-#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-#           佛祖保佑       永无BUG
