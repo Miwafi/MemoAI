@@ -287,14 +287,49 @@ class LSTMDialogNet(nn.Module):
             try:
                 # 尝试加载模型并处理设备兼容性
                 state_dict = torch.load(path, map_location=config.device)
-                
-                # 处理可能的模型结构变化
                 current_state = self.state_dict()
-                filtered_state = {k: v for k, v in state_dict.items() if k in current_state}
+                filtered_state = {}
                 
-                if len(filtered_state) < len(state_dict):
-                    missing_keys = set(state_dict.keys()) - set(filtered_state.keys())
-                    log_event(f"模型参数不匹配，忽略以下键: {missing_keys}", 'warning')
+                for name, param in state_dict.items():
+                    if name not in current_state:
+                        log_event(f"忽略不存在的参数: {name}", 'warning')
+                        continue
+                    
+                    # 处理词汇表大小变化导致的形状不匹配
+                    if name == 'embedding.weight':
+                        # 嵌入层: [旧词汇表大小, 嵌入维度] -> [新词汇表大小, 嵌入维度]
+                        old_size, embed_dim = param.shape
+                        new_size = current_state[name].shape[0]
+                        if old_size != new_size:
+                            log_event(f"嵌入层词汇表大小变化: {old_size} -> {new_size}", 'warning')
+                            # 复制旧参数并初始化新增部分
+                            new_param = current_state[name].clone()
+                            new_param[:old_size] = param
+                            filtered_state[name] = new_param
+                            continue
+                    elif name in ['fc.weight', 'fc.bias']:
+                        # 全连接层: [旧词汇表大小, 隐藏层大小] -> [新词汇表大小, 隐藏层大小]
+                        if name == 'fc.weight':
+                            old_size, hidden_size = param.shape
+                            new_size = current_state[name].shape[0]
+                        else:  # fc.bias
+                            old_size = param.shape[0]
+                            new_size = current_state[name].shape[0]
+                        
+                        if old_size != new_size:
+                            log_event(f"全连接层词汇表大小变化: {old_size} -> {new_size}", 'warning')
+                            # 复制旧参数并初始化新增部分
+                            new_param = current_state[name].clone()
+                            new_param[:old_size] = param
+                            filtered_state[name] = new_param
+                            continue
+                    
+                    # 常规参数形状检查
+                    if param.shape != current_state[name].shape:
+                        log_event(f"参数形状不匹配: {name} {param.shape} vs {current_state[name].shape}", 'warning')
+                        continue
+                    
+                    filtered_state[name] = param
                 
                 current_state.update(filtered_state)
                 self.load_state_dict(current_state)
@@ -591,6 +626,15 @@ class SelfLearningAI:
         try:
             # 编码输入
             input_seq = self.encoder.encode(input_text, max_length)
+            
+            # 检查词汇表是否更新，如果是则重新创建模型
+            current_vocab_size = self.encoder.get_vocab_size()
+            if current_vocab_size != self.vocab_size:
+                log_event(f"推理时词汇表大小已更新: {self.vocab_size} -> {current_vocab_size}，重新创建模型")
+                self.vocab_size = current_vocab_size
+                self.model = LSTMDialogNet(self.vocab_size).to(config.device)
+                self.optimizer = torch.optim.Adam(self.model.parameters(), lr=config.learning_rate)
+                
             input_tensor = torch.tensor([input_seq], dtype=torch.long).to(config.device)
             
             # 初始化隐藏状态
