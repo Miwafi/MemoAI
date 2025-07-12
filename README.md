@@ -37,8 +37,8 @@
 
 
 ## 开发者信息
-本MemoAI库由bilibili up主pyro创作，S_steve辅助开发。
-pyro的bilibili主页地址：<br>
+本MemoAI库由bilibili up主pyro创作，S_steve辅助开发。<br>
+pyro的bilibili主页地址：
 [pyro的bilibili主页地址](https://space.bilibili.com/1201856558 "点击访问")
 <br>
 S_steve的bilibili主页地址：
