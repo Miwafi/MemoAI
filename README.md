@@ -9,6 +9,7 @@
 
 ## 如何使用:
 本项目使用**Python3.11**编写，采用了*sys、PyQt5.QtWidgets*等多个库，为了顺利运行软件，请注意安装库。
+请注意，本软件仅内置了**中文汉语**，暂不支持其他语言，我们将在后续的更新中提供更多语言的支持。
 
 ###  软件的下载&安装
 1. 下载本项目，可以访问[github链接](https://github.com/Janmast-eng/MemoAI)。
@@ -16,18 +17,28 @@
 
 ### 使用本软件
 1. 进入MemoAI文件夹
-2. 在您的编辑器中执行“memo_ai_ui_pyqt.py”或者“memoAI_V2_UI”。memoAI_V2_UI是目前的正式版
+2. 在您的编辑器中执行“memo_ai_ui_pyqt.py”或者“memoAI_V2_UI”。memoAI_V2_UI是目前的正式版。
+
 
 #### 使用方法
 
-| 操作项目 | S_steve的memo_ai_ui_pyqt.py | pyro的memoAI_V2_UI |
+| 操作项目 | S_steve的memo_ai_ui_pyqt.py | pyro的memoAI_V2_UI.py |
 | :--: | :--: | :--: |
-| 启动软件 | 双击执行“memo_ai_ui_pyqt.py | 双击执行memo_V2_UI.py
+| 启动软件 | 双击执行“memo_ai_ui_pyqt.py | 双击执行memo_V2_UI.py |
+| 自动检查 | 暂未支持自动检查功能 | 在保证所有模块均已正确安装后会自动检查 |
 | 进行问答 | 直接在最上方的输入框中输入问题，然后点击“获取答复” | 直接在最上方的输入框中输入问题，然后点击“AI自动回复按钮 |
+| 修改样本 | 点击“人工标注”，按照提示操作，或者修改memory.json | 点击“人工标注”，按照提示操作，或者修改memory.json |
+| 备注 | 暂无 | 默认安装包模型与记忆文件为初始化状态，需自行训练 |
+| 错误反馈 | 暂无反馈入口 | 发现有任何错误请将终端中所有[ERROR]部分，startup_error与log文件夹一同发送至邮箱1942392307@qq.com |
+
+### 适龄提示
+暂无
+
+
 
 ## 开发者信息
 本MemoAI库由bilibili up主pyro创作，S_steve辅助开发。
-pyro的bilibili主页地址：
+pyro的bilibili主页地址：<br>
 [pyro的bilibili主页地址](https://space.bilibili.com/1201856558 "点击访问")
 <br>
 S_steve的bilibili主页地址：
@@ -42,3 +53,4 @@ S_steve的bilibili主页地址：
 - 免费更新（如果有余力的话）
 
 本AI的所有回答均由 AI 生成，内容仅供参考，请仔细甄别。这些文件导致你的作为或者不作为，其一切后果由使用者承担，制作者不承担**任何**相关责任。
+如果您是从付费的网站上购买的，[那你被骗了](https://www.bilibili.com/video/BV1GJ411x7h7)，本软件免费
