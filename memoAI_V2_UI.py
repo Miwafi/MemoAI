@@ -9,6 +9,7 @@ import random
 import datetime
 import os
 import sys
+import re
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -119,7 +120,8 @@ class DataManager:
         memory_item = {
             'timestamp': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             'user': user_input,
-            'ai': ai_response
+            'ai': ai_response,
+            'is_approved': False  # 新增：答案肯定状态
         }
         self.memory.append(memory_item)
         return self.save_memory()
@@ -130,10 +132,43 @@ class DataManager:
             return self.memory.copy()
         return self.memory[-count:].copy()
     
+    def get_relevant_memories(self, input_text, top_k=3):
+        """获取与输入文本相关的记忆（基于关键词匹配）"""
+        if not self.memory:  # 检查记忆是否为空
+            return []
+        
+        # 提取输入文本关键词（简单分词）
+        input_words = set(input_text.lower().split())
+        relevant_scores = []
+        
+        for item in self.memory:
+            # 合并用户输入和AI响应作为匹配文本
+            memory_text = f"{item['user']} {item['ai']}".lower()
+            # 计算关键词匹配度
+            memory_words = set(memory_text.split())
+            common_words = input_words.intersection(memory_words)
+            score = len(common_words) / (len(input_words) + 1e-6)  # 避免除零
+            relevant_scores.append((item, score))
+        
+        # 按分数排序并取top_k
+        relevant_scores.sort(key=lambda x: x[1], reverse=True)
+        return [item for item, _ in relevant_scores[:top_k]]
+    
     def clear_memory(self):
         """清除所有记忆"""
         self.memory = []
         return self.save_memory()
+    
+    def update_memory_approval(self, index, approved):
+        """更新记忆项的肯定状态"""
+        if 0 <= index < len(self.memory):
+            self.memory[index]['is_approved'] = approved
+            return self.save_memory()
+        return False
+    
+    def get_latest_memory_index(self):
+        """获取最新记忆项的索引"""
+        return len(self.memory) - 1
 
 # ------------------------------
 # 字符编码
@@ -206,8 +241,9 @@ class CharEncoder:
         if not text:
             return [self.char_to_idx[self.pad_char]] * max_length
         
-        # 过滤文本中的控制字符和空字符
-        filtered_text = ''.join([c for c in text if c.isprintable() or c in ' 	\n'])
+        # 增强文本清洗
+        filtered_text = re.sub(r'[^\u4e00-\u9fa5a-zA-Z0-9，。,.:;!?、 ]', '', text)
+        filtered_text = re.sub(r'\s+', ' ', filtered_text).strip()
         
         # 更新词汇表
         self.update_vocab(filtered_text)
@@ -345,7 +381,7 @@ class LSTMDialogNet(nn.Module):
 # ------------------------------
 # 自学习AI核心
 # ------------------------------
-class SelfLearningAI:
+class AICore:
     """自学习AI核心类"""
     def __init__(self):
         self.data_manager = DataManager()
@@ -359,7 +395,9 @@ class SelfLearningAI:
         self.loss_history = []
         
         # 尝试加载现有模型
-        if not self.model.load_model(config.model_path):
+        self.model_loaded = self.model.load_model(config.model_path)
+        if not self.model_loaded:
+            log_event("警告：未加载任何模型，响应质量可能不佳", 'warning')
             log_event("将使用新模型进行训练")
     
     def preprocess_data(self, memory=None):
@@ -490,6 +528,16 @@ class SelfLearningAI:
             log_event(f"词汇表大小已更新: {self.vocab_size} -> {current_vocab_size}，重新创建模型")
             self.vocab_size = current_vocab_size
             self.model = LSTMDialogNet(self.vocab_size).to(config.device)
+            
+            # 新增：加载预训练模型权重
+            if os.path.exists(config.model_path):
+                try:
+                    state_dict = torch.load(config.model_path, map_location=config.device)
+                    self.model.load_state_dict(state_dict)
+                    log_event("成功加载预训练模型权重")
+                except Exception as e:
+                    log_event(f"加载模型权重失败: {str(e)}", 'error')
+            
             self.optimizer = torch.optim.Adam(self.model.parameters(), lr=config.learning_rate)
         
         # 创建数据加载器
@@ -622,10 +670,14 @@ class SelfLearningAI:
             if greeting in input_lower:
                 self.data_manager.add_memory(input_text, response)
                 return response
+                # 获取相关记忆并构建上下文
+        relevant_memories = self.data_manager.get_relevant_memories(input_text)
+        context = "".join([f"用户: {m['user']}\nAI: {m['ai']}\n" for m in relevant_memories])
+        full_input = f"{context}用户: {input_text}\nAI: "
         
         try:
             # 编码输入
-            input_seq = self.encoder.encode(input_text, max_length)
+            input_seq = self.encoder.encode(full_input, max_length)
             
             # 检查词汇表是否更新，如果是则重新创建模型
             current_vocab_size = self.encoder.get_vocab_size()
@@ -649,9 +701,15 @@ class SelfLearningAI:
                 output, hidden = self.model(input_tensor[:, i:i+1], hidden)
 
                 # 添加温度参数调整概率分布
-                temperature = 0.7
+                temperature = 0.5  # 降低温度使输出更确定
                 output = output.squeeze(1)
                 output = F.softmax(output / temperature, dim=1)
+                
+                # 过滤低概率字符
+                min_prob = 0.01
+                output[output < min_prob] = 0
+                output = output / output.sum()  # 重新归一化
+                
                 top_idx = torch.multinomial(output, 1).item()
                 output_seq.append(top_idx)
 
@@ -707,7 +765,7 @@ class App:
         self.data_manager = DataManager()
         
         # 初始化AI核心
-        self.ai = SelfLearningAI()
+        self.ai = AICore()
         
         # AI想法相关初始化
         self.thought_queue = queue.Queue()
@@ -824,7 +882,7 @@ class App:
         """鼠标滚轮事件处理"""
         self.chat_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
     
-    def add_message(self, sender, text, typing_animation=False):
+    def add_message(self, sender, text, typing_animation=False, memory_index=None):
         """添加消息到聊天历史"""
         # 创建消息框架
         msg_frame = ttk.Frame(self.chat_history)
@@ -837,6 +895,15 @@ class App:
         # 调试: 打印消息内容
         print(f"添加{sender}消息: {text}")
         
+        # 添加肯定按钮（仅AI消息）
+        if sender == "ai" and memory_index is not None:
+            approve_btn = RoundedButton(
+                msg_frame, 
+                text="肯定", 
+                command=lambda idx=memory_index: self.approve_answer(idx)
+            )
+            approve_btn.pack(side=tk.RIGHT, padx=5)
+
         # 创建消息标签 - 显式设置颜色确保可见
         bg_color = '#0078d7' if sender == 'user' else '#e6e6e6'
         fg_color = 'white' if sender == 'user' else 'black'
@@ -855,7 +922,7 @@ class App:
             foreground=fg_color
         )
         msg_label.pack(fill=tk.X, expand=True)
-        
+
         # 打字动画效果
         if typing_animation and sender == "ai":
             self._type_text_animation(msg_label, text, 0)
@@ -891,7 +958,9 @@ class App:
             self.update_ai_state("responding")  # 设置为响应状态
             response = self.ai.infer(user_text)
             # 使用打字动画显示AI回复
-            self.root.after(0, lambda: self.add_message("ai", response, typing_animation=True))
+            # 获取最新记忆索引
+            memory_index = self.ai.data_manager.get_latest_memory_index()
+            self.root.after(0, lambda: self.add_message("ai", response, typing_animation=True, memory_index=memory_index))
             self.root.after(0, lambda: self.status_label.config(text="就绪", foreground="green"))
             self.root.after(0, lambda: self.update_ai_state("idle"))  # 恢复空闲状态
         
@@ -1019,6 +1088,14 @@ class App:
             ttk.Button(msg_window, text="确定", command=msg_window.destroy).pack(pady=5)
             return
     
+    def approve_answer(self, memory_index):
+        """处理答案肯定操作"""
+        success = self.ai.data_manager.update_memory_approval(memory_index, True)
+        if success:
+            self.add_message("system", "答案已肯定，感谢反馈！")
+        else:
+            self.add_message("system", "操作失败，请重试。")
+
     def clear_chat(self):
         """清除聊天历史"""
         # 清空聊天历史框架
@@ -1168,3 +1245,25 @@ if __name__ == "__main__":
         root.withdraw()  # 隐藏主窗口
         messagebox.showerror("启动失败", f"程序无法启动: {str(e)}\n详细信息请查看startup_error.log")
         sys.exit(1)
+
+
+
+
+#                  _ooOoo_
+#                 (| -_- |)
+#                 O\  =  /O
+#              ____/`---'\____
+#            .'  \\|     |//  `.
+#           /  \\|||  :  |||//  \
+#          /  _||||| -:- |||||-  \
+#          |   | \\\  -  /// |   |
+#          | \_|  ''\---/''  |   |
+#          \  .-\__  `-`  ___/-. /
+#        ___`. .'  /--.--\  `. . __
+#     ."" '<  `.___\_<|>_/___.'  >'"".
+#    | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+#    \  \ `-.   \_ __\ /__ _/   .-` /  /
+#=====`-.____`-.___\_____/___.-`____.-'======
+#                  `=---='
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#           佛祖保佑       永无BUG
