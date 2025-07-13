@@ -20,13 +20,31 @@ import matplotlib.pyplot as plt
 # 配置和常量
 # 翻译文件
 laun = {'ZHCN':{
-    'SYSCheck':'系统自检','CREATMenu':'创建必要目录','CREATError':'创建目录失败','ERROR':'错误'
+    'SYSCheck':'系统自检','CREATMenu':'创建必要目录','CREATError':'创建目录失败','ERROR':'错误',
+    'SEND_BTN': '发送', 'SELF_LEARN_BTN': '自主学习', 'ONLINE_LEARN_BTN': '联网自学',
+    'CORRECT_BTN': '手动纠错', 'COPY_AI_BTN': '复制AI输出', 'CLEAR_BTN': '清除对话',
+    'SETTINGS_BTN': '设置', 'QUIT_BTN': '退出', 'READY_STATUS': '就绪',
+    'WELCOME_MSG': '欢迎使用MemoAI V2！我正在初始化，请稍候...',
+    'AI_GREETING': '您好！我是MemoAI，一个可以自我学习的对话AI。有什么我可以帮助您的吗？',
+    'NETWORK_ROAMING': '网络漫游', 'APP_SUBTITLE': '自学习对话系统'
     },'ENG':{
         'SYSCheck':'System checking','CREATMenu':'Creating normal menu','CREATError':'Creating directory failed',
-        'ERROR':'Error'
+        'ERROR':'Error', 'SEND_BTN': 'Send', 'SELF_LEARN_BTN': 'Self Learning', 
+        'ONLINE_LEARN_BTN': 'Online Learning', 'CORRECT_BTN': 'Manual Correction',
+        'COPY_AI_BTN': 'Copy AI Output', 'CLEAR_BTN': 'Clear Chat', 'SETTINGS_BTN': 'Settings',
+        'QUIT_BTN': 'Quit', 'READY_STATUS': 'Ready',
+        'WELCOME_MSG': 'Welcome to MemoAI V2! I am initializing, please wait...',
+        'AI_GREETING': 'Hello! I am MemoAI, a self-learning conversational AI. How can I help you?',
+        'NETWORK_ROAMING': 'Network Roaming', 'APP_SUBTITLE': 'Self-learning Dialogue System'
         },'JAP':{    
             'SYSCheck':'システム自己診断中','CREATMenu':'ファイルディレクトリを作成中','CREATError':'ディレクトリを作成できませんでした',
-            'ERROR':'エラー'
+            'ERROR':'エラー', 'SEND_BTN': '送信', 'SELF_LEARN_BTN': '自己学習', 
+            'ONLINE_LEARN_BTN': 'オンライン学習', 'CORRECT_BTN': '手動修正',
+            'COPY_AI_BTN': 'AI出力をコピー', 'CLEAR_BTN': 'チャットをクリア', 'SETTINGS_BTN': '設定',
+            'QUIT_BTN': '終了', 'READY_STATUS': '準備完了',
+            'WELCOME_MSG': 'MemoAI V2へようこそ！初期化中です、しばらくお待ちください...',
+            'AI_GREETING': 'こんにちは！私はMemoAIです、自己学習ができる会話型AIです。何かお手伝いできますか？',
+            'NETWORK_ROAMING': 'ネットワークローミング', 'APP_SUBTITLE': '自己学習対話システム'
             }}
 class Config:
     def __init__(self):
@@ -1341,6 +1359,8 @@ class App:
         self.root.geometry("800x600")
         self.root.minsize(600, 500)
         
+        self.current_language = 'ZHCN'  # 默认语言为中文
+        
         # 初始化数据管理器
         self.data_manager = DataManager()
         
@@ -1361,8 +1381,15 @@ class App:
         self.run_system_check()
         
         # 显示欢迎消息
-        self.add_message("system", "欢迎使用MemoAI V2！我正在初始化，请稍候...")
-        self.add_message("ai", "您好！我是MemoAI，一个可以自我学习的对话AI。有什么我可以帮助您的吗？")
+        self.add_message("system", self.get_text('WELCOME_MSG'))
+        self.add_message("ai", self.get_text('AI_GREETING'))
+    
+    def get_text(self, key):
+        """根据当前语言获取文本"""
+        # 获取当前语言的字典，如果不存在则使用中文
+        lang_dict = laun.get(self.current_language, laun['ZHCN'])
+        # 返回对应键的文本，如果不存在则返回键本身
+        return lang_dict.get(key, key)
     
     def create_widgets(self):
         """创建UI组件"""
@@ -1414,15 +1441,31 @@ class App:
         self.user_input.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
         self.user_input.bind("<Return>", lambda event: self.send_message())
         
-        send_btn = RoundedButton(input_frame, text="发送", command=self.send_message)
-        send_btn.pack(side=tk.RIGHT)
+        self.send_btn = RoundedButton(input_frame, text=self.get_text('SEND_BTN'), command=self.send_message)
+        self.send_btn.pack(side=tk.RIGHT)
         
         # 状态和控制框架
         control_frame = ttk.Frame(right_frame)
         control_frame.pack(fill=tk.X, pady=(0, 10))
         
-        self.status_label = ttk.Label(control_frame, text="就绪", foreground="green")
+        self.status_label = ttk.Label(control_frame, text=self.get_text('READY_STATUS'), foreground="green")
         self.status_label.pack(side=tk.LEFT)
+        
+        # 添加语言选择下拉框
+        language_frame = ttk.Frame(control_frame)
+        language_frame.pack(side=tk.RIGHT, padx=10)
+        
+        ttk.Label(language_frame, text="语言:").pack(side=tk.LEFT)
+        self.language_var = tk.StringVar(value=self.current_language)
+        self.language_combo = ttk.Combobox(
+            language_frame,
+            textvariable=self.language_var,
+            values=['ZHCN', 'ENG', 'JAP'],
+            state='readonly',
+            width=5
+        )
+        self.language_combo.pack(side=tk.LEFT)
+        self.language_combo.bind("<<ComboboxSelected>>", self.on_language_change)
         
         # 进度条
         self.progress_bar = ttk.Progressbar(control_frame, orient=tk.HORIZONTAL, length=100, mode='determinate')
@@ -1434,13 +1477,13 @@ class App:
         
         # 添加网络漫游开关
         self.network_roaming_var = tk.BooleanVar(value=False)
-        self.roaming_switch = ttk.Checkbutton(btn_frame, text="网络漫游", variable=self.network_roaming_var)
+        self.roaming_switch = ttk.Checkbutton(btn_frame, text=self.get_text('NETWORK_ROAMING'), variable=self.network_roaming_var)
         self.roaming_switch.pack(side=tk.LEFT, padx=5)
         
-        self.learn_btn = RoundedButton(btn_frame, text="自主学习", command=self.start_self_learning)
+        self.learn_btn = RoundedButton(btn_frame, text=self.get_text('SELF_LEARN_BTN'), command=self.start_self_learning)
         self.learn_btn.pack(side=tk.LEFT, padx=5)
         
-        self.online_learn_btn = RoundedButton(btn_frame, text="联网自学", command=self.start_online_learning)
+        self.online_learn_btn = RoundedButton(btn_frame, text=self.get_text('ONLINE_LEARN_BTN'), command=self.start_online_learning)
         self.online_learn_btn.pack(side=tk.LEFT, padx=5)
         
         self.correct_btn = RoundedButton(btn_frame, text="手动纠错", command=self.open_correction_window)
@@ -1459,6 +1502,30 @@ class App:
         self.quit_btn.pack(side=tk.RIGHT, padx=5)
     
 
+    def on_language_change(self, event):
+        """语言选择变化时更新UI文本"""
+        self.current_language = self.language_var.get()
+        self.update_ui_texts()
+    
+    def update_ui_texts(self):
+        """更新所有UI元素的文本"""
+        # 更新按钮文本
+        self.send_btn.config(text=self.get_text('SEND_BTN'))
+        self.learn_btn.config(text=self.get_text('SELF_LEARN_BTN'))
+        self.online_learn_btn.config(text=self.get_text('ONLINE_LEARN_BTN'))
+        self.correct_btn.config(text=self.get_text('CORRECT_BTN'))
+        self.copy_ai_btn.config(text=self.get_text('COPY_AI_BTN'))
+        self.clear_btn.config(text=self.get_text('CLEAR_BTN'))
+        self.settings_btn.config(text=self.get_text('SETTINGS_BTN'))
+        self.quit_btn.config(text=self.get_text('QUIT_BTN'))
+        
+        # 更新状态标签和窗口标题
+        self.status_label.config(text=self.get_text('READY_STATUS'))
+        self.root.title(f"MemoAI V2 - {self.get_text('APP_SUBTITLE')}")
+        
+        # 更新网络漫游开关文本
+        self.roaming_switch.config(text=self.get_text('NETWORK_ROAMING'))
+    
     def _setup_fonts(self):
         """设置中文字体支持"""
         # 配置全局中文字体
