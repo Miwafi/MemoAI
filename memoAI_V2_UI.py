@@ -17,13 +17,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, TensorDataset
 import matplotlib.pyplot as plt
-
-# ------------------------------
 # 配置和常量
-# ------------------------------
-# ------------------------------
 # 翻译文件
-# ------------------------------
 laun = {'ZHCN':{
     'SYSCheck':'系统自检','CREATMenu':'创建必要目录','CREATError':'创建目录失败','ERROR':'错误'
     },'ENG':{
@@ -33,8 +28,6 @@ laun = {'ZHCN':{
             'SYSCheck':'システム自己診断中','CREATMenu':'ファイルディレクトリを作成中','CREATError':'ディレクトリを作成できませんでした',
             'ERROR':'エラー'
             }}
-# 我也就会这三门语言了
-# 待会儿去把繁体给弄上去
 class Config:
     def __init__(self):
         self.model_path = 'model/dialog_model.pth'
@@ -50,12 +43,8 @@ class Config:
         self.num_layers = 2
         self.dropout = 0.3
         self.temperature = 5
-
 config = Config()
-
-# ------------------------------
 # 工具函数
-# ------------------------------
 def log_event(message, level='info'):
     """记录事件到日志"""
     timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -72,10 +61,7 @@ def log_event(message, level='info'):
     
     # 打印到控制台
     print(log_entry.strip())
-
-# ------------------------------
 # 系统自检
-# ------------------------------
 def system_check():
     """系统环境自检"""
     log_event(laun['ENG']['SYSCheck'])
@@ -100,10 +86,7 @@ def system_check():
     
     log_event("系统自检完成")
     return True
-
-# ------------------------------
 # 数据管理
-# ------------------------------
 class DataManager:
     """数据管理类，负责记忆存储和加载"""
     def __init__(self):
@@ -197,10 +180,7 @@ class DataManager:
     def get_latest_memory_index(self):
         """获取最新记忆项的索引"""
         return len(self.memory) - 1
-
-# ------------------------------
 # 字符编码
-# ------------------------------
 class CharEncoder:
     """字符编码解码器"""
     def __init__(self):
@@ -302,10 +282,7 @@ class CharEncoder:
     def get_vocab_size(self):
         """获取词汇表大小"""
         return len(self.char_to_idx)
-
-# ------------------------------
 # 对话模型
-# ------------------------------
 class LSTMDialogNet(nn.Module):
     """LSTM对话模型"""
     def __init__(self, vocab_size):
@@ -405,10 +382,7 @@ class LSTMDialogNet(nn.Module):
         else:
             log_event(f"模型文件不存在: {path}", 'error')
         return False
-
-# ------------------------------
 # 自学习AI核心
-# ------------------------------
 class AICore:
     """自学习AI核心类"""
     def __init__(self):
@@ -503,6 +477,11 @@ class AICore:
                 
                 epoch_loss = 0
                 for batch_idx, (batch_inputs, batch_targets) in enumerate(dataloader):
+                    # 增加批次级别的终止检查
+                    if self.training_stop_event.is_set():
+                        log_event(f"{task_name}已被用户中断")
+                        return False
+                    
                     loss = self.train_step(batch_inputs, batch_targets)
                     epoch_loss += loss
                     
@@ -531,7 +510,9 @@ class AICore:
             log_event(f"{task_name}过程中出错: {str(e)}", 'error')
             return False
         finally:
+            # 确保无论成功失败都重置训练状态
             self.is_training = False
+            log_event(f"{task_name}线程已结束")
     
     def train(self, epochs=None, progress_callback=None):
         """训练模型"""
@@ -613,57 +594,100 @@ class AICore:
         plt.close()
         log_event(f"损失历史曲线已保存到 {loss_plot_path}")
     
-    def online_learn(self, progress_callback=None):
-        """联网自学功能，从网络获取知识进行学习"""
-        if self.is_training:
-            log_event("模型正在训练中，请先停止当前训练", 'warning')
+    def online_learn(self, query, progress_callback=None):
+        online_knowledge = []
+        try:
+            # 网络请求逻辑
+            url = f"https://www.baidu.com/s?wd={quote(query)}"
+            response = requests.get(url, headers=self.headers, timeout=10)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, 'html.parser')
+            results = soup.select('.result')
+
+            for result in results[:3]:  # 取前3条结果
+                title_tag = result.select_one('.t a')
+                summary_tag = result.select_one('.c-abstract')
+                if title_tag and summary_tag:
+                    title = title_tag.get_text(strip=True)
+                    summary = summary_tag.get_text(strip=True)
+                    online_knowledge.append({
+                        "user": f"什么是{title}?",
+                        "ai": summary
+                    })
+
+            log_event(f"成功获取 {len(online_knowledge)} 条新知识")
+            return online_knowledge
+
+        except Exception as e:
+            # 错误处理逻辑
+            log_event(f"联网获取知识失败: {str(e)}, URL: {url if 'url' in locals() else '未知'}", 'error')
+            print(f"[网络漫游]错误: {str(e)}, URL: {url if 'url' in locals() else '未知'}")
+            return None
+        return online_knowledge
+        
+        # 获取在线知识
+        online_knowledge = fetch_online_knowledge()
+        if not online_knowledge:
+            self.is_training = False
+            return False
+
+        if progress_callback:
+            progress_callback(50)  # 示例：更新进度为50%    
+        
+        # 使用在线知识进行训练
+        inputs, targets = self.preprocess_data(online_knowledge)
+        if inputs is None or targets is None:
+            self.is_training = False
             return False
         
-        log_event("开始联网自学...")
-        self.is_training = True
-        self.training_stop_event.clear()
-        self.loss_history = []
+        # 检查词汇表大小是否有变化，如果有则重新创建模型
+        current_vocab_size = self.encoder.get_vocab_size()
+        if current_vocab_size != self.vocab_size:
+            log_event(f"词汇表大小已更新: {self.vocab_size} -> {current_vocab_size}，重新创建模型")
+            self.vocab_size = current_vocab_size
+            self.model = LSTMDialogNet(self.vocab_size).to(config.device)
+            self.optimizer = torch.optim.Adam(self.model.parameters(), lr=config.learning_rate)
         
-        # 实现真实联网获取数据的过程
-        def fetch_online_knowledge():
-            try:
-                # 这里使用百度搜索API获取最新知识
-                log_event("正在从网络获取最新知识...")
-                
-                # 搜索关键词（可以根据需要调整或从用户输入获取）
-                search_keywords = ["人工智能最新发展", "机器学习前沿技术", "深度学习应用案例"]
-                online_knowledge = []
-                
-                for keyword in search_keywords:
-                    # 发送搜索请求
-                    url = f"https://www.baidu.com/s?wd={requests.utils.quote(keyword)}"
-                    headers = {
-                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-                    }
-                    
-                    response = requests.get(url, headers=headers, timeout=10)
-                    response.raise_for_status()  # 检查请求是否成功
-                    
-                    # 解析搜索结果
-                    soup = BeautifulSoup(response.text, 'html.parser')
-                    results = soup.select('.result.c-container')[:3]  # 获取前3条结果
-                    
-                    for result in results:
-                        title = result.select_one('.t a').get_text(strip=True) if result.select_one('.t a') else ""
-                        summary = result.select_one('.c-abstract').get_text(strip=True) if result.select_one('.c-abstract') else ""
-                        
-                        if title and summary:
-                            # 格式化知识为问答形式
-                            online_knowledge.append({
-                                "user": f"什么是{title}?",
-                                "ai": summary
-                            })
-                
-                log_event(f"成功获取 {len(online_knowledge)} 条新知识")
-                return online_knowledge
-            except Exception as e:
-                log_event(f"联网获取知识失败: {str(e)}", 'error')
-                return None
+        # 创建数据加载器
+        dataset = TensorDataset(inputs, targets)
+        dataloader = DataLoader(dataset, batch_size=config.batch_size, shuffle=True)
+        
+        return self._common_training_loop(3, dataloader, progress_callback, "联网自学")
+    
+    def self_learn(self, progress_callback=None):
+        """自主学习，使用现有记忆进行训练"""
+        log_event("开始自主学习...")
+        return self.start_training_thread(epochs=5, progress_callback=progress_callback)
+    def online_learn(self, query):
+        online_knowledge = []
+        try:
+            # 网络请求逻辑
+            url = f"https://www.baidu.com/s?wd={quote(query)}"
+            response = requests.get(url, headers=self.headers, timeout=10)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, 'html.parser')
+            results = soup.select('.result')
+
+            for result in results[:3]:  # 取前3条结果
+                title_tag = result.select_one('.t a')
+                summary_tag = result.select_one('.c-abstract')
+                if title_tag and summary_tag:
+                    title = title_tag.get_text(strip=True)
+                    summary = summary_tag.get_text(strip=True)
+                    online_knowledge.append({
+                        "user": f"什么是{title}?",
+                        "ai": summary
+                    })
+
+            log_event(f"成功获取 {len(online_knowledge)} 条新知识")
+            return online_knowledge
+
+        except Exception as e:
+            # 错误处理逻辑
+            log_event(f"联网获取知识失败: {str(e)}, URL: {url if 'url' in locals() else '未知'}", 'error')
+            print(f"[网络漫游]错误: {str(e)}, URL: {url if 'url' in locals() else '未知'}")
+            return None
+        return online_knowledge
         
         # 获取在线知识
         online_knowledge = fetch_online_knowledge()
@@ -696,7 +720,7 @@ class AICore:
         log_event("开始自主学习...")
         return self.start_training_thread(epochs=5, progress_callback=progress_callback)
     
-    def infer(self, input_text, max_length=50):
+    def infer(self, input_text, max_length=50, enable_network_roaming=False):
         """推理生成响应"""
         if not input_text.strip():
             return "请输入有效的文本"
@@ -1264,6 +1288,26 @@ class AICore:
             response = self.encoder.decode(output_seq)
             self.model.train()
             
+            # 如果启用网络漫游且本地响应不理想，则进行网络搜索
+            if enable_network_roaming and (not response.strip() or len(response) < 20):
+                try:
+                    log_event(f"进行网络搜索: {input_text}")
+                    print(f"[网络漫游] 触发搜索: {input_text}")  # 终端日志
+                    url = f"https://www.baidu.com/s?wd={requests.utils.quote(input_text)}"
+                    headers = {
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+                    }
+                    
+                    response = requests.get(url, headers=headers, timeout=10)
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    results = soup.select('.result.c-container')[:1]
+                    if results:
+                        summary = results[0].select_one('.c-abstract').get_text(strip=True) if results[0].select_one('.c-abstract') else ""
+                        if summary:
+                            response = f"根据网络信息: {summary}"
+                except Exception as e:
+                    log_event(f"网络搜索失败: {str(e)}", 'error')
+            
             # 添加到记忆
             self.data_manager.add_memory(input_text, response)
             
@@ -1281,20 +1325,14 @@ class AICore:
         log_event(f"添加手动纠错样本: 用户输入='{input_text}', 正确响应='{correct_response}'")
         self.data_manager.add_memory(input_text, correct_response)
         return True
-
-# ------------------------------
 # UI组件
-# ------------------------------
 class RoundedButton(ttk.Button):
     """圆角按钮组件"""
     def __init__(self, parent, text, command=None, **kwargs):
         super().__init__(parent, text=text, command=command, **kwargs)
         # 使用ttkbootstrap支持的内置样式
         self.configure(style='Primary.TButton')
-
-# ------------------------------
 # 主应用界面
-# ------------------------------
 class App:
     """主应用程序类"""
     def __init__(self, root):
@@ -1318,6 +1356,9 @@ class App:
         
         # 创建UI
         self.create_widgets()
+        
+        # 启动系统自检
+        self.run_system_check()
         
         # 显示欢迎消息
         self.add_message("system", "欢迎使用MemoAI V2！我正在初始化，请稍候...")
@@ -1391,6 +1432,11 @@ class App:
         btn_frame = ttk.Frame(right_frame)
         btn_frame.pack(fill=tk.X)
         
+        # 添加网络漫游开关
+        self.network_roaming_var = tk.BooleanVar(value=False)
+        self.roaming_switch = ttk.Checkbutton(btn_frame, text="网络漫游", variable=self.network_roaming_var)
+        self.roaming_switch.pack(side=tk.LEFT, padx=5)
+        
         self.learn_btn = RoundedButton(btn_frame, text="自主学习", command=self.start_self_learning)
         self.learn_btn.pack(side=tk.LEFT, padx=5)
         
@@ -1399,6 +1445,10 @@ class App:
         
         self.correct_btn = RoundedButton(btn_frame, text="手动纠错", command=self.open_correction_window)
         self.correct_btn.pack(side=tk.LEFT, padx=5)
+        
+        # 添加复制AI输出按钮
+        self.copy_ai_btn = RoundedButton(btn_frame, text="复制AI输出", command=self.copy_last_ai_response)
+        self.copy_ai_btn.pack(side=tk.LEFT, padx=5)
         
         self.clear_btn = RoundedButton(btn_frame, text="清除对话", command=self.clear_chat)
         self.clear_btn.pack(side=tk.LEFT, padx=5)
@@ -1422,11 +1472,87 @@ class App:
         self.style.configure('TFrame', font=self.default_font)
         self.style.configure('TText', font=self.default_font)
 
+    def run_system_check(self):
+        """系统自检流程"""
+        self.status_label.config(text="系统自检中...", foreground="blue")
+        self.progress_bar["value"] = 0
+        self.check_steps = [
+            ("检查数据管理器", self.check_data_manager),
+            ("验证AI模型", self.check_ai_model),
+            ("测试网络连接", self.check_network),
+            ("验证依赖库", self.check_dependencies)
+        ]
+        
+        def execute_check(index=0):
+            if index < len(self.check_steps):
+                step_name, step_func = self.check_steps[index]
+                self.add_message("system", f"[自检] {step_name}...", custom_fg="#0066cc")
+                
+                try:
+                    result, message = step_func()
+                    color = "#00cc66" if result else "#ff6666"
+                    self.add_message("system", f"[自检] {step_name}: {message}", custom_bg=color, custom_fg="white")
+                except Exception as e:
+                    self.add_message("system", f"[自检] {step_name}失败: {str(e)}", custom_bg="#ff3333", custom_fg="white")
+                
+                self.progress_bar["value"] = (index + 1) * 25
+                self.root.after(1000, execute_check, index + 1)
+            else:
+                self.status_label.config(text="自检完成", foreground="green")
+                self.add_message("system", "=== 系统自检完成 ===", custom_fg="#9933ff")
+        
+        # 启动检查流程
+        self.root.after(500, execute_check)
+    
+    def check_data_manager(self):
+        """检查数据管理器状态"""
+        # 修复属性名错误：memory_file → memory_path
+        if hasattr(self.data_manager, 'memory_path'):
+            memory_path = self.data_manager.memory_path
+            # 添加详细日志输出
+            log_event(f"检查记忆文件: {memory_path}")
+            if os.path.exists(memory_path):
+                return True, f"数据管理器就绪 (记忆文件: {os.path.basename(memory_path)})"
+            return False, f"记忆文件不存在于: {memory_path}"
+        return False, "数据管理器未初始化"
+    
+    def check_ai_model(self):
+        """检查AI模型状态"""
+        model_path = "model/dialog_model.pth"
+        if os.path.exists(model_path) and os.path.getsize(model_path) > 0:
+            return True, "模型文件正常"
+        return False, "模型文件缺失或损坏"
+    
+    def check_network(self):
+        """检查网络连接状态"""
+        try:
+            import requests
+            response = requests.get("https://www.baidu.com", timeout=5)
+            return response.status_code == 200, "网络连接正常"
+        except:
+            return False, "网络连接失败"
+    
+    def check_dependencies(self):
+        """检查关键依赖库"""
+        required_libs = ["torch", "requests", "bs4", "ttkbootstrap"]
+        missing = [lib for lib in required_libs if not self._is_lib_installed(lib)]
+        if not missing:
+            return True, "所有依赖库已安装"
+        return False, f"缺少依赖: {', '.join(missing)}"
+    
+    def _is_lib_installed(self, lib_name):
+        """检查库是否安装"""
+        try:
+            __import__(lib_name)
+            return True
+        except ImportError:
+            return False
+
     def _on_mousewheel(self, event):
         """鼠标滚轮事件处理"""
         self.chat_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
     
-    def add_message(self, sender, text, typing_animation=False, memory_index=None):
+    def add_message(self, sender, text, typing_animation=False, memory_index=None, custom_bg=None, custom_fg=None):
         """添加消息到聊天历史"""
         # 创建消息框架
         msg_frame = ttk.Frame(self.chat_history)
@@ -1457,9 +1583,9 @@ class App:
             )
             approve_btn.pack(side=tk.RIGHT, padx=2)
 
-        # 创建消息标签 - 显式设置颜色确保可见
-        bg_color = '#0078d7' if sender == 'user' else '#e6e6e6'
-        fg_color = 'white' if sender == 'user' else 'black'
+        # 创建消息标签 - 支持自定义颜色
+        bg_color = custom_bg if custom_bg else ('#0078d7' if sender == 'user' else '#e6e6e6' if sender == 'ai' else '#ffd700')
+        fg_color = custom_fg if custom_fg else ('white' if sender == 'user' else 'black')
         
         msg_label = ttk.Label(
             msg_frame,
@@ -1509,16 +1635,27 @@ class App:
         # 在新线程中获取AI响应，避免UI卡顿
         def get_ai_response():
             self.update_ai_state("responding")  # 设置为响应状态
-            response = self.ai.infer(user_text)
+            # 获取网络漫游状态
+            # 获取网络漫游状态
+            enable_roaming = self.network_roaming_var.get() if hasattr(self, 'network_roaming_var') else False
+            
+            # 生成AI响应
+            ai_response = self.ai.infer(user_text, enable_network_roaming=enable_roaming)
+            
             # 使用打字动画显示AI回复
             # 获取最新记忆索引
             memory_index = self.ai.data_manager.get_latest_memory_index()
-            self.root.after(0, lambda: self.add_message("ai", response, typing_animation=True, memory_index=memory_index))
+            self.root.after(0, lambda: self.display_ai_response(ai_response, memory_index))
             self.root.after(0, lambda: self.status_label.config(text="就绪", foreground="green"))
             self.root.after(0, lambda: self.update_ai_state("idle"))  # 恢复空闲状态
         
         threading.Thread(target=get_ai_response).start()
-    
+
+    def display_ai_response(self, response, memory_index):
+        """显示AI响应并保存到最后一条响应变量"""
+        self.last_ai_response = response
+        self.add_message("ai", response, typing_animation=True, memory_index=memory_index)
+
     def start_self_learning(self):
         """开始自主学习"""
         if self.ai.is_training:
@@ -1575,7 +1712,18 @@ class App:
                 self.update_ai_state("idle")  # 恢复空闲状态
         
         # 启动联网学习线程
-        threading.Thread(target=lambda: self.ai.online_learn(progress_callback=update_progress)).start()
+        query_text = self.user_input.get().strip()
+        if not query_text:
+            self.add_message("system", "请输入查询内容")
+            self.online_learn_btn.config(state=tk.NORMAL)
+            self.status_label.config(text="就绪", foreground="green")
+            self.update_ai_state("idle")
+            return
+        threading.Thread(target=lambda: self.ai.online_learn(
+            query_text, 
+            progress_callback=update_progress
+        )).start()
+
     
     def open_correction_window(self):
         """打开手动纠错窗口"""
@@ -1727,6 +1875,15 @@ class App:
         else:
             self.add_message("system", "聊天历史已清除")
     
+    def copy_last_ai_response(self):
+        """复制最后一条AI输出到剪贴板"""
+        if hasattr(self, 'last_ai_response') and self.last_ai_response:
+            self.root.clipboard_clear()  # 清除剪贴板
+            self.root.clipboard_append(self.last_ai_response)  # 添加文本到剪贴板
+            self.status_label.config(text="AI输出已复制到剪贴板")
+        else:
+            self.status_label.config(text="暂无AI输出可复制")
+    
     def quit_app(self):
         """退出应用程序"""
         if self.ai.is_training:
@@ -1822,10 +1979,7 @@ class App:
         self.thought_text.config(state=tk.NORMAL)
         self.thought_text.delete(1.0, tk.END)
         self.thought_text.config(state=tk.DISABLED)
-
-# ------------------------------
 # 主程序入口
-# ------------------------------
 if __name__ == "__main__":
     try:
         # 系统自检
