@@ -10,6 +10,8 @@ import datetime
 import os
 import sys
 import re
+import requests
+from bs4 import BeautifulSoup
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -47,6 +49,7 @@ class Config:
         self.embedding_dim = 64
         self.num_layers = 2
         self.dropout = 0.3
+        self.temperature = 5
 
 config = Config()
 
@@ -621,22 +624,40 @@ class AICore:
         self.training_stop_event.clear()
         self.loss_history = []
         
-        # 模拟联网获取数据的过程
+        # 实现真实联网获取数据的过程
         def fetch_online_knowledge():
             try:
-                # 这里可以添加实际的联网获取数据代码
+                # 这里使用百度搜索API获取最新知识
                 log_event("正在从网络获取最新知识...")
-                time.sleep(3)  # 模拟网络请求延迟
                 
-                # 模拟获取到的知识数据
-                online_knowledge = [
-                    {"user": "你好", "ai": "你好！很高兴为您服务。"},
-                    {"user": "您好", "ai": "您好！请问有什么可以帮助您的吗？"},
-                    {"user": "早上好", "ai": "早上好！今天天气不错呢。"},
-                    {"user": "晚上好", "ai": "晚上好！今天过得怎么样？"},
-                    {"user": "什么是人工智能?", "ai": "人工智能是研究、开发用于模拟、延伸和扩展人的智能的理论、方法、技术及应用系统的一门新的技术科学。"},
-                    {"user": "机器学习的主要类型有哪些?", "ai": "机器学习主要分为监督学习、无监督学习、半监督学习和强化学习四大类。"}
-                ]
+                # 搜索关键词（可以根据需要调整或从用户输入获取）
+                search_keywords = ["人工智能最新发展", "机器学习前沿技术", "深度学习应用案例"]
+                online_knowledge = []
+                
+                for keyword in search_keywords:
+                    # 发送搜索请求
+                    url = f"https://www.baidu.com/s?wd={requests.utils.quote(keyword)}"
+                    headers = {
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+                    }
+                    
+                    response = requests.get(url, headers=headers, timeout=10)
+                    response.raise_for_status()  # 检查请求是否成功
+                    
+                    # 解析搜索结果
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    results = soup.select('.result.c-container')[:3]  # 获取前3条结果
+                    
+                    for result in results:
+                        title = result.select_one('.t a').get_text(strip=True) if result.select_one('.t a') else ""
+                        summary = result.select_one('.c-abstract').get_text(strip=True) if result.select_one('.c-abstract') else ""
+                        
+                        if title and summary:
+                            # 格式化知识为问答形式
+                            online_knowledge.append({
+                                "user": f"什么是{title}?",
+                                "ai": summary
+                            })
                 
                 log_event(f"成功获取 {len(online_knowledge)} 条新知识")
                 return online_knowledge
@@ -1382,6 +1403,8 @@ class App:
         self.clear_btn = RoundedButton(btn_frame, text="清除对话", command=self.clear_chat)
         self.clear_btn.pack(side=tk.LEFT, padx=5)
         
+        self.settings_btn = RoundedButton(btn_frame, text="设置", command=self.open_settings_window)
+        self.settings_btn.pack(side=tk.LEFT, padx=5)
         self.quit_btn = RoundedButton(btn_frame, text="退出", command=self.quit_app)
         self.quit_btn.pack(side=tk.RIGHT, padx=5)
     
@@ -1617,6 +1640,61 @@ class App:
             ttk.Label(msg_window, text="纠错内容不能为空！", padding=20).pack()
             ttk.Button(msg_window, text="确定", command=msg_window.destroy).pack(pady=5)
             return
+    
+    def open_settings_window(self):
+        """打开设置窗口"""
+        settings_window = tk.Toplevel(self.root)
+        settings_window.title("设置")
+        settings_window.geometry("400x300")
+        settings_window.resizable(False, False)
+        settings_window.option_add("*Font", self.default_font)
+        
+        # 创建设置框架
+        settings_frame = ttk.Frame(settings_window, padding=20)
+        settings_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # 温度设置
+        ttk.Label(settings_frame, text="推理温度设置:").grid(row=0, column=0, sticky=tk.W, pady=10)
+        
+        temp_frame = ttk.Frame(settings_frame)
+        temp_frame.grid(row=0, column=1, sticky=tk.EW)
+        
+        # 修复AICore无config属性的问题，直接使用实例变量或默认值
+        default_temp = getattr(self.ai, 'temperature', 5)
+        self.temp_var = tk.IntVar(value=default_temp)
+        
+        # 设置滑动条固定长度并确保填充
+        temp_scale = ttk.Scale(temp_frame, from_=1, to=10, orient=tk.HORIZONTAL,
+                              variable=self.temp_var, command=self.update_temp_label, length=200)
+        temp_scale.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
+        
+        self.temp_label = ttk.Label(temp_frame, text=str(default_temp))
+        self.temp_label.pack(side=tk.LEFT)
+        
+        # 保存按钮
+        save_btn = RoundedButton(settings_window, text="保存设置", command=lambda: self.save_settings(settings_window))
+        save_btn.pack(pady=20)
+        
+        # 配置列权重，使第二列可扩展
+        settings_frame.columnconfigure(1, weight=1)
+        # 确保第一列也有适当宽度
+        settings_frame.columnconfigure(0, minsize=120)
+
+    def update_temp_label(self, value):
+        """更新温度标签显示"""
+        self.temp_label.config(text=str(int(float(value))))
+
+    def save_settings(self, window):
+        """保存设置"""
+        # 获取温度值
+        temperature = self.temp_var.get()
+        
+        # 直接设置AICore的temperature属性
+        self.ai.temperature = temperature
+        
+        # 显示保存成功消息
+        self.add_message("system", f"设置已保存，温度值: {temperature}")
+        window.destroy()
     
     def approve_answer(self, memory_index):
         """处理答案肯定操作"""
