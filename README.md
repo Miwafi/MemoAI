@@ -56,7 +56,7 @@ S_steve的bilibili主页地址：
 本AI的所有回答均由 AI 生成，内容仅供参考，请仔细甄别。这些文件导致你的作为或者不作为，其一切后果由使用者承担，制作者不承担**任何**相关责任。
 如果您是从付费的网站上购买的，[那你被骗了](https://www.bilibili.com/video/BV1GJ411x7h7)，本软件免费。
 
-# 宣发视频（中文版）
+## 宣发视频（中文版）
 暂未制作
 ---
 
@@ -118,7 +118,7 @@ If you purchased this from a paid website, **[you've been scammed](https://www.b
 
 Attention please, this text is translated by AI, and haven't been checked by human. standard Chinese(中文)
 
-# The Vedio for invitation(English)
+## The Vedio for invitation(English)
 There is not now.
 ---
 
@@ -179,7 +179,7 @@ AIによる回答内容は参考情報です。内容を精査し、利用によ
 有料サイトで購入した場合は[詐欺被害に遭っています](https://www.bilibili.com/video/BV1GJ411x7h7)。本ソフトは完全に無料です。
 このテクスト譯は翻訳です，品質は安いじゃないです。中国語と标准言います
 
-# 映画(日本語)
+## 映画(日本語)
  ない
 ---
 
@@ -239,5 +239,5 @@ S_steve 的 bilibili 主頁：
 若您自付費網站購得本軟體，[您已遭受詐騙](https://www.bilibili.com/video/BV1GJ411x7h7)，本軟體永久免費。
 這些文本由翻譯器翻譯，可能不符合您的語言習慣，也可能出現一些誤差，請以簡體中文為主。
 
-# 宣發視頻
+## 宣發視頻
 暫無
