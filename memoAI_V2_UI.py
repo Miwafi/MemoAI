@@ -19,7 +19,7 @@ from torch.utils.data import DataLoader, TensorDataset
 import matplotlib.pyplot as plt
 # 配置和常量
 # 翻译文件
-laun = {'ZHCN':{
+laun = {'中文':{
     'SYSCheck':'系统自检','CREATMenu':'创建必要目录','CREATError':'创建目录失败','ERROR':'错误',
     'SEND_BTN': '发送', 'SELF_LEARN_BTN': '自主学习', 'ONLINE_LEARN_BTN': '联网自学',
     'CORRECT_BTN': '手动纠错', 'COPY_AI_BTN': '复制AI输出', 'CLEAR_BTN': '清除对话',
@@ -33,18 +33,18 @@ laun = {'ZHCN':{
         'ONLINE_LEARN_BTN': 'Online Learning', 'CORRECT_BTN': 'Manual Correction',
         'COPY_AI_BTN': 'Copy AI Output', 'CLEAR_BTN': 'Clear Chat', 'SETTINGS_BTN': 'Settings',
         'QUIT_BTN': 'Quit', 'READY_STATUS': 'Ready',
-        'WELCOME_MSG': 'Welcome to MemoAI V2! I am initializing, please wait...',
-        'AI_GREETING': 'Hello! I am MemoAI, a self-learning conversational AI. How can I help you?',
+        'WELCOME_MSG': 'Welcome to MemoAI V2! Initializing, please wait...',
+        'AI_GREETING': 'Hello! This is MemoAI, a self-learning conversational AI. How can I help you?',
         'NETWORK_ROAMING': 'Network Roaming', 'APP_SUBTITLE': 'Self-learning Dialogue System'
-        },'JAP':{    
-            'SYSCheck':'システム自己診断中','CREATMenu':'ファイルディレクトリを作成中','CREATError':'ディレクトリを作成できませんでした',
+        },'日本語':{    
+            'SYSCheck':'システム自己診断中','CREATMenu':'せっずを作成中','CREATError':'へイルを作成できませんでした',
             'ERROR':'エラー', 'SEND_BTN': '送信', 'SELF_LEARN_BTN': '自己学習', 
             'ONLINE_LEARN_BTN': 'オンライン学習', 'CORRECT_BTN': '手動修正',
             'COPY_AI_BTN': 'AI出力をコピー', 'CLEAR_BTN': 'チャットをクリア', 'SETTINGS_BTN': '設定',
-            'QUIT_BTN': '終了', 'READY_STATUS': '準備完了',
+            'QUIT_BTN': '完了', 'READY_STATUS': '準備完了',
             'WELCOME_MSG': 'MemoAI V2へようこそ！初期化中です、しばらくお待ちください...',
-            'AI_GREETING': 'こんにちは！私はMemoAIです、自己学習ができる会話型AIです。何かお手伝いできますか？',
-            'NETWORK_ROAMING': 'ネットワークローミング', 'APP_SUBTITLE': '自己学習対話システム'
+            'AI_GREETING': 'こんにちは！ MemoAIです、自己学習ができる会話型AIです。何かお手伝いできますか？',
+            'NETWORK_ROAMING': '根とを言います', 'APP_SUBTITLE': '自己学習対話システム'
             }}
 class Config:
     def __init__(self):
@@ -1356,10 +1356,10 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("MemoAI V2 - 自学习对话系统")
-        self.root.geometry("800x600")
-        self.root.minsize(600, 500)
+        self.root.geometry("1000x480")
+        self.root.minsize(1200, 500)
         
-        self.current_language = 'ZHCN'  # 默认语言为中文
+        self.current_language = '中文'  # 默认语言为中文
         
         # 初始化数据管理器
         self.data_manager = DataManager()
@@ -1387,7 +1387,7 @@ class App:
     def get_text(self, key):
         """根据当前语言获取文本"""
         # 获取当前语言的字典，如果不存在则使用中文
-        lang_dict = laun.get(self.current_language, laun['ZHCN'])
+        lang_dict = laun.get(self.current_language, laun['中文'])
         # 返回对应键的文本，如果不存在则返回键本身
         return lang_dict.get(key, key)
     
@@ -1460,7 +1460,7 @@ class App:
         self.language_combo = ttk.Combobox(
             language_frame,
             textvariable=self.language_var,
-            values=['ZHCN', 'ENG', 'JAP'],
+            values=['中文', 'ENG', '日本語'],
             state='readonly',
             width=5
         )
