@@ -2,7 +2,7 @@
 
 
 ## 简介
-MemoAI 是一个功能丰富的软件，它旨在为用户提供便捷的交互体验。该库集成了一系列实用的功能，可用于创建具备问答、样本修改等功能的软件，帮助用户更高效地处理信息和获取智能答复。<br>这将是一个非常**简单**的软件。希望你使用愉快
+MemoAI 是一个功能丰富的软件，它旨在为用户提供便捷的交互体验。该库集成了一系列实用的功能，可用于创建具备问答、样本修改等功能的软件，同时也支持了运算功能。帮助用户更高效地处理信息和获取智能答复。<br>这将是一个非常**简单**的软件。希望你使用愉快
 
 ## 使用建议
 建议本项目在一个x86架构的个人电脑上运行，本文件至少约7MB，请确保您的电脑有足够的储存空间。
@@ -65,7 +65,7 @@ S_steve的bilibili主页地址：
 # MemoAI　English
 
 ## Introduction
-MemoAI is a feature-rich software designed to provide users with a convenient interactive experience. This library integrates a series of practical functions for creating applications with capabilities such as Q&A and sample modification, helping users process information more efficiently and obtain intelligent responses.  
+MemoAI is a feature-rich software designed to provide users with a convenient interactive experience. This library integrates a series of practical functions for creating applications with capabilities such as Q&A and sample modification,and it can do math calculate. Helping users process information more efficiently and obtain intelligent responses.  
 This will be an extremely **simple** software. We hope you enjoy using it.
 
 ## Usage Recommendations
@@ -127,7 +127,7 @@ There is not now.
 # MemoAI日本語
 
 ## 概要
-MemoAIは、ユーザーに便利なインタラクティブ体験を提供する多機能ソフトウェアです。このライブラリには、質問応答やサンプル修正などの機能を備えたソフトウェアを作成するための一連の実用的な機能が統合されており、情報処理やインテリジェントな回答取得を効率化します。<br>
+MemoAIは、ユーザーに便利なインタラクティブ体験を提供する多機能ソフトウェアです。このライブラリには、質問応答やサンプル修正などの機能を備えたソフトウェアを作成するための一連の実用的な機能が統合されており、数据の處理、情報処理やインテリジェントな回答取得を効率化します。<br>
 これは非常に**シンプル**なソフトウェアです。ご利用をお楽しみください。
 
 ## 動作環境推奨
@@ -189,7 +189,7 @@ AIによる回答内容は参考情報です。内容を精査し、利用によ
 # MemoAI 中文 繁體中文
 
 ## 簡介
-MemoAI 是一款功能豐富的軟體，旨在為使用者提供便捷的互動體驗。該程式庫整合了一系列實用功能，可用於建立具備問答、樣本修改等功能的軟體，協助使用者更高效地處理資訊並取得智慧回覆。<br>這將是一款非常**簡易**的軟體。祝您使用愉快！
+MemoAI 是一款功能豐富的軟體，旨在為使用者提供便捷的互動體驗。該程式庫整合了一系列實用功能，可用於建立具備問答、樣本修改等功能的軟體，進行簡單的四則運算，協助使用者更高效地處理資訊並取得智慧回覆。<br>這將是一款非常**簡易**的軟體。祝您使用愉快！
 
 ## 使用建議
 建議本專案在 x86 架構的個人電腦上執行，主檔案大小約 7MB，請確保您的電腦具備足夠的儲存空間。

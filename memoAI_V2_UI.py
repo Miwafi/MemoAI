@@ -2084,3 +2084,48 @@ if __name__ == "__main__":
         root.withdraw()  # 隐藏主窗口
         messagebox.showerror("启动失败", f"程序无法启动: {str(e)}\n详细信息请查看startup_error.log")
         sys.exit(1)
+
+'''
+新功能待加入
+假设说，T是用户输入的消息
+
+T = ''
+
+# 检查并处理T中的四则运算（等号在末尾）
+def process_operations(expression):
+    # 确保等号是最后一个非空白字符
+    stripped_expr = expression.rstrip()
+    if stripped_expr.endswith('=') and '=' in stripped_expr[:-1]:
+        # 提取等号前的表达式部分
+        expr_part = stripped_expr.rsplit('=', 1)[0].strip()
+        if any(op in expr_part for op in '+-*/'):
+            try:
+                result = eval(expr_part)
+                return f"{expression}{result}"  # 保留原始格式并添加结果
+            except Exception as e:
+                return f"{expression}计算错误: {str(e)}"
+        return f"{expression}无效表达式"
+    return expression
+
+# 示例使用
+if __name__ == "__main__":
+    # 正确格式：等号在末尾
+    T = "2+3*4="
+    print(process_operations(T))  # 输出: 2+3*4=14
+
+    # 支持带空格的格式
+    T = "100 / 5 - 3 = "
+    print(process_operations(T))  # 输出: 100 / 5 - 3 = 17
+
+    # 非计算格式将保持不变
+    T = "这是一个不包含等号的文本"
+    print(process_operations(T))  # 输出: 这是一个不包含等号的文本
+
+    # 等号不在末尾的情况
+    T = "=2+3*4"
+    print(process_operations(T))  # 输出: =2+3*4
+
+# 本大爷实在是找不到你的用户输入的变量
+# 也找不到输出的变量
+# 你看着插进去哈
+'''
