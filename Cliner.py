@@ -1,3 +1,5 @@
+# 目前暂时有一些错误，已被禁用
+'''
 import os
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QProgressBar, QMessageBox
@@ -76,3 +78,4 @@ if __name__ == '__main__':
     ex = FileCleanerApp()
     ex.show()
     sys.exit(app.exec_())
+'''
