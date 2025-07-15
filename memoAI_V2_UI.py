@@ -1382,6 +1382,9 @@ class App:
         self.running = True
         self.default_font = ('SimHei', 10)
         
+        # 初始化网络漫游状态变量
+        self.network_roaming_var = tk.BooleanVar(value=False)
+        
         # 创建UI
         self.create_widgets()
         
@@ -1463,28 +1466,6 @@ class App:
         control_frame = ttk.Frame(right_frame)
         control_frame.pack(fill=tk.X, pady=(0, 10))
         
-        # 语言选择框架
-        language_frame = ttk.Frame(control_frame)
-        language_frame.pack(side=tk.RIGHT, padx=10)
-
-        ttk.Label(language_frame, text="语言:").pack(side=tk.LEFT)
-        # 创建语言按钮而非下拉框
-        lang_frame = ttk.Frame(language_frame)
-        lang_frame.pack(side=tk.LEFT)
-
-        # 中文按钮
-        self.cn_btn = ttk.Button(lang_frame, text="中文", command=lambda: self.set_language('中文'))
-        self.cn_btn.pack(side=tk.LEFT, padx=2)
-        self.cn_btn.config(state=tk.DISABLED, style='Disabled.TButton')  # 当前语言置灰
-
-        # 英文按钮
-        self.en_btn = ttk.Button(lang_frame, text="ENG", command=lambda: self.set_language('ENG'))
-        self.en_btn.pack(side=tk.LEFT, padx=2)
-
-        # 日文按钮
-        self.jp_btn = ttk.Button(lang_frame, text="日本語", command=lambda: self.set_language('日本語'))
-        self.jp_btn.pack(side=tk.LEFT, padx=2)
-        
         # 进度条
         self.progress_bar = ttk.Progressbar(control_frame, orient=tk.HORIZONTAL, length=100, mode='determinate')
         self.progress_bar.pack(side=tk.LEFT, padx=10, fill=tk.X, expand=True)
@@ -1492,11 +1473,6 @@ class App:
         # 功能按钮框架
         btn_frame = ttk.Frame(right_frame)
         btn_frame.pack(fill=tk.X)
-        
-        # 添加网络漫游开关
-        self.network_roaming_var = tk.BooleanVar(value=False)
-        self.roaming_switch = ttk.Checkbutton(btn_frame, text=self.get_text('NETWORK_ROAMING'), variable=self.network_roaming_var)
-        self.roaming_switch.pack(side=tk.LEFT, padx=5)
         
         self.learn_btn = RoundedButton(btn_frame, text=self.get_text('SELF_LEARN_BTN'), command=self.start_self_learning)
         self.learn_btn.pack(side=tk.LEFT, padx=5)
@@ -1521,23 +1497,25 @@ class App:
     
 
     def set_language(self, lang):
-        """设置语言并更新按钮状态"""
         self.current_language = lang
-        # 重置所有按钮状态
-        self.cn_btn.config(state=tk.NORMAL, style='TButton')
-        self.en_btn.config(state=tk.NORMAL, style='TButton')
-        self.jp_btn.config(state=tk.NORMAL, style='TButton')
-
-        # 设置当前语言按钮为灰色
-        if lang == '中文':
-            self.cn_btn.config(state=tk.DISABLED, style='Disabled.TButton')
-        elif lang == 'ENG':
-            self.en_btn.config(state=tk.DISABLED, style='Disabled.TButton')
-        else:
-            self.jp_btn.config(state=tk.DISABLED, style='Disabled.TButton')
-
-        # 更新UI文本
-        self.update_ui_texts()
+        self.update_language_buttons()  # 更新设置窗口按钮状态
+        self.update_ui_texts()          # 更新主界面文本
+    
+    def update_language_buttons(self):
+        # 更新设置窗口中的语言按钮状态
+        if hasattr(self, 'settings_cn_btn'):
+            # 重置所有按钮状态
+            self.settings_cn_btn.config(state=tk.NORMAL, style='TButton')
+            self.settings_en_btn.config(state=tk.NORMAL, style='TButton')
+            self.settings_jp_btn.config(state=tk.NORMAL, style='TButton')
+            
+            # 设置当前语言按钮为灰色
+            if self.current_language == '中文':
+                self.settings_cn_btn.config(state=tk.DISABLED, style='Disabled.TButton')
+            elif self.current_language == 'ENG':
+                self.settings_en_btn.config(state=tk.DISABLED, style='Disabled.TButton')
+            else:
+                self.settings_jp_btn.config(state=tk.DISABLED, style='Disabled.TButton')
     
     def update_ui_texts(self):
         """更新所有UI元素的文本"""
@@ -1937,27 +1915,71 @@ class App:
             return
     
     def open_settings_window(self):
-        """打开设置窗口"""
-        settings_window = tk.Toplevel(self.root)
-        settings_window.title("设置")
-        settings_window.geometry("400x400")  # 增大窗口高度
-        settings_window.resizable(False, False)
-        settings_window.option_add("*Font", self.default_font)
-
+        # 创建设置窗口
+        self.settings_window = tk.Toplevel(self.root)
+        self.settings_window.title("设置")
+        self.settings_window.geometry("400x300")
+        self.settings_window.resizable(False, False)
+        self.settings_window.transient(self.root)
+        self.settings_window.grab_set()
+        
+        # 设置窗口居中
+        self.settings_window.update_idletasks()
+        width = self.settings_window.winfo_width()
+        height = self.settings_window.winfo_height()
+        x = (self.settings_window.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.settings_window.winfo_screenheight() // 2) - (height // 2)
+        self.settings_window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        
         # 创建设置框架
-        settings_frame = ttk.Frame(settings_window, padding=20)
+        settings_frame = ttk.Frame(self.settings_window, padding=20)
         settings_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # ===== 添加语言设置区域 =====
+        ttk.Label(settings_frame, text="语言设置", font=('SimHei', 12, 'bold')).pack(anchor=tk.W, pady=(0, 10))
+        lang_frame = ttk.Frame(settings_frame)
+        lang_frame.pack(anchor=tk.W, pady=(0, 20))
+        
+        # 中文按钮
+        self.settings_cn_btn = ttk.Button(lang_frame, text="中文", command=lambda: self.set_language('中文'))
+        self.settings_cn_btn.pack(side=tk.LEFT, padx=5)
+        
+        # 英文按钮
+        self.settings_en_btn = ttk.Button(lang_frame, text="ENG", command=lambda: self.set_language('ENG'))
+        self.settings_en_btn.pack(side=tk.LEFT, padx=5)
+        
+        # 日文按钮
+        self.settings_jp_btn = ttk.Button(lang_frame, text="日本語", command=lambda: self.set_language('日本語'))
+        self.settings_jp_btn.pack(side=tk.LEFT, padx=5)
+        
+        # 更新语言按钮状态
+        self.update_language_buttons()
+        
+        # ===== 添加网络漫游设置区域 =====
+        ttk.Label(settings_frame, text="功能设置", font=('SimHei', 12, 'bold')).pack(anchor=tk.W, pady=(15, 10))
+        
+        # 网络漫游开关
+        self.settings_roaming_var = tk.BooleanVar(value=self.network_roaming_var.get())
+        ttk.Checkbutton(settings_frame, text=self.get_text('NETWORK_ROAMING'), variable=self.settings_roaming_var).pack(anchor=tk.W, pady=(0, 10))
+        
+        # 应用按钮
+        def apply_settings():
+            # 保存网络漫游状态
+            self.network_roaming_var.set(self.settings_roaming_var.get())
+            self.settings_window.destroy()
+        
+        ttk.Button(self.settings_window, text="应用", command=apply_settings).pack(side=tk.RIGHT, padx=20, pady=10)
 
         # 添加进度条
-        ttk.Label(settings_frame, text="操作进度:").grid(row=0, column=0, sticky=tk.W, pady=10)
+        ttk.Label(settings_frame, text="操作进度:").pack(anchor=tk.W, pady=10)
         self.progress_bar = ttk.Progressbar(settings_frame, orient=tk.HORIZONTAL, length=300, mode='determinate')
-        self.progress_bar.grid(row=0, column=1, sticky=tk.EW, pady=10)
+        self.progress_bar.pack(fill=tk.X, pady=10)
 
         # 温度设置
-        ttk.Label(settings_frame, text="推理温度设置:").grid(row=1, column=0, sticky=tk.W, pady=10)
+        ttk.Label(settings_frame, text="推理温度设置:").pack(anchor=tk.W, pady=10)
         
         temp_frame = ttk.Frame(settings_frame)
-        temp_frame.grid(row=1, column=1, sticky=tk.EW)
+        temp_frame.pack(fill=tk.X)
         
         # 修复AICore无config属性的问题，直接使用实例变量或默认值
         default_temp = getattr(self.ai, 'temperature', 5)
@@ -1971,30 +1993,9 @@ class App:
         self.temp_label = ttk.Label(temp_frame, text=str(default_temp))
         self.temp_label.pack(side=tk.LEFT)
         
-        # 功能按钮区域
-        functions_frame = ttk.LabelFrame(settings_frame, text="功能选项")
-        functions_frame.grid(row=2, column=0, columnspan=2, sticky=tk.NSEW, pady=15)
-
-        # 网络漫游开关
-        ttk.Checkbutton(functions_frame, text=self.get_text('NETWORK_ROAMING'), variable=self.network_roaming_var).pack(anchor=tk.W, pady=5)
-
-        # 手动纠错按钮
-        ttk.Button(functions_frame, text=self.get_text('CORRECT_BTN'), command=self.open_correction_window).pack(anchor=tk.W, pady=5)
-
-        # 自我学习按钮
-        ttk.Button(functions_frame, text=self.get_text('SELF_LEARN_BTN'), command=self.start_self_learning).pack(anchor=tk.W, pady=5)
-
-        # 联网自学按钮
-        ttk.Button(functions_frame, text=self.get_text('ONLINE_LEARN_BTN'), command=self.start_online_learning).pack(anchor=tk.W, pady=5)
-
         # 保存按钮
-        save_btn = RoundedButton(settings_window, text="保存设置", command=lambda: self.save_settings(settings_window))
+        save_btn = RoundedButton(self.settings_window, text="保存设置", command=lambda: self.save_settings(self.settings_window))
         save_btn.pack(pady=20)
-        
-        # 配置列权重，使第二列可扩展
-        settings_frame.columnconfigure(1, weight=1)
-        # 确保第一列也有适当宽度
-        settings_frame.columnconfigure(0, minsize=120)
 
     def update_temp_label(self, value):
         """更新温度标签显示"""
