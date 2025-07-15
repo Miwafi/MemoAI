@@ -1364,8 +1364,8 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("MemoAI V2 - 自学习对话系统")
-        self.root.geometry("1001x563")
-        self.root.minsize(1001,563)
+        self.root.geometry("1001x563")  # 修改初始分辨率为1001:563
+        self.root.minsize(1001, 563)     # 设置最低分辨率为1001:563
         
         self.current_language = '中文'  # 默认语言为中文
         
@@ -1407,7 +1407,8 @@ class App:
         self.style.configure('ChatFrame.TFrame', background='#f0f0f0')
         self.style.configure('UserMessage.TLabel', background='#0078d7', foreground='white')
         self.style.configure('AIMessage.TLabel', background='#e6e6e6', foreground='black')
-        self.style.configure('SystemMessage.TLabel', background='#ffd700', foreground='black')
+        self.style.configure('SystemMessage.TLabel', background='#A7A7A7', foreground='black')  # 浅灰色背景，黑色文字
+        self.style.configure('SystemSuccess.TLabel', background='#00cc66', foreground='white')   # 保留成功状态的绿色
         
         # 主框架
         main_frame = ttk.Frame(self.root)
@@ -1444,36 +1445,45 @@ class App:
         # 输入框架
         input_frame = ttk.Frame(right_frame)
         input_frame.pack(fill=tk.X, pady=(0, 10))
-        
-        self.user_input = ttk.Entry(input_frame, font=('SimHei', 10))
+
+        # 就绪状态标签
+        self.status_label = ttk.Label(input_frame, text=self.get_text('READY_STATUS'), foreground="green")
+        self.status_label.pack(side=tk.LEFT, padx=(0, 10))
+
+        # 用户输入框（缩短并居中）
+        self.user_input = ttk.Entry(input_frame, font=('SimHei', 10), width=40)  # 设置固定宽度
         self.user_input.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
         self.user_input.bind("<Return>", lambda event: self.send_message())
-        
+
+        # 发送按钮
         self.send_btn = RoundedButton(input_frame, text=self.get_text('SEND_BTN'), command=self.send_message)
-        self.send_btn.pack(side=tk.RIGHT)
+        self.send_btn.pack(side=tk.LEFT)
         
         # 状态和控制框架
         control_frame = ttk.Frame(right_frame)
         control_frame.pack(fill=tk.X, pady=(0, 10))
         
-        self.status_label = ttk.Label(control_frame, text=self.get_text('READY_STATUS'), foreground="green")
-        self.status_label.pack(side=tk.LEFT)
-        
-        # 添加语言选择下拉框
+        # 语言选择框架
         language_frame = ttk.Frame(control_frame)
         language_frame.pack(side=tk.RIGHT, padx=10)
-        
+
         ttk.Label(language_frame, text="语言:").pack(side=tk.LEFT)
-        self.language_var = tk.StringVar(value=self.current_language)
-        self.language_combo = ttk.Combobox(
-            language_frame,
-            textvariable=self.language_var,
-            values=['中文', 'ENG', '日本語'],
-            state='readonly',
-            width=5
-        )
-        self.language_combo.pack(side=tk.LEFT)
-        self.language_combo.bind("<<ComboboxSelected>>", self.on_language_change)
+        # 创建语言按钮而非下拉框
+        lang_frame = ttk.Frame(language_frame)
+        lang_frame.pack(side=tk.LEFT)
+
+        # 中文按钮
+        self.cn_btn = ttk.Button(lang_frame, text="中文", command=lambda: self.set_language('中文'))
+        self.cn_btn.pack(side=tk.LEFT, padx=2)
+        self.cn_btn.config(state=tk.DISABLED, style='Disabled.TButton')  # 当前语言置灰
+
+        # 英文按钮
+        self.en_btn = ttk.Button(lang_frame, text="ENG", command=lambda: self.set_language('ENG'))
+        self.en_btn.pack(side=tk.LEFT, padx=2)
+
+        # 日文按钮
+        self.jp_btn = ttk.Button(lang_frame, text="日本語", command=lambda: self.set_language('日本語'))
+        self.jp_btn.pack(side=tk.LEFT, padx=2)
         
         # 进度条
         self.progress_bar = ttk.Progressbar(control_frame, orient=tk.HORIZONTAL, length=100, mode='determinate')
@@ -1510,9 +1520,23 @@ class App:
         self.quit_btn.pack(side=tk.RIGHT, padx=5)
     
 
-    def on_language_change(self, event):
-        """语言选择变化时更新UI文本"""
-        self.current_language = self.language_var.get()
+    def set_language(self, lang):
+        """设置语言并更新按钮状态"""
+        self.current_language = lang
+        # 重置所有按钮状态
+        self.cn_btn.config(state=tk.NORMAL, style='TButton')
+        self.en_btn.config(state=tk.NORMAL, style='TButton')
+        self.jp_btn.config(state=tk.NORMAL, style='TButton')
+
+        # 设置当前语言按钮为灰色
+        if lang == '中文':
+            self.cn_btn.config(state=tk.DISABLED, style='Disabled.TButton')
+        elif lang == 'ENG':
+            self.en_btn.config(state=tk.DISABLED, style='Disabled.TButton')
+        else:
+            self.jp_btn.config(state=tk.DISABLED, style='Disabled.TButton')
+
+        # 更新UI文本
         self.update_ui_texts()
     
     def update_ui_texts(self):
@@ -1548,36 +1572,87 @@ class App:
         self.style.configure('TText', font=self.default_font)
 
     def run_system_check(self):
-        """系统自检流程"""
-        self.status_label.config(text="系统自检中...", foreground="blue")
-        self.progress_bar["value"] = 0
+        """系统自检流程 - 创建独立模态窗口"""
+        # 创建自检窗口
+        self.check_window = tk.Toplevel(self.root)
+        self.check_window.title("系统自检")
+        self.check_window.geometry("400x200")
+        self.check_window.resizable(False, False)
+        
+        # 设置为模态窗口（阻止主窗口操作）
+        self.check_window.transient(self.root)
+        self.check_window.grab_set()
+        
+        # 窗口居中显示
+        self.check_window.update_idletasks()
+        width = self.check_window.winfo_width()
+        height = self.check_window.winfo_height()
+        x = (self.check_window.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.check_window.winfo_screenheight() // 2) - (height // 2)
+        self.check_window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        
+        # 添加自检标题
+        ttk.Label(self.check_window, text="系统自检中...", font=('SimHei', 12, 'bold')).pack(pady=10)
+        
+        # 添加进度条
+        self.check_progress = ttk.Progressbar(self.check_window, orient=tk.HORIZONTAL, length=300, mode='determinate')
+        self.check_progress.pack(pady=20)
+        
+        # 添加状态标签
+        self.check_status = ttk.Label(self.check_window, text="准备开始自检", font=('SimHei', 10))
+        self.check_status.pack(pady=10)
+        
+        # 绑定窗口关闭事件
+        self.check_window.protocol("WM_DELETE_WINDOW", self.on_check_window_close)
+        
         self.check_steps = [
             ("检查数据管理器", self.check_data_manager),
             ("验证AI模型", self.check_ai_model),
             ("测试网络连接", self.check_network),
             ("验证依赖库", self.check_dependencies)
         ]
+        self.check_success = True  # 默认自检成功
         
         def execute_check(index=0):
             if index < len(self.check_steps):
                 step_name, step_func = self.check_steps[index]
-                self.add_message("system", f"[自检] {step_name}...", custom_fg="#0066cc")
+                self.check_status.config(text=f"正在{step_name}...")
                 
                 try:
                     result, message = step_func()
-                    color = "#00cc66" if result else "#ff6666"
-                    self.add_message("system", f"[自检] {step_name}: {message}", custom_bg=color, custom_fg="white")
+                    self.check_success = self.check_success and result
+                    
+                    # 更新进度条
+                    self.check_progress["value"] = (index + 1) * (100 / len(self.check_steps))
+                    
+                    # 继续下一项检查
+                    self.check_window.after(1000, execute_check, index + 1)
                 except Exception as e:
-                    self.add_message("system", f"[自检] {step_name}失败: {str(e)}", custom_bg="#ff3333", custom_fg="white")
-                
-                self.progress_bar["value"] = (index + 1) * 25
-                self.root.after(1000, execute_check, index + 1)
+                    self.check_success = False
+                    self.check_status.config(text=f"{step_name}失败: {str(e)}")
             else:
-                self.status_label.config(text="自检完成", foreground="green")
-                self.add_message("system", "=== 系统自检完成 ===", custom_fg="#9933ff")
+                # 自检完成处理
+                if self.check_success:
+                    self.check_status.config(text="系统自检成功！", foreground="green")
+                    self.check_window.after(2000, self.check_window.destroy)  # 成功后自动关闭
+                    self.status_label.config(text="自检完成", foreground="green")
+                    self.add_message("system", "=== 系统自检完成 ===", custom_fg="#9933ff")
+                else:
+                    # 播放错误提示音
+                    import winsound
+                    winsound.Beep(1000, 500)  # 1000Hz频率，500ms时长
+                    self.check_status.config(text="系统自检失败，请检查问题后重启", foreground="red")
+                    # 添加关闭按钮
+                    ttk.Button(self.check_window, text="关闭", command=self.on_check_window_close).pack(pady=10)
         
         # 启动检查流程
-        self.root.after(500, execute_check)
+        self.check_window.after(500, execute_check)
+    
+    def on_check_window_close(self):
+        """自检窗口关闭处理"""
+        if not self.check_success:
+            self.root.destroy()  # 自检失败时关闭主窗口
+        self.check_window.destroy()
     
     def check_data_manager(self):
         """检查数据管理器状态"""
@@ -1631,11 +1706,11 @@ class App:
         """添加消息到聊天历史"""
         # 创建消息框架
         msg_frame = ttk.Frame(self.chat_history)
-        msg_frame.pack(fill=tk.X, padx=5, pady=5, anchor="w" if sender == "user" else "e")
+        msg_frame.pack(fill=tk.X, padx=5, pady=5, anchor="center")  # 修改为居中对齐
         
         # 设置样式和对齐方式
         style = f'{sender.capitalize()}Message.TLabel'
-        anchor = tk.E if sender == "user" else tk.W
+        anchor = tk.CENTER  # 设置为居中
         
         # 调试: 打印消息内容
         print(f"添加{sender}消息: {text}")
@@ -1668,14 +1743,14 @@ class App:
             style=style,
             wraplength=600,
             justify=tk.LEFT,
-            anchor=anchor,
+            anchor=anchor,  # 文本居中
             padding=10,
             borderwidth=1,
             relief=tk.SOLID,
             background=bg_color,
             foreground=fg_color
         )
-        msg_label.pack(fill=tk.X, expand=True)
+        msg_label.pack(fill=tk.X, expand=True, anchor=tk.CENTER)  # 居中显示
 
         # 打字动画效果
         if typing_animation and sender == "ai":
@@ -1868,19 +1943,24 @@ class App:
         """打开设置窗口"""
         settings_window = tk.Toplevel(self.root)
         settings_window.title("设置")
-        settings_window.geometry("400x300")
+        settings_window.geometry("400x400")  # 增大窗口高度
         settings_window.resizable(False, False)
         settings_window.option_add("*Font", self.default_font)
-        
+
         # 创建设置框架
         settings_frame = ttk.Frame(settings_window, padding=20)
         settings_frame.pack(fill=tk.BOTH, expand=True)
-        
+
+        # 添加进度条
+        ttk.Label(settings_frame, text="操作进度:").grid(row=0, column=0, sticky=tk.W, pady=10)
+        self.progress_bar = ttk.Progressbar(settings_frame, orient=tk.HORIZONTAL, length=300, mode='determinate')
+        self.progress_bar.grid(row=0, column=1, sticky=tk.EW, pady=10)
+
         # 温度设置
-        ttk.Label(settings_frame, text="推理温度设置:").grid(row=0, column=0, sticky=tk.W, pady=10)
+        ttk.Label(settings_frame, text="推理温度设置:").grid(row=1, column=0, sticky=tk.W, pady=10)
         
         temp_frame = ttk.Frame(settings_frame)
-        temp_frame.grid(row=0, column=1, sticky=tk.EW)
+        temp_frame.grid(row=1, column=1, sticky=tk.EW)
         
         # 修复AICore无config属性的问题，直接使用实例变量或默认值
         default_temp = getattr(self.ai, 'temperature', 5)
@@ -1894,6 +1974,22 @@ class App:
         self.temp_label = ttk.Label(temp_frame, text=str(default_temp))
         self.temp_label.pack(side=tk.LEFT)
         
+        # 功能按钮区域
+        functions_frame = ttk.LabelFrame(settings_frame, text="功能选项")
+        functions_frame.grid(row=2, column=0, columnspan=2, sticky=tk.NSEW, pady=15)
+
+        # 网络漫游开关
+        ttk.Checkbutton(functions_frame, text=self.get_text('NETWORK_ROAMING'), variable=self.network_roaming_var).pack(anchor=tk.W, pady=5)
+
+        # 手动纠错按钮
+        ttk.Button(functions_frame, text=self.get_text('CORRECT_BTN'), command=self.open_correction_window).pack(anchor=tk.W, pady=5)
+
+        # 自我学习按钮
+        ttk.Button(functions_frame, text=self.get_text('SELF_LEARN_BTN'), command=self.start_self_learning).pack(anchor=tk.W, pady=5)
+
+        # 联网自学按钮
+        ttk.Button(functions_frame, text=self.get_text('ONLINE_LEARN_BTN'), command=self.start_online_learning).pack(anchor=tk.W, pady=5)
+
         # 保存按钮
         save_btn = RoundedButton(settings_window, text="保存设置", command=lambda: self.save_settings(settings_window))
         save_btn.pack(pady=20)
