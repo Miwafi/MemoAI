@@ -1364,8 +1364,8 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("MemoAI V2 - 自学习对话系统")
-        self.root.geometry("1000x480")
-        self.root.minsize(1200, 500)
+        self.root.geometry("1001x563")
+        self.root.minsize(1001,563)
         
         self.current_language = '中文'  # 默认语言为中文
         
