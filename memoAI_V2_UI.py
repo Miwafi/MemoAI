@@ -1576,17 +1576,14 @@ class App:
         # 创建自检窗口
         self.check_window = tk.Toplevel(self.root)
         self.check_window.title("系统自检")
-        self.check_window.geometry("400x200")
         self.check_window.resizable(False, False)
         
         # 设置为模态窗口（阻止主窗口操作）
         self.check_window.transient(self.root)
         self.check_window.grab_set()
         
-        # 窗口居中显示
-        self.check_window.update_idletasks()
-        width = self.check_window.winfo_width()
-        height = self.check_window.winfo_height()
+        # 强制设置窗口固定尺寸（宽度x高度）
+        width, height = 400, 200
         x = (self.check_window.winfo_screenwidth() // 2) - (width // 2)
         y = (self.check_window.winfo_screenheight() // 2) - (height // 2)
         self.check_window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
@@ -1596,7 +1593,7 @@ class App:
         
         # 添加进度条
         self.check_progress = ttk.Progressbar(self.check_window, orient=tk.HORIZONTAL, length=300, mode='determinate')
-        self.check_progress.pack(pady=20)
+        self.check_progress.pack(pady=20, padx=20)
         
         # 添加状态标签
         self.check_status = ttk.Label(self.check_window, text="准备开始自检", font=('SimHei', 10))
