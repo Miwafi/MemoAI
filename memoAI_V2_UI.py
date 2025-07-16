@@ -1561,7 +1561,7 @@ class App:
         self.check_window.grab_set()
         
         # 强制设置窗口固定尺寸（宽度x高度）
-        width, height = 400, 200
+        width, height = 400, 250  # 增加窗口高度以容纳新按钮
         x = (self.check_window.winfo_screenwidth() // 2) - (width // 2)
         y = (self.check_window.winfo_screenheight() // 2) - (height // 2)
         self.check_window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
@@ -1577,6 +1577,10 @@ class App:
         self.check_status = ttk.Label(self.check_window, text="准备开始自检", font=('SimHei', 10))
         self.check_status.pack(pady=10)
         
+        # 添加强制跳过按钮
+        self.skip_button = ttk.Button(self.check_window, text="强制跳过", command=self.skip_system_check)
+        self.skip_button.pack(pady=10)
+        
         # 绑定窗口关闭事件
         self.check_window.protocol("WM_DELETE_WINDOW", self.on_check_window_close)
         
@@ -1587,8 +1591,15 @@ class App:
             ("验证依赖库", self.check_dependencies)
         ]
         self.check_success = True  # 默认自检成功
+        self.skip_check = False  # 添加跳过标志
         
         def execute_check(index=0):
+            # 检查是否已跳过
+            if self.skip_check:
+                self.check_status.config(text="自检已跳过", foreground="orange")
+                self.check_window.after(2000, self.check_window.destroy)
+                return
+            
             if index < len(self.check_steps):
                 step_name, step_func = self.check_steps[index]
                 self.check_status.config(text=f"正在{step_name}...")
@@ -1598,7 +1609,8 @@ class App:
                     self.check_success = self.check_success and result
                     
                     # 更新进度条
-                    self.check_progress["value"] = (index + 1) * (100 / len(self.check_steps))
+                    progress = (index + 1) / len(self.check_steps) * 100
+                    self.check_progress['value'] = progress
                     
                     # 继续下一项检查
                     self.check_window.after(1000, execute_check, index + 1)
@@ -1622,6 +1634,11 @@ class App:
         
         # 启动检查流程
         self.check_window.after(500, execute_check)
+    def skip_system_check(self):
+        """处理强制跳过自检的逻辑"""
+        self.skip_check = True
+        self.check_success = True  # 设置为成功状态，避免关闭主窗口
+        self.check_status.config(text="正在跳过自检...", foreground="orange")
     
     def on_check_window_close(self):
         """自检窗口关闭处理"""

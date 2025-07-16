@@ -119,3 +119,25 @@
 [2025-07-14 21:18:37] [ERROR] 保存记忆失败: Object of type Response is not JSON serializable
 [2025-07-14 21:18:47] [INFO] 推理时词汇表大小已更新: 93 -> 101，重新创建模型
 [2025-07-14 21:18:47] [ERROR] 保存记忆失败: Object of type Response is not JSON serializable
+[2025-07-16 12:44:36] [INFO] System checking
+[2025-07-16 12:44:36] [INFO] PyTorch版本: 2.7.1+cpu, 设备: cpu
+[2025-07-16 12:44:36] [INFO] 系统自检完成
+[2025-07-16 12:44:36] [WARNING] 加载记忆失败: Expecting value: line 47 column 11 (char 1076)
+[2025-07-16 12:44:36] [WARNING] 加载记忆失败: Expecting value: line 47 column 11 (char 1076)
+[2025-07-16 12:44:36] [INFO] 加载词汇表成功，大小: 101
+[2025-07-16 12:44:37] [WARNING] 嵌入层词汇表大小变化: 79 -> 101
+[2025-07-16 12:44:37] [WARNING] 全连接层词汇表大小变化: 79 -> 101
+[2025-07-16 12:44:37] [WARNING] 全连接层词汇表大小变化: 79 -> 101
+[2025-07-16 12:44:37] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-16 12:44:37] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-16 13:10:22] [INFO] System checking
+[2025-07-16 13:10:22] [INFO] PyTorch版本: 2.7.1+cpu, 设备: cpu
+[2025-07-16 13:10:22] [INFO] 系统自检完成
+[2025-07-16 13:10:22] [WARNING] 加载记忆失败: Expecting value: line 47 column 11 (char 1076)
+[2025-07-16 13:10:22] [WARNING] 加载记忆失败: Expecting value: line 47 column 11 (char 1076)
+[2025-07-16 13:10:22] [INFO] 加载词汇表成功，大小: 101
+[2025-07-16 13:10:23] [WARNING] 嵌入层词汇表大小变化: 79 -> 101
+[2025-07-16 13:10:23] [WARNING] 全连接层词汇表大小变化: 79 -> 101
+[2025-07-16 13:10:23] [WARNING] 全连接层词汇表大小变化: 79 -> 101
+[2025-07-16 13:10:23] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-16 13:10:24] [INFO] 检查记忆文件: memory\memory.json
