@@ -1355,13 +1355,11 @@ class App:
         self.thought_thread = None
         self.ai_state = "idle"
         self.running = True
+        self.auto_close = False  # 添加自动关闭标志
         self.default_font = ('SimHei', 10)
         
         # 初始化网络漫游状态变量
         self.network_roaming_var = tk.BooleanVar(value=False)
-        
-        # 添加自动关闭标志
-        self.auto_close = False
         
         # 创建UI
         self.create_widgets()
@@ -1538,8 +1536,8 @@ class App:
         self.check_window.transient(self.root)
         self.check_window.grab_set()
         
-        # 强制设置窗口固定尺寸（宽度x高度）
-        width, height = 400, 250  # 增加窗口高度以容纳新按钮
+        # 调整窗口尺寸以容纳终端区域
+        width, height = 500, 400  # 增加宽度和高度
         x = (self.check_window.winfo_screenwidth() // 2) - (width // 2)
         y = (self.check_window.winfo_screenheight() // 2) - (height // 2)
         self.check_window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
@@ -1547,13 +1545,24 @@ class App:
         # 添加自检标题
         ttk.Label(self.check_window, text="系统自检中...", font=('SimHei', 12, 'bold')).pack(pady=10)
         
+        # 添加微型终端区域（带滚动条的文本框）
+        terminal_frame = ttk.Frame(self.check_window)
+        terminal_frame.pack(pady=10, padx=20, fill=tk.BOTH, expand=True)
+        
+        self.terminal = tk.Text(terminal_frame, height=8, width=50, state=tk.DISABLED, font=('SimHei', 9), bg='black', fg='white')
+        self.terminal.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        
+        scrollbar = ttk.Scrollbar(terminal_frame, command=self.terminal.yview)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.terminal.config(yscrollcommand=scrollbar.set)
+        
         # 添加进度条
-        self.check_progress = ttk.Progressbar(self.check_window, orient=tk.HORIZONTAL, length=300, mode='determinate')
-        self.check_progress.pack(pady=20, padx=20)
+        self.check_progress = ttk.Progressbar(self.check_window, orient=tk.HORIZONTAL, length=400, mode='determinate')
+        self.check_progress.pack(pady=10, padx=20)
         
         # 添加状态标签
         self.check_status = ttk.Label(self.check_window, text="准备开始自检", font=('SimHei', 10))
-        self.check_status.pack(pady=10)
+        self.check_status.pack(pady=5)
         
         # 添加强制跳过按钮
         self.skip_button = ttk.Button(self.check_window, text="强制跳过", command=self.skip_system_check)
@@ -1561,7 +1570,6 @@ class App:
         
         # 绑定窗口关闭事件
         self.check_window.protocol("WM_DELETE_WINDOW", self.on_check_window_close)
-        
         
         self.check_steps = [
             ("检查数据管理器", self.check_data_manager),
@@ -1572,20 +1580,31 @@ class App:
         self.check_success = True  # 默认自检成功
         self.skip_check = False  # 添加跳过标志
         
+        # 终端日志输出函数
+        def log_to_terminal(message):
+            self.terminal.config(state=tk.NORMAL)
+            self.terminal.insert(tk.END, f"{message}\n")
+            self.terminal.config(state=tk.DISABLED)
+            self.terminal.see(tk.END)  # 自动滚动到底部
+        
         def execute_check(index=0):
             # 检查是否已跳过
             if self.skip_check:
                 self.check_status.config(text="自检已跳过,可自行关闭窗口", foreground="orange")
+                log_to_terminal("用户已强制跳过自检流程")
                 self.check_window.after(2000, self.check_window.destroy)
                 return
             
             if index < len(self.check_steps):
                 step_name, step_func = self.check_steps[index]
                 self.check_status.config(text=f"正在{step_name}...")
+                log_to_terminal(f"[{time.strftime('%H:%M:%S')}] 开始{step_name}")
                 
                 try:
                     result, message = step_func()
                     self.check_success = self.check_success and result
+                    status = "成功" if result else "失败"
+                    log_to_terminal(f"[{time.strftime('%H:%M:%S')}] {step_name}{status}: {message}")
                     
                     # 更新进度条
                     progress = (index + 1) / len(self.check_steps) * 100
@@ -1595,45 +1614,41 @@ class App:
                     self.check_window.after(1000, execute_check, index + 1)
                 except Exception as e:
                     self.check_success = False
-                    self.check_status.config(text=f"{step_name}失败: {str(e)}")
+                    error_msg = f"{step_name}失败: {str(e)}"
+                    self.check_status.config(text=error_msg)
+                    log_to_terminal(f"[{time.strftime('%H:%M:%S')}] 错误: {error_msg}")
             else:
                 # 自检完成处理
                 if self.check_success:
                     self.auto_close = True  # 标记为自动关闭
                     self.check_status.config(text="系统自检成功！", foreground="green")
-                    self.check_window.after(2000, lambda: [
-                self.user_input.config(state=tk.NORMAL),
-                self.check_window.destroy(),
-                    self.root.after(200, lambda: self.user_input.focus_set())
-            ])
+                    log_to_terminal("=== 系统自检完成，所有组件正常 ===")
+                    self.check_window.after(2000, self.check_window.destroy)  # 成功后自动关闭
                     self.status_label.config(text="自检完成", foreground="green")
                     self.add_message("system", "=== 系统自检完成 ===", custom_fg="#9933ff")
                 else:
-                    # 播放错误提示音
                     import winsound
-                    winsound.Beep(1000, 500)  # 1000Hz频率，500ms时长
+                    winsound.Beep(1000, 500)
                     self.check_status.config(text="系统自检失败，请检查问题后重启", foreground="red")
-                    # 添加关闭按钮
+                    log_to_terminal("=== 系统自检失败，请查看日志了解详情 ===")
                     ttk.Button(self.check_window, text="关闭", command=self.on_check_window_close).pack(pady=10)
         
+        # 导入时间模块用于日志时间戳
+        import time
+        log_to_terminal("=== 系统自检程序启动 ===")
         # 启动检查流程
         self.check_window.after(500, execute_check)
     def skip_system_check(self):
+        """处理强制跳过自检的逻辑"""
         self.skip_check = True
         self.check_success = True
         self.check_status.config(text="正在跳过自检...", foreground="orange")
-        
-        # 先启用输入框再销毁窗口
-        self.user_input.config(state=tk.NORMAL)
-        # 延迟设置焦点确保窗口已销毁
-        self.root.after(200, lambda: self.user_input.focus_set())
-        self.check_window.destroy()
+        self.root.destroy()  # 关闭主窗口
+        self.check_window.destroy()  # 关闭自检窗口
     
     def on_check_window_close(self):
-        # 先启用输入框再销毁窗口
-        self.user_input.config(state=tk.NORMAL)
-        # 延迟设置焦点确保窗口已销毁
-        self.root.after(200, lambda: self.user_input.focus_set())
+        """自检窗口关闭处理"""
+        # 如果不是自动关闭（即用户手动关闭），则关闭主窗口
         if not self.auto_close:
             self.root.destroy()
         self.check_window.destroy()
@@ -1703,9 +1718,9 @@ class App:
         if sender == "ai" and memory_index is not None:
             # 否定按钮（先添加，靠右显示）
             disapprove_btn = RoundedButton(
-                msg_frame, 
-                text="否定", 
-                command=lambda idx=memory_index: self.disapprove_answer(idx)
+            msg_frame, 
+            text="否定", 
+            command=lambda idx=memory_index: self.disapprove_answer(idx)
             )
             disapprove_btn.pack(side=tk.RIGHT, padx=2)
             
@@ -1789,6 +1804,7 @@ class App:
         self.status_label.config(text="思考中...", foreground="blue")
         self.root.update_idletasks()
         
+        # 剩余代码保持不变
         # 在新线程中获取AI响应，避免UI卡顿
         def get_ai_response():
             self.update_ai_state("responding")  # 设置为响应状态
@@ -1808,6 +1824,7 @@ class App:
         
         threading.Thread(target=get_ai_response).start()
 
+    # 确保以下方法与send_message方法缩进相同
     def display_ai_response(self, response, memory_index):
         """显示AI响应并保存到最后一条响应变量"""
         self.last_ai_response = response
@@ -2166,8 +2183,16 @@ class App:
             self.root.after(100, self._update_thought_display)
     
     def update_ai_state(self, state):
-        """更新AI状态"""
+        """更新AI状态并控制输入框可用性"""
         self.ai_state = state
+        # 根据AI状态启用/禁用输入框
+        if state in ['idle']:
+            self.user_input.config(state=tk.NORMAL)
+            self.send_btn.config(state=tk.NORMAL)
+        else:
+            self.user_input.config(state=tk.DISABLED)
+            self.send_btn.config(state=tk.DISABLED)
+        
         if state == "learning":
             self.thought_queue.put((datetime.datetime.now(), "system", "开始学习新知识..."))
         elif state == "responding":
