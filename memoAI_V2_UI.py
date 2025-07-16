@@ -1596,7 +1596,7 @@ class App:
         def execute_check(index=0):
             # 检查是否已跳过
             if self.skip_check:
-                self.check_status.config(text="自检已跳过", foreground="orange")
+                self.check_status.config(text="自检已跳过,可自行关闭窗口", foreground="orange")
                 self.check_window.after(2000, self.check_window.destroy)
                 return
             
