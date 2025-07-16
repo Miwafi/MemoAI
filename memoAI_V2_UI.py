@@ -1620,7 +1620,8 @@ class App:
             else:
                 # 自检完成处理
                 if self.check_success:
-                    self.check_status.config(text="系统自检成功！", foreground="green")
+                    self.check_status.config(text="系统自检成功！请自行关闭窗口", foreground="green")
+
                     self.check_window.after(2000, self.check_window.destroy)  # 成功后自动关闭
                     self.status_label.config(text="自检完成", foreground="green")
                     self.add_message("system", "=== 系统自检完成 ===", custom_fg="#9933ff")
