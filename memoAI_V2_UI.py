@@ -27,7 +27,8 @@ class Config:
         self.vocab_path = 'model/vocab.json'
         self.log_dir = 'log'
         self.memory_dir = 'memory'
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.use_gpu = True  # 新增：GPU使用开关
+        self.device = 'cuda' if (self.use_gpu and torch.cuda.is_available()) else 'cpu'
         self.epochs = 10
         self.batch_size = 32
         self.learning_rate = 0.001
@@ -1343,6 +1344,7 @@ class App:
         self.root.minsize(1001, 563)     # 设置最低分辨率为1001:563
         
         self.current_language = '中文'  # 默认语言为中文
+        self.laun = laun.laun  # 初始化翻译字典
         
         # 初始化数据管理器
         self.data_manager = DataManager()
@@ -1374,7 +1376,7 @@ class App:
     def get_text(self, key):
         """根据当前语言获取文本"""
         # 获取当前语言的字典，如果不存在则使用中文
-        lang_dict = laun.laun.get(self.current_language, laun.laun['中文'])
+        lang_dict = self.laun.get(self.current_language, self.laun['中文'])
         # 返回对应键的文本，如果不存在则返回键本身
         return lang_dict.get(key, key)
     
@@ -2011,6 +2013,11 @@ class App:
         self.settings_roaming_var = tk.BooleanVar(value=self.network_roaming_var.get())
         ttk.Checkbutton(settings_frame, text=self.get_text('NETWORK_ROAMING'), variable=self.settings_roaming_var).pack(anchor=tk.W, pady=(0, 10))
         
+        # GPU选项
+        self.gpu_var = tk.BooleanVar(value=config.use_gpu)
+        gpu_checkbox = ttk.Checkbutton(settings_frame, text="使用GPU加速", variable=self.gpu_var, command=self.toggle_gpu)
+        gpu_checkbox.pack(anchor=tk.W, padx=5, pady=2)
+        
         # 应用按钮
         def apply_settings():
             # 保存网络漫游状态
@@ -2061,6 +2068,13 @@ class App:
         # 显示保存成功消息
         self.add_message("system", f"设置已保存，温度值: {temperature}")
         window.destroy()
+    
+    def toggle_gpu(self):
+        config.use_gpu = self.gpu_var.get()
+        config.device = 'cuda' if (config.use_gpu and torch.cuda.is_available()) else 'cpu'
+        self.ai.model.to(config.device)
+        status_text = f"已切换至{config.device}模式"
+        self.add_message("system", status_text)
     
     def approve_answer(self, memory_index):
         """处理答案肯定操作"""
