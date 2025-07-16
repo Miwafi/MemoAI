@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "f:\InformationTechnology\MemoAIInternetGithub\MemoAI-1\memoAI_V2_UI.py", line 2215, in <module>
+    if not system_check():
+           ~~~~~~~~~~~~^^
+  File "f:\InformationTechnology\MemoAIInternetGithub\MemoAI-1\memoAI_V2_UI.py", line 88, in system_check
+    log_event(laun['ENG']['SYSCheck'])
+              ~~~~^^^^^^^
+TypeError: 'module' object is not subscriptable
+程序启动失败: 'module' object is not subscriptable
