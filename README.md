@@ -38,12 +38,15 @@ MemoAI 是一个功能丰富的软件，它旨在为用户提供便捷的交互�
 暂无
 
 ## 开发者信息
-本MemoAI库由bilibili up主pyro创作，S_steve辅助开发。<br>
+本MemoAI库由bilibili up主pyro创作，S_steve辅助开发。
+<br>
 pyro的bilibili主页地址：
 [ pyro的bilibili主页地址 ](https://space.bilibili.com/1201856558 "点击访问")
 <br>
 S_steve的bilibili主页地址：
 [ S_steve的bilibili主页地址 ](https://space.bilibili.com/1499517607 "点击访问")
+<br>
+（注意：在本库中，S_steve为Jason，pyro为Janmast。）
 
 ## 法律声明
 本软件为开源软件，完全免费，任何人不得以任何理由盗用收费。我们支持：
@@ -55,6 +58,10 @@ S_steve的bilibili主页地址：
 
 本AI的所有回答均由 AI 生成，内容仅供参考，请仔细甄别。这些文件导致你的作为或者不作为，其一切后果由使用者承担，制作者不承担**任何**相关责任。
 如果您是从付费的网站上购买的，[那你被骗了](https://www.bilibili.com/video/BV1GJ411x7h7)，本软件免费。
+
+## 错误反馈
+代码异常反馈到1942392307@qq.com，反应材料应当有startup_error与log文件夹，本反馈暂不支持其他语言。
+
 
 ## 宣发视频（中文版）
 暂未制作

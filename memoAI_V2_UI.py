@@ -26,7 +26,7 @@ laun = {'中文':{
     'SETTINGS_BTN': '设置', 'QUIT_BTN': '退出', 'READY_STATUS': '就绪',
     'WELCOME_MSG': '欢迎使用MemoAI V2！我正在初始化，请稍候...',
     'AI_GREETING': '您好！我是MemoAI，一个可以自我学习的对话AI。有什么我可以帮助您的吗？',
-    'NETWORK_ROAMING': '网络漫游', 'APP_SUBTITLE': '自学习对话系统'
+    'NETWORK_ROAMING': '网络漫游', 'APP_SUBTITLE': '自学习对话系统', 'settingwindows': '设置','launset':'语言设置','funcsetting':'功能设置','webswim':'网络漫游','road':'进度','temperture':'推理温度','app':'应用'
     },'ENG':{
         'SYSCheck':'System checking','CREATMenu':'Creating normal menu','CREATError':'Creating directory failed',
         'ERROR':'Error', 'SEND_BTN': 'Send', 'SELF_LEARN_BTN': 'Self Learning', 
@@ -35,7 +35,7 @@ laun = {'中文':{
         'QUIT_BTN': 'Quit', 'READY_STATUS': 'Ready',
         'WELCOME_MSG': 'Welcome to MemoAI V2! Initializing, please wait...',
         'AI_GREETING': 'Hello! This is MemoAI, a self-learning conversational AI. How can I help you?',
-        'NETWORK_ROAMING': 'Network Roaming', 'APP_SUBTITLE': 'Self-learning Dialogue System'
+        'NETWORK_ROAMING': 'Network Roaming', 'APP_SUBTITLE': 'Self-learning Dialogue System', 'settingwindows': 'settings','lauset':'laungrey settings','funcsetting':'function setting','webswim':'search on internet','road':'Progress bar','temperture':'temperture','app':'application'
         },'日本語':{    
             'SYSCheck':'システム自己診断中','CREATMenu':'せっずを作成中','CREATError':'へイルを作成できませんでした',
             'ERROR':'エラー', 'SEND_BTN': '送信', 'SELF_LEARN_BTN': '自己学習', 
@@ -44,7 +44,7 @@ laun = {'中文':{
             'QUIT_BTN': '完了', 'READY_STATUS': '準備完了',
             'WELCOME_MSG': 'MemoAI V2へようこそ！初期化中です、しばらくお待ちください...',
             'AI_GREETING': 'こんにちは！ MemoAIです、自己学習ができる会話型AIです。何かお手伝いできますか？',
-            'NETWORK_ROAMING': '根とを言います', 'APP_SUBTITLE': '自己学習対話システム'
+            'NETWORK_ROAMING': '根とを言います', 'APP_SUBTITLE': '自己学習対話システム','settingwindows':'設定','launset':'言語設定','funcsetting':'功能設定','webswim':' サイト検索','road':'進捗状況','temperture':'推理温度','app':'アプリ'
             }}
 class Config:
     def __init__(self):
@@ -1385,6 +1385,9 @@ class App:
         # 初始化网络漫游状态变量
         self.network_roaming_var = tk.BooleanVar(value=False)
         
+        # 添加自动关闭标志
+        self.auto_close = False
+        
         # 创建UI
         self.create_widgets()
         
@@ -1584,6 +1587,7 @@ class App:
         # 绑定窗口关闭事件
         self.check_window.protocol("WM_DELETE_WINDOW", self.on_check_window_close)
         
+        
         self.check_steps = [
             ("检查数据管理器", self.check_data_manager),
             ("验证AI模型", self.check_ai_model),
@@ -1620,8 +1624,13 @@ class App:
             else:
                 # 自检完成处理
                 if self.check_success:
+                    self.auto_close = True  # 标记为自动关闭
                     self.check_status.config(text="系统自检成功！", foreground="green")
-                    self.check_window.after(2000, self.check_window.destroy)  # 成功后自动关闭
+                    self.check_window.after(2000, lambda: [
+                self.user_input.config(state=tk.NORMAL),
+                self.check_window.destroy(),
+                    self.root.after(200, lambda: self.user_input.focus_set())
+            ])
                     self.status_label.config(text="自检完成", foreground="green")
                     self.add_message("system", "=== 系统自检完成 ===", custom_fg="#9933ff")
                 else:
@@ -1635,15 +1644,23 @@ class App:
         # 启动检查流程
         self.check_window.after(500, execute_check)
     def skip_system_check(self):
-        """处理强制跳过自检的逻辑"""
         self.skip_check = True
-        self.check_success = True  # 设置为成功状态，避免关闭主窗口
+        self.check_success = True
         self.check_status.config(text="正在跳过自检...", foreground="orange")
+        
+        # 先启用输入框再销毁窗口
+        self.user_input.config(state=tk.NORMAL)
+        # 延迟设置焦点确保窗口已销毁
+        self.root.after(200, lambda: self.user_input.focus_set())
+        self.check_window.destroy()
     
     def on_check_window_close(self):
-        """自检窗口关闭处理"""
-        if not self.check_success:
-            self.root.destroy()  # 自检失败时关闭主窗口
+        # 先启用输入框再销毁窗口
+        self.user_input.config(state=tk.NORMAL)
+        # 延迟设置焦点确保窗口已销毁
+        self.root.after(200, lambda: self.user_input.focus_set())
+        if not self.auto_close:
+            self.root.destroy()
         self.check_window.destroy()
     
     def check_data_manager(self):
@@ -1766,6 +1783,29 @@ class App:
         if not user_text:
             return
         
+        # 添加四则运算处理功能
+        def process_operations(expression):
+            # 检查是否包含四则运算符号
+            if any(op in expression for op in '+-*/'):
+                # 提取表达式部分（移除等号及后面内容）
+                expr_part = expression.split('=')[0].strip()
+                try:
+                    # 使用eval计算结果（注意安全风险）
+                    result = eval(expr_part)
+                    return f"{expression}={result}"  # 格式化为"表达式=结果"
+                except Exception as e:
+                    return f"计算错误: {str(e)}"
+            return None  # 不包含运算符号则返回None
+
+        # 处理计算请求
+        calculation_result = process_operations(user_text)
+        if calculation_result:
+            self.add_message("user", user_text)
+            self.add_message("ai", calculation_result, typing_animation=True)
+            self.user_input.delete(0, tk.END)
+            self.status_label.config(text="就绪", foreground="green")
+            return
+
         # 添加用户消息到聊天历史
         self.add_message("user", user_text)
         self.user_input.delete(0, tk.END)
@@ -1935,7 +1975,7 @@ class App:
         # 创建设置窗口
         self.settings_window = tk.Toplevel(self.root)
         self.settings_window.title("设置")
-        self.settings_window.geometry("400x300")
+        self.settings_window.geometry("400x600")
         self.settings_window.resizable(False, False)
         self.settings_window.transient(self.root)
         self.settings_window.grab_set()
