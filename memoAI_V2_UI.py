@@ -11,6 +11,7 @@ import datetime
 import os
 import sys
 import re
+from urllib.parse import quote
 import requests
 from bs4 import BeautifulSoup
 import torch
@@ -1769,11 +1770,24 @@ class App:
             label.config(text=current_text)
             self.root.after(30, self._type_text_animation, label, text, index + 1)
 
-    def send_message(self):
+    def send_message(self, event=None):
         """发送用户消息并获取AI响应"""
         user_text = self.user_input.get().strip()
+        
+        # 新增四则运算处理功能
+        if user_text:
+            # 处理计算请求
+            calculation_result = process_operations(user_text)
+            if calculation_result:
+                self.add_message("user", user_text)
+                self.add_message("ai", calculation_result, typing_animation=True)
+                self.user_input.delete(0, tk.END)
+                self.status_label.config(text="就绪", foreground="green")
+                return
+
         if not user_text:
             return
+
         
         # 添加四则运算处理功能
         def process_operations(expression):
