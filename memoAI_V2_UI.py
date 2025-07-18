@@ -1374,6 +1374,10 @@ class App:
         self.add_message("system", self.get_text('WELCOME_MSG'))
         self.add_message("ai", self.get_text('AI_GREETING'))
     
+    def validate_input(self, new_text):
+        """输入验证方法，限制最大输入长度"""
+        return len(new_text) <= 200  # 限制最大输入200字符
+
     def get_text(self, key):
         """根据当前语言获取文本"""
         # 获取当前语言的字典，如果不存在则使用中文
@@ -1433,7 +1437,9 @@ class App:
         self.status_label.pack(side=tk.LEFT, padx=(0, 10))
 
         # 用户输入框（缩短并居中）
-        self.user_input = ttk.Entry(input_frame, font=('SimHei', 10), width=40)  # 设置固定宽度
+        self.user_input = ttk.Entry(input_frame, font=('SimHei', 10), width=40)
+        self.user_input.config(validate="key", 
+            validatecommand=(self.root.register(self.validate_input), '%P'))  # 设置输入验证
         self.user_input.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
         self.user_input.bind("<Return>", lambda event: self.send_message())
 
@@ -1626,7 +1632,9 @@ class App:
                     self.auto_close = True  # 标记为自动关闭
                     self.check_status.config(text="系统自检成功！", foreground="green")
                     log_to_terminal("=== 系统自检完成，所有组件正常 ===")
+                    self.user_input.config(state=tk.NORMAL)
                     self.check_window.after(2000, self.check_window.destroy)  # 成功后自动关闭
+                    self.root.after(300, self.focus_input)
                     self.status_label.config(text="自检完成", foreground="green")
                     self.add_message("system", "=== 系统自检完成 ===", custom_fg="#9933ff")
                 else:
@@ -1646,15 +1654,19 @@ class App:
         self.skip_check = True
         self.check_success = True
         self.check_status.config(text="正在跳过自检...", foreground="orange")
+        self.user_input.config(state=tk.NORMAL)
         self.root.destroy()  # 关闭主窗口
         self.check_window.destroy()  # 关闭自检窗口
+        self.root.after(300, self.focus_input)
     
     def on_check_window_close(self):
         """自检窗口关闭处理"""
         # 如果不是自动关闭（即用户手动关闭），则关闭主窗口
         if not self.auto_close:
             self.root.destroy()
+        self.user_input.config(state=tk.NORMAL)
         self.check_window.destroy()
+        self.root.after(300, self.focus_input)
     
     def check_data_manager(self):
         """检查数据管理器状态"""
@@ -1782,8 +1794,10 @@ class App:
                 self.add_message("user", user_text)
                 self.add_message("ai", calculation_result, typing_animation=True)
                 self.user_input.delete(0, tk.END)
-                self.status_label.config(text="就绪", foreground="green")
-                return
+        self.user_input.config(state=tk.NORMAL)
+        self.user_input.focus_set()
+        self.status_label.config(text="就绪", foreground="green")
+        return
 
         if not user_text:
             return
@@ -2233,6 +2247,10 @@ class App:
         self.thought_text.config(state=tk.NORMAL)
         self.thought_text.delete(1.0, tk.END)
         self.thought_text.config(state=tk.DISABLED)
+    def focus_input(self):
+        self.user_input.focus_set()
+        self.user_input.icursor(tk.END)
+
 # 主程序入口
 if __name__ == "__main__":
     try:

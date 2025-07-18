@@ -1,9 +1,11 @@
 Traceback (most recent call last):
-  File "f:\InformationTechnology\MemoAIInternetGithub\MemoAI-1\memoAI_V2_UI.py", line 2215, in <module>
-    if not system_check():
-           ~~~~~~~~~~~~^^
-  File "f:\InformationTechnology\MemoAIInternetGithub\MemoAI-1\memoAI_V2_UI.py", line 88, in system_check
-    log_event(laun['ENG']['SYSCheck'])
-              ~~~~^^^^^^^
-TypeError: 'module' object is not subscriptable
-程序启动失败: 'module' object is not subscriptable
+  File "f:\InformationTechnology\MemoAIInternetGithub\MemoAI-1\memoAI_V2_UI.py", line 2266, in <module>
+    app = App(root)
+  File "f:\InformationTechnology\MemoAIInternetGithub\MemoAI-1\memoAI_V2_UI.py", line 1368, in __init__
+    self.create_widgets()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "f:\InformationTechnology\MemoAIInternetGithub\MemoAI-1\memoAI_V2_UI.py", line 1438, in create_widgets
+    validatecommand=(self.root.register(self.validate_input), '%P'))  # 设置输入验证
+                                        ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'App' object has no attribute 'validate_input'
+程序启动失败: 'App' object has no attribute 'validate_input'
