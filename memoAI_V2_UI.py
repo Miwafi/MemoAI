@@ -1374,10 +1374,6 @@ class App:
         self.add_message("system", self.get_text('WELCOME_MSG'))
         self.add_message("ai", self.get_text('AI_GREETING'))
     
-    def validate_input(self, new_text):
-        """输入验证方法，限制最大输入长度"""
-        return len(new_text) <= 200  # 限制最大输入200字符
-
     def get_text(self, key):
         """根据当前语言获取文本"""
         # 获取当前语言的字典，如果不存在则使用中文
@@ -1437,9 +1433,7 @@ class App:
         self.status_label.pack(side=tk.LEFT, padx=(0, 10))
 
         # 用户输入框（缩短并居中）
-        self.user_input = ttk.Entry(input_frame, font=('SimHei', 10), width=40)
-        self.user_input.config(validate="key", 
-            validatecommand=(self.root.register(self.validate_input), '%P'))  # 设置输入验证
+        self.user_input = ttk.Entry(input_frame, font=('SimHei', 10), width=40)  # 设置固定宽度
         self.user_input.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
         self.user_input.bind("<Return>", lambda event: self.send_message())
 
@@ -1632,9 +1626,7 @@ class App:
                     self.auto_close = True  # 标记为自动关闭
                     self.check_status.config(text="系统自检成功！", foreground="green")
                     log_to_terminal("=== 系统自检完成，所有组件正常 ===")
-                    self.user_input.config(state=tk.NORMAL)
                     self.check_window.after(2000, self.check_window.destroy)  # 成功后自动关闭
-                    self.root.after(300, self.focus_input)
                     self.status_label.config(text="自检完成", foreground="green")
                     self.add_message("system", "=== 系统自检完成 ===", custom_fg="#9933ff")
                 else:
@@ -1654,19 +1646,15 @@ class App:
         self.skip_check = True
         self.check_success = True
         self.check_status.config(text="正在跳过自检...", foreground="orange")
-        self.user_input.config(state=tk.NORMAL)
         self.root.destroy()  # 关闭主窗口
         self.check_window.destroy()  # 关闭自检窗口
-        self.root.after(300, self.focus_input)
     
     def on_check_window_close(self):
         """自检窗口关闭处理"""
         # 如果不是自动关闭（即用户手动关闭），则关闭主窗口
         if not self.auto_close:
             self.root.destroy()
-        self.user_input.config(state=tk.NORMAL)
         self.check_window.destroy()
-        self.root.after(300, self.focus_input)
     
     def check_data_manager(self):
         """检查数据管理器状态"""
@@ -1782,48 +1770,35 @@ class App:
             label.config(text=current_text)
             self.root.after(30, self._type_text_animation, label, text, index + 1)
 
+    def process_operations(self, expression):
+        """处理四则运算请求"""
+        # 检查是否包含四则运算符号
+        if any(op in expression for op in '+-*/'):
+            # 提取表达式部分（移除等号及后面内容）
+            expr_part = expression.split('=')[0].strip()
+            try:
+                # 使用eval计算结果（注意安全风险）
+                result = eval(expr_part)
+                return f"{expression}={result}"  # 格式化为"表达式=结果"
+            except Exception as e:
+                return f"计算错误: {str(e)}"
+        return None  # 不包含运算符号则返回None
+
     def send_message(self, event=None):
         """发送用户消息并获取AI响应"""
         user_text = self.user_input.get().strip()
-        
-        # 新增四则运算处理功能
+
         if user_text:
             # 处理计算请求
-            calculation_result = process_operations(user_text)
+            calculation_result = self.process_operations(user_text)
             if calculation_result:
                 self.add_message("user", user_text)
                 self.add_message("ai", calculation_result, typing_animation=True)
                 self.user_input.delete(0, tk.END)
-        self.user_input.config(state=tk.NORMAL)
-        self.user_input.focus_set()
-        self.status_label.config(text="就绪", foreground="green")
-        return
+                self.status_label.config(text="就绪", foreground="green")
+                return
 
         if not user_text:
-            return
-
-        
-        # 添加四则运算处理功能
-        def process_operations(expression):
-            # 检查是否包含四则运算符号
-            if any(op in expression for op in '+-*/'):
-                # 提取表达式部分（移除等号及后面内容）
-                expr_part = expression.split('=')[0].strip()
-                try:
-                    # 使用eval计算结果（注意安全风险）
-                    result = eval(expr_part)
-                    return f"{expression}={result}"  # 格式化为"表达式=结果"
-                except Exception as e:
-                    return f"计算错误: {str(e)}"
-            return None  # 不包含运算符号则返回None
-
-        # 处理计算请求
-        calculation_result = process_operations(user_text)
-        if calculation_result:
-            self.add_message("user", user_text)
-            self.add_message("ai", calculation_result, typing_animation=True)
-            self.user_input.delete(0, tk.END)
-            self.status_label.config(text="就绪", foreground="green")
             return
 
         # 添加用户消息到聊天历史
@@ -1834,23 +1809,19 @@ class App:
         self.status_label.config(text="思考中...", foreground="blue")
         self.root.update_idletasks()
         
-        # 剩余代码保持不变
         # 在新线程中获取AI响应，避免UI卡顿
         def get_ai_response():
             self.update_ai_state("responding")  # 设置为响应状态
-            # 获取网络漫游状态
-            # 获取网络漫游状态
             enable_roaming = self.network_roaming_var.get() if hasattr(self, 'network_roaming_var') else False
             
             # 生成AI响应
             ai_response = self.ai.infer(user_text, enable_network_roaming=enable_roaming)
             
             # 使用打字动画显示AI回复
-            # 获取最新记忆索引
             memory_index = self.ai.data_manager.get_latest_memory_index()
             self.root.after(0, lambda: self.display_ai_response(ai_response, memory_index))
             self.root.after(0, lambda: self.status_label.config(text="就绪", foreground="green"))
-            self.root.after(0, lambda: self.update_ai_state("idle"))  # 恢复空闲状态
+            self.root.after(0, lambda: self.update_ai_state("idle"))
         
         threading.Thread(target=get_ai_response).start()
 
@@ -2247,10 +2218,6 @@ class App:
         self.thought_text.config(state=tk.NORMAL)
         self.thought_text.delete(1.0, tk.END)
         self.thought_text.config(state=tk.DISABLED)
-    def focus_input(self):
-        self.user_input.focus_set()
-        self.user_input.icursor(tk.END)
-
 # 主程序入口
 if __name__ == "__main__":
     try:
