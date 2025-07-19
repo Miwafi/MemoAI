@@ -2047,11 +2047,11 @@ class App:
         
         self.temp_label = ttk.Label(temp_frame, text=str(default_temp))
         self.temp_label.pack(side=tk.LEFT)
-        
+        '''
         # 保存按钮
         save_btn = RoundedButton(self.settings_window, text="保存设置", command=lambda: self.save_settings(self.settings_window))
         save_btn.pack(pady=20)
-
+        ''' 
     def update_temp_label(self, value):
         """更新温度标签显示"""
         self.temp_label.config(text=str(int(float(value))))
