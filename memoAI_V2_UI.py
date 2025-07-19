@@ -1359,6 +1359,7 @@ class App:
         self.ai_state = "idle"
         self.running = True
         self.auto_close = False  # 添加自动关闭标志
+        self.message_count = 0  # 新增消息计数器
         self.default_font = ('SimHei', 10)
         
         # 初始化网络漫游状态变量
@@ -1435,10 +1436,10 @@ class App:
         # 用户输入框（缩短并居中）
         self.user_input = ttk.Entry(input_frame, font=('SimHei', 10), width=40)  # 设置固定宽度
         self.user_input.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
-        self.user_input.bind("<Return>", lambda event: self.send_message())
+        self.user_input.bind("<Return>", lambda e: self.send_message() if self.user_input['state'] == 'normal' else None)
 
         # 发送按钮
-        self.send_btn = RoundedButton(input_frame, text=self.get_text('SEND_BTN'), command=self.send_message)
+        self.send_btn = RoundedButton(input_frame, text=self.get_text('SEND_BTN'), command=lambda: self.send_message() if self.ai_state == 'idle' else None)
         self.send_btn.pack(side=tk.LEFT)
         
         # 状态和控制框架
@@ -1646,8 +1647,10 @@ class App:
         self.skip_check = True
         self.check_success = True
         self.check_status.config(text="正在跳过自检...", foreground="orange")
-        self.root.destroy()  # 关闭主窗口
-        self.check_window.destroy()  # 关闭自检窗口
+        if hasattr(self, 'check_window') and self.check_window.winfo_exists():
+            self.check_window.destroy()
+        if self.root.winfo_exists():
+            self.root.destroy()
     
     def on_check_window_close(self):
         """自检窗口关闭处理"""
@@ -1708,7 +1711,7 @@ class App:
         """添加消息到聊天历史"""
         # 创建消息框架
         msg_frame = ttk.Frame(self.chat_history)
-        msg_frame.pack(fill=tk.X, padx=5, pady=5, anchor="center")  # 修改为居中对齐
+        msg_frame.pack(fill=tk.X, padx=5, pady=5)
         
         # 设置样式和对齐方式
         style = f'{sender.capitalize()}Message.TLabel'
@@ -1752,7 +1755,7 @@ class App:
             background=bg_color,
             foreground=fg_color
         )
-        msg_label.pack(fill=tk.X, expand=True, anchor=tk.CENTER)  # 居中显示
+        msg_label.pack(fill=tk.BOTH, expand=True)
 
         # 打字动画效果
         if typing_animation and sender == "ai":
@@ -1786,7 +1789,18 @@ class App:
 
     def send_message(self, event=None):
         """发送用户消息并获取AI响应"""
+        if not self.running or self.ai_state != 'idle':
+            return
+        
         user_text = self.user_input.get().strip()
+        if not user_text:
+            return
+        
+        # 立即禁用输入组件
+        self.root.after(0, lambda: [
+            self.user_input.config(state=tk.DISABLED),
+            self.send_btn.config(state=tk.DISABLED)
+        ])
 
         if user_text:
             # 处理计算请求
@@ -1821,7 +1835,12 @@ class App:
             memory_index = self.ai.data_manager.get_latest_memory_index()
             self.root.after(0, lambda: self.display_ai_response(ai_response, memory_index))
             self.root.after(0, lambda: self.status_label.config(text="就绪", foreground="green"))
-            self.root.after(0, lambda: self.update_ai_state("idle"))
+            self.root.after(0, lambda: [
+                self.update_ai_state("idle"),
+                self.user_input.config(state=tk.NORMAL),
+                self.send_btn.config(state=tk.NORMAL),
+                self.user_input.focus()
+            ])
         
         threading.Thread(target=get_ai_response).start()
 
@@ -2047,11 +2066,11 @@ class App:
         
         self.temp_label = ttk.Label(temp_frame, text=str(default_temp))
         self.temp_label.pack(side=tk.LEFT)
-        '''
+        
         # 保存按钮
         save_btn = RoundedButton(self.settings_window, text="保存设置", command=lambda: self.save_settings(self.settings_window))
         save_btn.pack(pady=20)
-        ''' 
+
     def update_temp_label(self, value):
         """更新温度标签显示"""
         self.temp_label.config(text=str(int(float(value))))
@@ -2124,6 +2143,8 @@ class App:
         
         log_event("应用程序已退出")
         self.running = False
+        if hasattr(self, 'check_window') and self.check_window.winfo_exists():
+            self.check_window.destroy()
         self.root.destroy()
     
     def start_thought_processing(self):
