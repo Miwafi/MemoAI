@@ -18,6 +18,7 @@ MemoAI 是一个功能丰富的软件，它旨在为用户提供便捷的交互�
 ### 使用本软件
 1. 进入MemoAI文件夹
 2. 在您的编辑器中执行 “memoAI_V2_UI”。memoAI_V2_UI是目前的正式版。
+注意！ 目前memoAI_V2UI暂不可用！
 
 
 #### 使用方法
@@ -121,7 +122,7 @@ Attention please, this text is translated by AI, and haven't been checked by hum
 
 ## The Vedio for invitation(English)
 There is not now.
-
+注意！ 目前memoAI_V2UI暂不可用！
 ---
 
 # MemoAI日本語
@@ -221,7 +222,7 @@ MemoAI 是一款功能豐富的軟體，旨在為使用者提供便捷的互動�
 
 ### 適齡提示
 暫無
-
+注意！ 目前memoAI_V2UI暂不可用！
 ## 開發者資訊
 本 MemoAI 程式庫由 bilibili 創作者 pyro 開發，S_steve 輔助協作。<br>
 pyro 的 bilibili 主頁：
@@ -244,3 +245,4 @@ S_steve 的 bilibili 主頁：
 
 ## 宣發視頻
 暫無
+注意！ 目前memoAI_V2UI暂不可用！
