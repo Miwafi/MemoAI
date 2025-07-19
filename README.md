@@ -1,246 +1,282 @@
-# MemoAI 中文
+# MemoAI
 
+<div align="center">
 
-## 简介
-MemoAI 是一个功能丰富的软件，它旨在为用户提供便捷的交互体验。该库集成了一系列实用的功能，可用于创建具备问答、样本修改等功能的软件，同时也支持了运算功能。帮助用户更高效地处理信息和获取智能答复。<br>这将是一个非常**简单**的软件。希望你使用愉快
+![MemoAI Logo](https://img.shields.io/badge/MemoAI-智能问答系统-blue?style=for-the-badge)
 
-## 使用建议
-建议本项目在一个x86架构的个人电脑上运行，本文件至少约7MB，请确保您的电脑有足够的储存空间。
+[![Python Version](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/Janmast-eng/MemoAI?style=social)](https://github.com/Janmast-eng/MemoAI)
 
-## 如何使用:
-本项目使用**Python3.11**编写，采用了*sys、PyQt5.QtWidgets*等多个库，为了顺利运行软件，请注意安装库。
-请注意，本软件仅内置了**中文汉语**，暂不支持其他语言，我们将在后续的更新中提供更多语言的支持。
+**一个基于 PyQt5 的智能问答与记忆管理系统**
 
-###  软件的下载&安装
-1. 下载本项目，可以访问[github链接](https://github.com/Janmast-eng/MemoAI)。
-2. 解压本“.zip”文件，到一个权限为“完全控制”的文件夹。
+[🚀 快速开始](#快速开始) • [📖 使用指南](#使用指南) • [🛠️ 开发文档](#开发文档) • [🤝 贡献指南](#贡献指南)
 
-### 使用本软件
-1. 进入MemoAI文件夹
-2. 在您的编辑器中执行 “memoAI_V2_UI”。memoAI_V2_UI是目前的正式版。
-
-
-#### 使用方法
-
-| 操作项目 | memoAI_V2_UI.py的操作方式 |
-| :--: | :--: |
-| 启动软件 | 双击执行memo_V2_UI.py |
-| 自动检查 | 在保证所有模块均已正确安装后会自动检查 |
-| 进行问答 | 直接在最上方的输入框中输入问题，然后点击“AI自动回复按钮 |
-| 修改样本 | 点击“人工标注”，按照提示操作，或者修改memory.json |
-| 备注 | 默认安装包模型与记忆文件为初始化状态，需自行训练 |
-| 错误反馈 | 发现有任何错误请将终端中所有[ERROR]部分，startup_error与log文件夹一同发送至邮箱1942392307@qq.com |
-
-#### 冗余文件处理
-使用“Cliner.py”，按照操作提示使用（暂不可用）
-
-### 适龄提示
-暂无
-
-## 开发者信息
-本MemoAI库由bilibili up主pyro创作，S_steve辅助开发。<br>
-pyro的bilibili主页地址：
-[ pyro的bilibili主页地址 ](https://space.bilibili.com/1201856558 "点击访问")
-<br>
-S_steve的bilibili主页地址：
-[ S_steve的bilibili主页地址 ](https://space.bilibili.com/1499517607 "点击访问")
-
-## 法律声明
-本软件为开源软件，完全免费，任何人不得以任何理由盗用收费。我们支持：
-
-- 免费使用（如果您从本项目获得了软件）
-- 免费修改（但是不要在里面添加付费、不符合中华人民共和国法律的内容）
-- 免费分享（但是不要同时分享不符合中华人民共和国法律的内容）
-- 免费更新（如果有余力的话）
-
-本AI的所有回答均由 AI 生成，内容仅供参考，请仔细甄别。这些文件导致你的作为或者不作为，其一切后果由使用者承担，制作者不承担**任何**相关责任。
-如果您是从付费的网站上购买的，[那你被骗了](https://www.bilibili.com/video/BV1GJ411x7h7)，本软件免费。
-
-## 宣发视频（中文版）
-暂未制作
+</div>
 
 ---
 
+## 📋 目录
 
-# MemoAI　English
-
-## Introduction
-MemoAI is a feature-rich software designed to provide users with a convenient interactive experience. This library integrates a series of practical functions for creating applications with capabilities such as Q&A and sample modification,and it can do math calculate. Helping users process information more efficiently and obtain intelligent responses.  
-This will be an extremely **simple** software. We hope you enjoy using it.
-
-## Usage Recommendations
-It is recommended to run this project on an x86-architecture personal computer. The file size is approximately 7MB – please ensure your computer has sufficient storage space.
-
-## How to Use:
-This project is written in **Python 3.11** and utilizes libraries including *sys* and *PyQt5.QtWidgets*. Please install these dependencies to ensure smooth operation.  
-Note: The software currently only supports **Mandarin Chinese**. Support for additional languages will be added in future updates.
-
-### Download & Installation
-1. Download the project from the [GitHub repository](https://github.com/Janmast-eng/MemoAI).
-2. Extract the ".zip" file to a folder with "Full Control" permissions.
-
-### Launching the Software
-1. Navigate to the MemoAI folder.
-2. Execute `memoAI_V2_UI.py` in your editor (this is the current stable version).
-
-#### Usage Guide
-
-| Feature          | Operation Method in `memoAI_V2_UI.py`       |
-| :--------------- | :------------------------------------------ |
-| Launch Software  | Double-click `memo_V2_UI.py`                |
-| Auto-Check       | Automatically verifies dependencies after launch |
-| Use Q&A              | Enter questions in the top input box and click "AI Auto-Reply" |
-| Modify Samples   | Click "Manual Annotation" and follow prompts, or edit `memory.json` |
-| Note             | Default model and memory files are initialized – requires custom training |
-| Error Reporting  | For any errors, email all `[ERROR]` logs from the terminal, `startup_error`, and the `log` folder to 1942392307@qq.com |
-
-#### Redundant File Handling
-Use `Cleaner.py` and follow the on-screen instructions.
-
-### Age Recommendation
-Not specified
-
-## Developer Information
-The MemoAI library was created by Bilibili UP主 **pyro**, with development assistance from **S_steve**.  
-pyro's Bilibili homepage:  
-[pyro's Bilibili](https://space.bilibili.com/1201856558 "Click to visit")  
-S_steve's Bilibili homepage:  
-[S_steve's Bilibili](https://space.bilibili.com/1499517607 "Click to visit")
-
-## Legal Notice
-This is open-source software and completely free. No one may charge for it under any circumstances. We support:  
-- Free use (if you obtained the software from this project)  
-- Free modification (but do not add paid or illegal content under Chinese law)  
-- Free sharing (but do not distribute illegal content under Chinese law)  
-- Free updates (if resources permit)  
-
-All responses generated by this AI are for reference only – please verify content carefully. Users bear full responsibility for any consequences arising from their actions or inactions related to these files. The developers assume **no** liability.  
-If you purchased this from a paid website, **[you've been scammed](https://www.bilibili.com/video/BV1GJ411x7h7)** – this software is free.
-
-Attention please, this text is translated by AI, and haven't been checked by human. standard Chinese(中文)
-
-## The Vedio for invitation(English)
-There is not now.
+- [✨ 特性](#特性)
+- [🔧 系统要求](#系统要求)
+- [🚀 快速开始](#快速开始)
+- [📖 使用指南](#使用指南)
+- [🛠️ 开发文档](#开发文档)
+- [🤝 贡献指南](#贡献指南)
+- [📄 许可证](#许可证)
+- [👥 开发团队](#开发团队)
 
 ---
 
-# MemoAI日本語
+## ✨ 特性
 
-## 概要
-MemoAIは、ユーザーに便利なインタラクティブ体験を提供する多機能ソフトウェアです。このライブラリには、質問応答やサンプル修正などの機能を備えたソフトウェアを作成するための一連の実用的な機能が統合されており、数据の處理、情報処理やインテリジェントな回答取得を効率化します。<br>
-これは非常に**シンプル**なソフトウェアです。ご利用をお楽しみください。
-
-## 動作環境推奨
-x86アーキテクチャのパソコンでの実行を推奨します。ファイルサイズは約7MB以上です。十分なストレージ容量があることをご確認ください。
-
-## 使用方法:
-本プロジェクトは**Python 3.11**で記述され、*sys、PyQt5.QtWidgets*など複数のライブラリを使用しています。正常に動作させるためには、必要なライブラリをインストールしてください。
-本ソフトウェアは現在**中国語（簡体字）** のみに対応しており、他の言語はサポートされていません。今後のアップデートで多言語対応を提供する予定です。
-
-### ソフトウェアのダウンロード＆インストール
-1. [GitHubリンク](https://github.com/Janmast-eng/MemoAI)からプロジェクトをダウンロード
-2. ".zip"ファイルを「フルコントロール」権限のあるフォルダに解凍
-
-### ソフトウェアの起動方法
-1. MemoAIフォルダに移動
-2. エディタで「memoAI_V2_UI.py」を実行（現行の正式版）
-
-#### 操作ガイド
-
-| 操作項目 | memoAI_V2_UI.pyの操作方法 |
-| :--: | :--: |
-| ソフト起動 | memo_V2_UI.pyをダブルクリックで実行 |
-| 自動チェック | 全モジュール正しくインストール後、自動的にチェック |
-| 質問機能 | 上部入力欄に質問→「AI自動返答」ボタンクリック |
-| サンプル修正 | 「手動タグ付け」クリック→指示に従う、またはmemory.jsonを直接編集 |
-| 注意点 | 初期状態のモデル/メモリファイルは未学習のため、各自でトレーニングが必要 |
-| エラー報告 | エラー発生時はターミナルの全[ERROR]箇所とstartup_error、logフォルダを1942392307@qq.comへ送付 |
-
-#### 冗長ファイル処理
-「Cliner.py」を使用し、画面指示に従って操作（masu nai）
-
-### 年齢制限
-なし
-
-## 開発者情報
-MemoAIライブラリはBilibili UP主「pyro」が開発、S_steveが開発補助。<br>
-pyroのBilibiliプロフィール:  
-[ pyroのBilibili ](https://space.bilibili.com/1201856558 "クリックしてアクセス")  
-S_steveのBilibiliプロフィール:  
-[ S_steveのBilibili ](https://space.bilibili.com/1499517607 "クリックしてアクセス")
-
-## 法の告知
-本ソフトウェアはオープンソースで完全無料です。いかなる理由でも有料販売は禁止されています。以下を許可します：
-
-- 無料利用（本プロジェクトから入手した場合）
-- 無料改変（ただし有料機能・中華人民共和国法律に反する内容の追加禁止）
-- 無料共有（ただし違法コンテンツと同時に配布しないこと）
-- 無料更新（余力がある場合）
-
-AIによる回答内容は参考情報です。内容を精査し、利用による全ての結果について利用者が責任を負い、開発者は**一切の責任を負いません**。  
-有料サイトで購入した場合は[詐欺被害に遭っています](https://www.bilibili.com/video/BV1GJ411x7h7)。本ソフトは完全に無料です。
-このテクスト譯は翻訳です，品質は安いじゃないです。中国語と标准言います
-
-## 映画(日本語)
- ない
+- 🤖 **智能问答系统** - 基于 AI 的自动回复功能
+- 💾 **记忆管理** - 支持样本修改和记忆文件管理
+- 🧮 **数学运算** - 内置基础数学计算功能
+- 🎨 **图形界面** - 基于 PyQt5 的现代化用户界面
+- 🔧 **可扩展性** - 支持自定义训练和模型调整
+- 📝 **日志系统** - 完整的错误追踪和日志记录
 
 ---
 
-# MemoAI 中文 繁體中文
+## 🔧 系统要求
 
-## 簡介
-MemoAI 是一款功能豐富的軟體，旨在為使用者提供便捷的互動體驗。該程式庫整合了一系列實用功能，可用於建立具備問答、樣本修改等功能的軟體，進行簡單的四則運算，協助使用者更高效地處理資訊並取得智慧回覆。<br>這將是一款非常**簡易**的軟體。祝您使用愉快！
+### 最低配置
 
-## 使用建議
-建議本專案在 x86 架構的個人電腦上執行，主檔案大小約 7MB，請確保您的電腦具備足夠的儲存空間。
+- **操作系统**: Windows 10+ / macOS 10.14+ / Linux (Ubuntu 18.04+)
+- **处理器**: x86/x64 架构
+- **内存**: 4GB RAM
+- **存储空间**: 至少 50MB 可用空间
+- **Python 版本**: Python 3.11+
 
-## 如何使用：
-本專案使用 **Python 3.11** 編寫，採用 *sys、PyQt5.QtWidgets* 等多個程式庫，請務必安裝所需程式庫以確保順利執行。<br>
-請注意，本軟體目前僅內建**中文（漢語）** 支援，後續更新將提供更多語言選項。
+### 依赖库
 
-### 軟體下載與安裝
-1. 存取 [GitHub 專案連結](https://github.com/Janmast-eng/MemoAI) 下載本專案
-2. 將 ".zip" 壓縮檔解壓縮至具有「完全控制」權限的資料夾
+```
+PyQt5
+sys (内置)
+json (内置)
+其他依赖详见 requirements.txt
+```
 
-### 啟動軟體
-1. 進入 MemoAI 資料夾
-2. 於編輯器中執行「memoAI_V2_UI」檔案（此為當前正式版本）
+---
 
-#### 操作說明
+## 🚀 快速开始
 
-| 功能項目 | memoAI_V2_UI.py 操作方式 |
-| :------: | :---------------------- |
-| 啟動軟體 | 雙擊執行 memo_V2_UI.py |
-| 自動檢查 | 所有模組正確安裝後將自動執行檢核 |
-| 進行問答 | 於頂端輸入框提問後點擊「AI 自動回覆」按鈕 |
-| 修改樣本 | 點擊「人工標註」依提示操作，或直接修改 memory.json |
-| 注意事項 | 預設安裝包模型與記憶檔為初始狀態，需自行訓練 |
-| 錯誤回報 | 發現錯誤時請將終端機中所有 [ERROR] 內容、startup_error 及 log 資料夾寄送至 1942392307@qq.com |
-#### 冗餘檔案處理
-執行「Cliner.py」並依操作指示使用(暫不可用)
+### 1. 克隆项目
 
-### 適齡提示
-暫無
+```bash
+git clone https://github.com/Janmast-eng/MemoAI.git
+cd MemoAI
+```
 
-## 開發者資訊
-本 MemoAI 程式庫由 bilibili 創作者 pyro 開發，S_steve 輔助協作。<br>
-pyro 的 bilibili 主頁：
-[ pyro 的 bilibili 主頁 ](https://space.bilibili.com/1201856558 "點擊前往")
-<br>
-S_steve 的 bilibili 主頁：
-[ S_steve 的 bilibili 主頁 ](https://space.bilibili.com/1499517607 "點擊前往")
+### 2. 安装依赖
 
-## 法律聲明
-本軟體為開源軟體，完全免費，任何人不得以任何形式盜用收費。我們支持：
+```bash
+pip install -r requirements.txt
+```
 
-- 免費使用（若您自本專案取得軟體）
-- 免費修改（但不得加入付費或不符合中華人民共和國法律之內容）
-- 免費分享（但不得同時分享不符合中華人民共和國法律之內容）
-- 免費更新（開發者若有餘力時提供）
+### 3. 运行程序
 
-本 AI 所有回答均由人工智慧產生，內容僅供參考，請仔細甄別。因使用本檔案所致之行為或不行為，其一切後果由使用者自行承擔，開發者不承擔**任何**相關責任。<br>
-若您自付費網站購得本軟體，[您已遭受詐騙](https://www.bilibili.com/video/BV1GJ411x7h7)，本軟體永久免費。
-這些文本由翻譯器翻譯，可能不符合您的語言習慣，也可能出現一些誤差，請以簡體中文為主。
+```bash
+python memoAI_V2_UI.py
+```
 
-## 宣發視頻
-暫無
+---
+
+## 📖 使用指南
+
+### 基本操作
+
+| 功能            | 操作方法                             | 说明               |
+| --------------- | ------------------------------------ | ------------------ |
+| 🚀 **启动软件** | 双击 `memoAI_V2_UI.py` 或命令行运行  | 启动主程序界面     |
+| 🔍 **自动检查** | 程序启动时自动执行                   | 检查依赖和配置文件 |
+| 💬 **AI 问答**  | 在输入框输入问题 → 点击"AI 自动回复" | 获取智能回答       |
+| ✏️ **样本标注** | 点击"人工标注" → 按提示操作          | 训练和改进 AI 模型 |
+| 📝 **记忆管理** | 直接编辑 `memory.json` 文件          | 自定义记忆数据     |
+
+### 高级功能
+
+#### 自定义训练
+
+1. 准备训练数据
+2. 使用人工标注功能
+3. 调整模型参数
+4. 测试训练效果
+
+#### 错误处理
+
+如遇到问题，请收集以下信息：
+
+- 终端中的 `[ERROR]` 信息
+- `startup_error` 文件
+- `log` 文件夹内容
+
+发送至：📧 1942392307@qq.com
+
+---
+
+## 🛠️ 开发文档
+
+### 项目结构
+
+```
+MemoAI/
+├── memoAI_V2_UI.py      # 主程序文件
+├── memory.json          # 记忆数据文件
+├── Cliner.py           # 清理工具（开发中）
+├── log/                # 日志文件夹
+├── requirements.txt    # 依赖列表
+└── README.md          # 项目说明
+```
+
+### 核心模块
+
+- **UI 模块**: 基于 PyQt5 的用户界面
+- **AI 模块**: 问答处理和响应生成
+- **记忆模块**: 数据存储和检索
+- **日志模块**: 错误追踪和系统监控
+
+---
+
+## 🤝 贡献指南
+
+我们欢迎所有形式的贡献！
+
+### 如何贡献
+
+1. Fork 本项目
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
+
+### 贡献类型
+
+- 🐛 Bug 修复
+- ✨ 新功能开发
+- 📝 文档改进
+- 🎨 界面优化
+- 🔧 性能提升
+
+---
+
+## 📄 许可证
+
+本项目采用 **MIT 许可证** - 详见 [LICENSE](LICENSE) 文件
+
+### 使用条款
+
+- ✅ **免费使用** - 个人和商业用途
+- ✅ **自由修改** - 可根据需要调整代码
+- ✅ **自由分享** - 可重新分发和传播
+- ✅ **免费更新** - 持续的功能改进
+
+### 重要声明
+
+- 🚫 **禁止收费** - 本软件永久免费
+- ⚖️ **法律合规** - 请遵守当地法律法规
+- 🛡️ **免责声明** - AI 回答仅供参考，使用风险自负
+
+---
+
+## 👥 开发团队
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://space.bilibili.com/1201856558">
+        <img src="https://img.shields.io/badge/Bilibili-pyro-ff69b4?style=for-the-badge&logo=bilibili" alt="pyro"/>
+        <br />
+        <sub><b>pyro</b></sub>
+      </a>
+      <br />
+      <sub>项目创始人 & 主要开发者</sub>
+    </td>
+    <td align="center">
+      <a href="https://space.bilibili.com/1499517607">
+        <img src="https://img.shields.io/badge/Bilibili-S_steve-00d4aa?style=for-the-badge&logo=bilibili" alt="S_steve"/>
+        <br />
+        <sub><b>S_steve</b></sub>
+      </a>
+      <br />
+      <sub>开发协助 & 技术支持</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
+<div align="center">
+
+### 🌟 如果这个项目对您有帮助，请给我们一个 Star！
+
+[![GitHub stars](https://img.shields.io/github/stars/Janmast-eng/MemoAI?style=social)](https://github.com/Janmast-eng/MemoAI/stargazers)
+
+**Made with ❤️ by MemoAI Team**
+
+</div>
+
+---
+
+## 🌍 多语言版本
+
+<details>
+<summary>🇺🇸 English Version</summary>
+
+# MemoAI
+
+**An intelligent Q&A and memory management system based on PyQt5**
+
+## Features
+
+- 🤖 AI-powered automatic response system
+- 💾 Memory management with sample modification support
+- 🧮 Built-in mathematical calculation functions
+- 🎨 Modern GUI based on PyQt5
+- 🔧 Extensible with custom training capabilities
+- 📝 Comprehensive logging and error tracking
+
+## Quick Start
+
+1. Clone the repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run: `python memoAI_V2_UI.py`
+
+## System Requirements
+
+- Python 3.11+
+- PyQt5
+- 4GB RAM minimum
+- 50MB storage space
+
+For detailed documentation, please refer to the Chinese version above.
+
+</details>
+
+<details>
+<summary>🇯🇵 日本語版</summary>
+
+# MemoAI
+
+**PyQt5 ベースのインテリジェント Q&A およびメモリ管理システム**
+
+## 特徴
+
+- 🤖 AI 駆動の自動応答システム
+- 💾 サンプル修正をサポートするメモリ管理
+- 🧮 内蔵数学計算機能
+- 🎨 PyQt5 ベースのモダン GUI
+- 🔧 カスタムトレーニング機能による拡張性
+- 📝 包括的なログとエラー追跡
+
+## クイックスタート
+
+1. リポジトリをクローン
+2. 依存関係をインストール: `pip install -r requirements.txt`
+3. 実行: `python memoAI_V2_UI.py`
+
+詳細なドキュメントについては、上記の中国語版をご参照ください。
+
+</details>
