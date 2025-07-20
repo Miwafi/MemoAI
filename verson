@@ -92,3 +92,7 @@ beta 2.2.9.3
 2. 切换设备后系统会自动提示当前使用的计算设备
 3. 若GPU不可用，将自动回退至CPU模式运行
 （在此纪念MemoAI_V1版本）
+
+--------------------
+Psy1
+Del the UI of wal and try to update new one
