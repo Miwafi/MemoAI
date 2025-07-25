@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "c:\Users\19423\Desktop\MemoAI_V2_UI\memoAI_V2_UI.py", line 2272, in <module>
+    app = App(root)
+  File "c:\Users\19423\Desktop\MemoAI_V2_UI\memoAI_V2_UI.py", line 1398, in __init__
+    self.ai = AICore()
+              ~~~~~~^^
+  File "c:\Users\19423\Desktop\MemoAI_V2_UI\memoAI_V2_UI.py", line 414, in __init__
+    self.model = LSTMDialogNet(self.vocab_size).to(config.device)
+                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\19423\Desktop\MemoAI_V2_UI\memoAI_V2_UI.py", line 309, in __init__
+    self.embedding = nn.Embedding(vocab_size, config.embedding_dim)
+                                              ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Config' object has no attribute 'embedding_dim'
+程序启动失败: 'Config' object has no attribute 'embedding_dim'
