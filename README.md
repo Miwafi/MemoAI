@@ -1,248 +1,217 @@
 # MemoAI 中文
 
-
 ## 简介
-MemoAI 是一个功能丰富的软件，它旨在为用户提供便捷的交互体验。该库集成了一系列实用的功能，可用于创建具备问答、样本修改等功能的软件，同时也支持了运算功能。帮助用户更高效地处理信息和获取智能答复。<br>这将是一个非常**简单**的软件。希望你使用愉快
+MemoAI 是一个功能丰富的项目，它旨在为用户提供便捷的交互体验。该库集成了一系列实用的功能，可用于创建具备问答、样本修改等功能的项目，同时也支持了运算功能。帮助用户更高效地处理信息和获取智能答复。<br>这将是一个非常**简单**的项目。希望你使用愉快！
 
 ## 使用建议
 建议本项目在一个x86架构的个人电脑上运行，本文件至少约7MB，请确保您的电脑有足够的储存空间。
 
-## 如何使用:
-本项目使用**Python3.11**编写，采用了*sys、PyQt5.QtWidgets*等多个库，为了顺利运行软件，请注意安装库。
-请注意，本软件仅内置了**中文汉语**，暂不支持其他语言，我们将在后续的更新中提供更多语言的支持。
+## 使用库:
+本项目运用了多种不同的库，其中第三方库有：
+- PyQt5
+- requests
+- beautifulsoup4
+- torch
+- matplotlib
 
-###  软件的下载&安装
-1. 下载本项目，可以访问[github链接](https://github.com/Janmast-eng/MemoAI)。
-2. 解压本“.zip”文件，到一个权限为“完全控制”的文件夹。
+**如果手动安装过于繁琐，推荐使用项目中的 "PipHelper.bat" 脚本，可自动完成安装（已安装的库将自动升级）**
 
-### 使用本软件
-1. 进入MemoAI文件夹
-2. 在您的编辑器中执行 “memoAI_V2_UI”。memoAI_V2_UI是目前的正式版。
-注意！ 目前memoAI_V2UI暂不可用！
+## 项目的下载&安装
+1. 下载本项目，请访问 [GitHub 仓库](https://github.com/Janmast-eng/MemoAI)（项目内已添加快捷方式）。
+2. 解压 ".zip" 文件至具有"完全控制"权限的文件夹。
 
-
-#### 使用方法
-
-| 操作项目 | memoAI_V2_UI.py的操作方式 |
-| :--: | :--: |
-| 启动软件 | 双击执行memo_V2_UI.py |
-| 自动检查 | 在保证所有模块均已正确安装后会自动检查 |
-| 进行问答 | 直接在最上方的输入框中输入问题，然后点击“AI自动回复按钮 |
-| 修改样本 | 点击“人工标注”，按照提示操作，或者修改memory.json |
-| 备注 | 默认安装包模型与记忆文件为初始化状态，需自行训练 |
-| 错误反馈 | 发现有任何错误请将终端中所有[ERROR]部分，startup_error与log文件夹一同发送至邮箱1942392307@qq.com |
-
-#### 冗余文件处理
-使用“Cliner.py”，按照操作提示使用（暂不可用）
+## 使用项目
+本库提供两套操作模式：UI界面模式和非UI模式（模型源文件）。
+UI模式操作指南……（待补充）
+**重要：若需使用UI模式，请勿删除非UI版文件，否则将导致UI功能异常**
 
 ### 适龄提示
 暂无
 
-## 开发者信息
-本MemoAI库由bilibili up主pyro创作，S_steve辅助开发。<br>
-pyro的bilibili主页地址：
-[ pyro的bilibili主页地址 ](https://space.bilibili.com/1201856558 "点击访问")
-<br>
-S_steve的bilibili主页地址：
-[ S_steve的bilibili主页地址 ](https://space.bilibili.com/1499517607 "点击访问")
-
 ## 法律声明
-本软件为开源软件，完全免费，任何人不得以任何理由盗用收费。我们支持：
+本项目为开源项目，永久免费，严禁任何形式的商业盗用。我们承诺：
+- 免费使用（合法获取本项目者）
+- 免费修改（禁止添加付费内容或违反中国法律条款）
+- 免费分享（禁止分享违反中国法律的内容）
+- 免费更新（开发者视情况提供）
 
-- 免费使用（如果您从本项目获得了软件）
-- 免费修改（但是不要在里面添加付费、不符合中华人民共和国法律的内容）
-- 免费分享（但是不要同时分享不符合中华人民共和国法律的内容）
-- 免费更新（如果有余力的话）
+AI生成内容仅供参考，请使用者自行甄别。因使用本文件引发的所有后果，**开发者不承担任何法律责任**。
+若您通过付费渠道购买本项目，[请知晓此为诈骗行为](https://www.bilibili.com/video/BV1GJ411x7h7)。
 
-本AI的所有回答均由 AI 生成，内容仅供参考，请仔细甄别。这些文件导致你的作为或者不作为，其一切后果由使用者承担，制作者不承担**任何**相关责任。
-如果您是从付费的网站上购买的，[那你被骗了](https://www.bilibili.com/video/BV1GJ411x7h7)，本软件免费。
+## 开发与交流
+### 开发
+开发文档编写中，后续将通过仓库更新。
+### 交流
+欢迎加入开发者交流社区：
+| 平台 | 添加方式          |
+| :-- | :--------------- |
+| QQ群 | 群号：1017170337  |
+| 钉钉 | 群号：139375004749 |
 
 ## 宣发视频（中文版）
-暂未制作
+制作中
 
----
+=====
 
-
-# MemoAI　English
+# MemoAI English
 
 ## Introduction
-MemoAI is a feature-rich software designed to provide users with a convenient interactive experience. This library integrates a series of practical functions for creating applications with capabilities such as Q&A and sample modification,and it can do math calculate. Helping users process information more efficiently and obtain intelligent responses.  
-This will be an extremely **simple** software. We hope you enjoy using it.
+MemoAI is a feature-rich project designed to deliver seamless user interaction experiences. This library integrates practical functionalities including Q&A systems, sample modification tools, and computational operations, empowering users to process information and obtain intelligent responses efficiently.<br>This will be an **intuitive** project. Enjoy!
 
-## Usage Recommendations
-It is recommended to run this project on an x86-architecture personal computer. The file size is approximately 7MB – please ensure your computer has sufficient storage space.
+## Recommendations
+For optimal performance, deploy this project on an x86-architecture PC. The base package requires at least 7MB storage space - ensure sufficient disk capacity.
 
-## How to Use:
-This project is written in **Python 3.11** and utilizes libraries including *sys* and *PyQt5.QtWidgets*. Please install these dependencies to ensure smooth operation.  
-Note: The software currently only supports **Mandarin Chinese**. Support for additional languages will be added in future updates.
+## Dependencies
+Third-party libraries utilized:
+- PyQt5
+- requests
+- beautifulsoup4
+- torch
+- matplotlib
 
-### Download & Installation
-1. Download the project from the [GitHub repository](https://github.com/Janmast-eng/MemoAI).
-2. Extract the ".zip" file to a folder with "Full Control" permissions.
+**For simplified installation, execute the "PipHelper.bat" script (pre-installed libraries will be upgraded)**
 
-### Launching the Software
-1. Navigate to the MemoAI folder.
-2. Execute `memoAI_V2_UI.py` in your editor (this is the current stable version).
+## Download & Installation
+1. Download the project from [GitHub repository](https://github.com/Janmast-eng/MemoAI) (shortcuts included)
+2. Extract the ".zip" archive to a directory with Full Control permissions
 
-#### Usage Guide
+## Usage
+Two operational modes are available: UI Interface mode and Non-UI mode (source files).
+UI mode guide... (Pending)
+**Critical: Retain Non-UI version files when using UI mode to prevent functionality loss**
 
-| Feature          | Operation Method in `memoAI_V2_UI.py`       |
-| :--------------- | :------------------------------------------ |
-| Launch Software  | Double-click `memo_V2_UI.py`                |
-| Auto-Check       | Automatically verifies dependencies after launch |
-| Use Q&A              | Enter questions in the top input box and click "AI Auto-Reply" |
-| Modify Samples   | Click "Manual Annotation" and follow prompts, or edit `memory.json` |
-| Note             | Default model and memory files are initialized – requires custom training |
-| Error Reporting  | For any errors, email all `[ERROR]` logs from the terminal, `startup_error`, and the `log` folder to 1942392307@qq.com |
+### Age Appropriateness Notice
+Not applicable
 
-#### Redundant File Handling
-Use `Cleaner.py` and follow the on-screen instructions.
+## Legal Disclaimer
+This open-source project is perpetually free. Commercial monetization is strictly prohibited. We guarantee:
+- Free usage (for legitimate acquirers)
+- Free modification (prohibits adding paid features or illegal content under Chinese law)
+- Free distribution (prohibits sharing unlawful materials)
+- Free updates (developer-discretionary)
 
-### Age Recommendation
-Not specified
+AI-generated content is for reference only. Users assume **full responsibility** for all consequences arising from the use of these materials.  
+If purchased through paid channels, [you are being defrauded](https://www.bilibili.com/video/BV1GJ411x7h7).
 
-## Developer Information
-The MemoAI library was created by Bilibili UP主 **pyro**, with development assistance from **S_steve**.  
-pyro's Bilibili homepage:  
-[pyro's Bilibili](https://space.bilibili.com/1201856558 "Click to visit")  
-S_steve's Bilibili homepage:  
-[S_steve's Bilibili](https://space.bilibili.com/1499517607 "Click to visit")
+## Development & Community
+### Development
+Technical documentation is under development and will be published via repository updates.
+### Collaboration
+Join developer communities:
+| Platform | Contact               |
+| :------ | :------------------- |
+| QQ Group | ID: 1017170337        |
+| DingTalk | ID: 139375004749      |
 
-## Legal Notice
-This is open-source software and completely free. No one may charge for it under any circumstances. We support:  
-- Free use (if you obtained the software from this project)  
-- Free modification (but do not add paid or illegal content under Chinese law)  
-- Free sharing (but do not distribute illegal content under Chinese law)  
-- Free updates (if resources permit)  
+## Promotional Video (English)
+Pending production
 
-All responses generated by this AI are for reference only – please verify content carefully. Users bear full responsibility for any consequences arising from their actions or inactions related to these files. The developers assume **no** liability.  
-If you purchased this from a paid website, **[you've been scammed](https://www.bilibili.com/video/BV1GJ411x7h7)** – this software is free.
+=====
 
-Attention please, this text is translated by AI, and haven't been checked by human. standard Chinese(中文)
-
-## The Vedio for invitation(English)
-There is not now.
-注意！ 目前memoAI_V2UI暂不可用！
----
-
-# MemoAI日本語
+# MemoAI 日本語
 
 ## 概要
-MemoAIは、ユーザーに便利なインタラクティブ体験を提供する多機能ソフトウェアです。このライブラリには、質問応答やサンプル修正などの機能を備えたソフトウェアを作成するための一連の実用的な機能が統合されており、数据の處理、情報処理やインテリジェントな回答取得を効率化します。<br>
-これは非常に**シンプル**なソフトウェアです。ご利用をお楽しみください。
+MemoAI は多機能プロジェクトとして、ユーザーにシームレスな対話型体験を提供します。質疑応答・サンプル編集・計算機能を統合したライブラリにより、情報処理と知能的レスポンス取得を効率化します。<br>**直感的な**操作設計です。ご活用ください。
 
-## 動作環境推奨
-x86アーキテクチャのパソコンでの実行を推奨します。ファイルサイズは約7MB以上です。十分なストレージ容量があることをご確認ください。
+## 推奨環境
+x86アーキテクチャのPCでの動作を推奨します。基本容量7MB以上必要。十分なストレージを確保してください。
 
-## 使用方法:
-本プロジェクトは**Python 3.11**で記述され、*sys、PyQt5.QtWidgets*など複数のライブラリを使用しています。正常に動作させるためには、必要なライブラリをインストールしてください。
-本ソフトウェアは現在**中国語（簡体字）** のみに対応しており、他の言語はサポートされていません。今後のアップデートで多言語対応を提供する予定です。
+## 使用ライブラリ
+サードパーティ製ライブラリ:
+- PyQt5
+- requests
+- beautifulsoup4
+- torch
+- matplotlib
 
-### ソフトウェアのダウンロード＆インストール
-1. [GitHubリンク](https://github.com/Janmast-eng/MemoAI)からプロジェクトをダウンロード
-2. ".zip"ファイルを「フルコントロール」権限のあるフォルダに解凍
+**手動インストールが煩雑な場合は "PipHelper.bat" スクリプトを実行（既存ライブラリは自動アップグレード）**
 
-### ソフトウェアの起動方法
-1. MemoAIフォルダに移動
-2. エディタで「memoAI_V2_UI.py」を実行（現行の正式版）
+## ダウンロード＆インストール
+1. [GitHub リポジトリ](https://github.com/Janmast-eng/MemoAI)から取得（ショートカット同梱）
+2. ".zip"ファイルを「完全制御」権限のフォルダに解凍
 
-#### 操作ガイド
+## 使用方法
+UIモードと非UIモード（ソースファイル）を提供。
+UI操作手順...（後日追加）
+**重要：UI使用時も非UI版ファイルを削除しないこと（機能不全の原因）**
 
-| 操作項目 | memoAI_V2_UI.pyの操作方法 |
-| :--: | :--: |
-| ソフト起動 | memo_V2_UI.pyをダブルクリックで実行 |
-| 自動チェック | 全モジュール正しくインストール後、自動的にチェック |
-| 質問機能 | 上部入力欄に質問→「AI自動返答」ボタンクリック |
-| サンプル修正 | 「手動タグ付け」クリック→指示に従う、またはmemory.jsonを直接編集 |
-| 注意点 | 初期状態のモデル/メモリファイルは未学習のため、各自でトレーニングが必要 |
-| エラー報告 | エラー発生時はターミナルの全[ERROR]箇所とstartup_error、logフォルダを1942392307@qq.comへ送付 |
+### 年齢制限通知
+該当なし
 
-#### 冗長ファイル処理
-「Cliner.py」を使用し、画面指示に従って操作（masu nai）
+## 法的表明
+オープンソースプロジェクトであり無償提供を永続保証。商用利用禁止。
+- 無償利用（正当な取得者のみ）
+- 無償改変（有償化/中国法律違反コンテンツ追加禁止）
+- 無償共有（違法コンテンツ配布禁止）
+- 無償更新（開発者裁量）
 
-### 年齢制限
-なし
+AI生成内容は参考情報です。使用に伴う**一切の結果について開発者は責任を負いません**。  
+有料販売経路で入手した場合、[詐欺被害報告先](https://www.bilibili.com/video/BV1GJ411x7h7)。
 
-## 開発者情報
-MemoAIライブラリはBilibili UP主「pyro」が開発、S_steveが開発補助。<br>
-pyroのBilibiliプロフィール:  
-[ pyroのBilibili ](https://space.bilibili.com/1201856558 "クリックしてアクセス")  
-S_steveのBilibiliプロフィール:  
-[ S_steveのBilibili ](https://space.bilibili.com/1499517607 "クリックしてアクセス")
+## 開発＆交流
+### 開発
+技術文書作成中。リポジトリ経由で公開予定。
+### 交流
+開発コミュニティ:
+| プラットフォーム | 連絡先             |
+| :-------------- | :--------------- |
+| QQグループ      | ID: 1017170337    |
+| DingTalk        | ID: 139375004749  |
 
-## 法の告知
-本ソフトウェアはオープンソースで完全無料です。いかなる理由でも有料販売は禁止されています。以下を許可します：
+## 紹介動画 (日本語版)
+制作中
 
-- 無料利用（本プロジェクトから入手した場合）
-- 無料改変（ただし有料機能・中華人民共和国法律に反する内容の追加禁止）
-- 無料共有（ただし違法コンテンツと同時に配布しないこと）
-- 無料更新（余力がある場合）
+=====
 
-AIによる回答内容は参考情報です。内容を精査し、利用による全ての結果について利用者が責任を負い、開発者は**一切の責任を負いません**。  
-有料サイトで購入した場合は[詐欺被害に遭っています](https://www.bilibili.com/video/BV1GJ411x7h7)。本ソフトは完全に無料です。
-このテクスト譯は翻訳です，品質は安いじゃないです。中国語と标准言います
+# MemoAI 한국어
 
-## 映画(日本語)
- ない
+## 개요
+MemoAI는 통합형 기능 프로젝트로 사용자에게 효율적인 상호작용 환경을 제공합니다. 질의응답 시스템, 샘플 수정 도구 및 연산 기능을 통합하여 정보 처리와 지능형 응답 생성을 최적화합니다.<br>**직관적인** 운영 설계를 구현했습니다. 활용해주세요.
 
----
+## 권장 사항
+x86 아키텍처 PC에서 사용 권장. 기본 용량 7MB 이상 필요 - 충분한 저장공간 확보 필수.
 
-# MemoAI 中文 繁體中文
+## 사용 라이브러리
+제3자 라이브러리:
+- PyQt5
+- requests
+- beautifulsoup4
+- torch
+- matplotlib
 
-## 簡介
-MemoAI 是一款功能豐富的軟體，旨在為使用者提供便捷的互動體驗。該程式庫整合了一系列實用功能，可用於建立具備問答、樣本修改等功能的軟體，進行簡單的四則運算，協助使用者更高效地處理資訊並取得智慧回覆。<br>這將是一款非常**簡易**的軟體。祝您使用愉快！
+**수동 설치 복잡 시 "PipHelper.bat" 스크립트 실행 (기존 라이브러리 자동 업그레이드)**
 
-## 使用建議
-建議本專案在 x86 架構的個人電腦上執行，主檔案大小約 7MB，請確保您的電腦具備足夠的儲存空間。
+## 다운로드 및 설치
+1. [GitHub 저장소](https://github.com/Janmast-eng/MemoAI)에서 다운로드 (바로가기 포함)
+2. ".zip" 압축 해제 시 "완전 제어" 권한 디렉터리 지정
 
-## 如何使用：
-本專案使用 **Python 3.11** 編寫，採用 *sys、PyQt5.QtWidgets* 等多個程式庫，請務必安裝所需程式庫以確保順利執行。<br>
-請注意，本軟體目前僅內建**中文（漢語）** 支援，後續更新將提供更多語言選項。
+## 사용 방법
+UI 모드와 비UI 모드(소스 파일) 제공.
+UI 운영 가이드... (추가 예정)
+**경고: UI 사용 시 비UI 버전 파일 삭제 금지 (기능 오류 유발)**
 
-### 軟體下載與安裝
-1. 存取 [GitHub 專案連結](https://github.com/Janmast-eng/MemoAI) 下載本專案
-2. 將 ".zip" 壓縮檔解壓縮至具有「完全控制」權限的資料夾
+## 연령 제한 공지
+해당 없음
 
-### 啟動軟體
-1. 進入 MemoAI 資料夾
-2. 於編輯器中執行「memoAI_V2_UI」檔案（此為當前正式版本）
+## 법적 고지
+오픈소스 프로젝트로 영구 무상 제공. 상업적 유료화 금지.
+- 무료 사용 (정당한 획득자에 한함)
+- 무료 수정 (유료화/중국 법률 위반 콘텐츠 추가 불가)
+- 무료 공유 (불법 자료 배포 금지)
+- 무료 업데이트 (개발자 재량)
 
-#### 操作說明
+AI 생성 콘텐츠는 참고용입니다. 사용으로 인한 **모든 책임은 사용자에게 있습니다**.  
+유료 구매 경로로 획득한 경우 [사기 피해 신고처](https://www.bilibili.com/video/BV1GJ411x7h7).
 
-| 功能項目 | memoAI_V2_UI.py 操作方式 |
-| :------: | :---------------------- |
-| 啟動軟體 | 雙擊執行 memo_V2_UI.py |
-| 自動檢查 | 所有模組正確安裝後將自動執行檢核 |
-| 進行問答 | 於頂端輸入框提問後點擊「AI 自動回覆」按鈕 |
-| 修改樣本 | 點擊「人工標註」依提示操作，或直接修改 memory.json |
-| 注意事項 | 預設安裝包模型與記憶檔為初始狀態，需自行訓練 |
-| 錯誤回報 | 發現錯誤時請將終端機中所有 [ERROR] 內容、startup_error 及 log 資料夾寄送至 1942392307@qq.com |
-#### 冗餘檔案處理
-執行「Cliner.py」並依操作指示使用(暫不可用)
+## 개발 및 교류
+### 개발
+기술 문서 작성 중. 저장소 통한 업데이트 예정.
+### 교류
+개발자 커뮤니티:
+| 플랫폼   | 연락처             |
+| :------ | :--------------- |
+| QQ 그룹 | ID: 1017170337    |
+| DingTalk | ID: 139375004749  |
 
-### 適齡提示
-暫無
-注意！ 目前memoAI_V2UI暂不可用！
-## 開發者資訊
-本 MemoAI 程式庫由 bilibili 創作者 pyro 開發，S_steve 輔助協作。<br>
-pyro 的 bilibili 主頁：
-[ pyro 的 bilibili 主頁 ](https://space.bilibili.com/1201856558 "點擊前往")
-<br>
-S_steve 的 bilibili 主頁：
-[ S_steve 的 bilibili 主頁 ](https://space.bilibili.com/1499517607 "點擊前往")
-
-## 法律聲明
-本軟體為開源軟體，完全免費，任何人不得以任何形式盜用收費。我們支持：
-
-- 免費使用（若您自本專案取得軟體）
-- 免費修改（但不得加入付費或不符合中華人民共和國法律之內容）
-- 免費分享（但不得同時分享不符合中華人民共和國法律之內容）
-- 免費更新（開發者若有餘力時提供）
-
-本 AI 所有回答均由人工智慧產生，內容僅供參考，請仔細甄別。因使用本檔案所致之行為或不行為，其一切後果由使用者自行承擔，開發者不承擔**任何**相關責任。<br>
-若您自付費網站購得本軟體，[您已遭受詐騙](https://www.bilibili.com/video/BV1GJ411x7h7)，本軟體永久免費。
-這些文本由翻譯器翻譯，可能不符合您的語言習慣，也可能出現一些誤差，請以簡體中文為主。
-
-## 宣發視頻
-暫無
-注意！ 目前memoAI_V2UI暂不可用！
+## 홍보 영상 (한국어)
+제작 예정
