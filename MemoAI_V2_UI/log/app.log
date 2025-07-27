@@ -1,0 +1,180 @@
+[2025-07-26 13:15:28] [INFO] 加载词汇表成功，大小: 108
+[2025-07-26 13:15:29] [ERROR] 加载模型失败: Weights only load failed. In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+Please file an issue with the following so that we can make `weights_only=True` compatible with your use case: WeightsUnpickler error: Unsupported operand 10
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2025-07-26 13:15:29] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 13:15:29] [INFO] 将使用新模型进行训练
+[2025-07-26 13:18:03] [INFO] 加载词汇表成功，大小: 108
+[2025-07-26 13:18:04] [ERROR] 加载模型失败: invalid load key, '\x0a'.
+[2025-07-26 13:18:04] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 13:18:04] [INFO] 将使用新模型进行训练
+[2025-07-26 13:19:30] [INFO] 加载词汇表成功，大小: 108
+[2025-07-26 13:19:31] [ERROR] 加载模型失败: invalid load key, '\x0a'.
+[2025-07-26 13:19:31] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 13:19:31] [INFO] 将使用新模型进行训练
+[2025-07-26 13:20:50] [INFO] 加载词汇表成功，大小: 108
+[2025-07-26 13:20:51] [ERROR] 加载模型失败: invalid load key, '\x0a'.
+[2025-07-26 13:20:51] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 13:20:51] [INFO] 将使用新模型进行训练
+[2025-07-26 13:22:28] [INFO] 加载词汇表成功，大小: 108
+[2025-07-26 13:22:29] [ERROR] 加载模型失败: invalid load key, '\x0a'.
+[2025-07-26 13:22:29] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 13:22:29] [INFO] 将使用新模型进行训练
+[2025-07-26 13:22:29] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 13:27:08] [INFO] 加载词汇表成功，大小: 108
+[2025-07-26 13:27:09] [ERROR] 加载模型失败: invalid load key, '\x0a'.
+[2025-07-26 13:27:09] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 13:27:09] [INFO] 将使用新模型进行训练
+[2025-07-26 13:27:10] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 13:34:47] [INFO] 加载词汇表成功，大小: 108
+[2025-07-26 13:34:48] [ERROR] 加载模型失败: invalid load key, '\x0a'.
+[2025-07-26 13:34:48] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 13:34:48] [INFO] 将使用新模型进行训练
+[2025-07-26 13:34:48] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 13:35:13] [INFO] 加载词汇表成功，大小: 108
+[2025-07-26 13:35:14] [ERROR] 加载模型失败: invalid load key, '\x0a'.
+[2025-07-26 13:35:14] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 13:35:14] [INFO] 将使用新模型进行训练
+[2025-07-26 13:35:15] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 19:03:06] [INFO] 加载词汇表成功，大小: 108
+[2025-07-26 19:03:07] [ERROR] 加载模型失败: invalid load key, '\x0a'.
+[2025-07-26 19:03:07] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 19:03:07] [INFO] 将使用新模型进行训练
+[2025-07-26 19:03:07] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 19:03:25] [INFO] 推理时词汇表大小已更新: 108 -> 111，重新创建模型
+[2025-07-26 19:45:12] [INFO] 加载词汇表成功，大小: 2503
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: embedding.weight torch.Size([2503, 256]) vs torch.Size([2503, 128])
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: lstm.weight_ih_l0 torch.Size([2048, 256]) vs torch.Size([1024, 128])
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: lstm.weight_hh_l0 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: lstm.bias_ih_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: lstm.bias_hh_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: lstm.weight_ih_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: lstm.weight_hh_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: lstm.bias_ih_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: lstm.bias_hh_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 19:45:13] [WARNING] 忽略不存在的参数: lstm.weight_ih_l2
+[2025-07-26 19:45:13] [WARNING] 忽略不存在的参数: lstm.weight_hh_l2
+[2025-07-26 19:45:13] [WARNING] 忽略不存在的参数: lstm.bias_ih_l2
+[2025-07-26 19:45:13] [WARNING] 忽略不存在的参数: lstm.bias_hh_l2
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: layer_norm.weight torch.Size([512]) vs torch.Size([256])
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: layer_norm.bias torch.Size([512]) vs torch.Size([256])
+[2025-07-26 19:45:13] [WARNING] 参数形状不匹配: fc.weight torch.Size([2503, 512]) vs torch.Size([2503, 256])
+[2025-07-26 19:45:13] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-26 19:45:14] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 19:45:27] [ERROR] 推理过程中出错: probability tensor contains either `inf`, `nan` or element < 0
+[2025-07-26 19:45:32] [ERROR] 推理过程中出错: probability tensor contains either `inf`, `nan` or element < 0
+[2025-07-26 19:55:04] [INFO] 加载词汇表成功，大小: 2503
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: embedding.weight torch.Size([2503, 256]) vs torch.Size([2503, 128])
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: lstm.weight_ih_l0 torch.Size([2048, 256]) vs torch.Size([1024, 128])
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: lstm.weight_hh_l0 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: lstm.bias_ih_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: lstm.bias_hh_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: lstm.weight_ih_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: lstm.weight_hh_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: lstm.bias_ih_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: lstm.bias_hh_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 19:55:05] [WARNING] 忽略不存在的参数: lstm.weight_ih_l2
+[2025-07-26 19:55:05] [WARNING] 忽略不存在的参数: lstm.weight_hh_l2
+[2025-07-26 19:55:05] [WARNING] 忽略不存在的参数: lstm.bias_ih_l2
+[2025-07-26 19:55:05] [WARNING] 忽略不存在的参数: lstm.bias_hh_l2
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: layer_norm.weight torch.Size([512]) vs torch.Size([256])
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: layer_norm.bias torch.Size([512]) vs torch.Size([256])
+[2025-07-26 19:55:05] [WARNING] 参数形状不匹配: fc.weight torch.Size([2503, 512]) vs torch.Size([2503, 256])
+[2025-07-26 19:55:05] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-26 19:55:06] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 19:55:31] [INFO] 推理时词汇表大小已更新: 2503 -> 2504，重新创建模型
+[2025-07-26 19:59:18] [INFO] 加载词汇表成功，大小: 2504
+[2025-07-26 19:59:19] [WARNING] 嵌入层词汇表大小变化: 2503 -> 2504
+[2025-07-26 19:59:19] [ERROR] 加载模型失败: The expanded size of the tensor (128) must match the existing size (256) at non-singleton dimension 1.  Target sizes: [2503, 128].  Tensor sizes: [2503, 256]
+[2025-07-26 19:59:19] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 19:59:19] [INFO] 将使用新模型进行训练
+[2025-07-26 19:59:19] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 20:00:40] [INFO] 推理时词汇表大小已更新: 2504 -> 2505，重新创建模型
+[2025-07-26 20:13:56] [INFO] 加载词汇表成功，大小: 2505
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: embedding.weight torch.Size([2505, 256]) vs torch.Size([2505, 128])
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: lstm.weight_ih_l0 torch.Size([2048, 256]) vs torch.Size([1024, 128])
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: lstm.weight_hh_l0 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: lstm.bias_ih_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: lstm.bias_hh_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: lstm.weight_ih_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: lstm.weight_hh_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: lstm.bias_ih_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: lstm.bias_hh_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-26 20:13:57] [WARNING] 忽略不存在的参数: lstm.weight_ih_l2
+[2025-07-26 20:13:57] [WARNING] 忽略不存在的参数: lstm.weight_hh_l2
+[2025-07-26 20:13:57] [WARNING] 忽略不存在的参数: lstm.bias_ih_l2
+[2025-07-26 20:13:57] [WARNING] 忽略不存在的参数: lstm.bias_hh_l2
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: layer_norm.weight torch.Size([512]) vs torch.Size([256])
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: layer_norm.bias torch.Size([512]) vs torch.Size([256])
+[2025-07-26 20:13:57] [WARNING] 参数形状不匹配: fc.weight torch.Size([2505, 512]) vs torch.Size([2505, 256])
+[2025-07-26 20:13:57] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-26 20:13:57] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 20:20:13] [INFO] 推理时词汇表大小已更新: 2505 -> 2506，重新创建模型
+[2025-07-26 21:38:37] [INFO] 加载词汇表成功，大小: 2506
+[2025-07-26 21:38:38] [WARNING] 嵌入层词汇表大小变化: 2505 -> 2506
+[2025-07-26 21:38:38] [ERROR] 加载模型失败: The expanded size of the tensor (128) must match the existing size (256) at non-singleton dimension 1.  Target sizes: [2505, 128].  Tensor sizes: [2505, 256]
+[2025-07-26 21:38:38] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 21:38:38] [INFO] 将使用新模型进行训练
+[2025-07-26 21:38:39] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 21:39:09] [INFO] 加载词汇表成功，大小: 2506
+[2025-07-26 21:39:10] [WARNING] 嵌入层词汇表大小变化: 2505 -> 2506
+[2025-07-26 21:39:10] [ERROR] 加载模型失败: The expanded size of the tensor (128) must match the existing size (256) at non-singleton dimension 1.  Target sizes: [2505, 128].  Tensor sizes: [2505, 256]
+[2025-07-26 21:39:10] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 21:39:10] [INFO] 将使用新模型进行训练
+[2025-07-26 21:39:10] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 21:40:05] [INFO] 加载词汇表成功，大小: 2506
+[2025-07-26 21:40:06] [WARNING] 嵌入层词汇表大小变化: 2505 -> 2506
+[2025-07-26 21:40:06] [ERROR] 加载模型失败: The expanded size of the tensor (128) must match the existing size (256) at non-singleton dimension 1.  Target sizes: [2505, 128].  Tensor sizes: [2505, 256]
+[2025-07-26 21:40:06] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 21:40:06] [INFO] 将使用新模型进行训练
+[2025-07-26 21:40:07] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 21:40:15] [INFO] 加载词汇表成功，大小: 2506
+[2025-07-26 21:40:16] [WARNING] 嵌入层词汇表大小变化: 2505 -> 2506
+[2025-07-26 21:40:16] [ERROR] 加载模型失败: The expanded size of the tensor (128) must match the existing size (256) at non-singleton dimension 1.  Target sizes: [2505, 128].  Tensor sizes: [2505, 256]
+[2025-07-26 21:40:16] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 21:40:16] [INFO] 将使用新模型进行训练
+[2025-07-26 21:40:16] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 21:40:36] [INFO] 加载词汇表成功，大小: 2506
+[2025-07-26 21:40:37] [WARNING] 嵌入层词汇表大小变化: 2505 -> 2506
+[2025-07-26 21:40:37] [ERROR] 加载模型失败: The expanded size of the tensor (128) must match the existing size (256) at non-singleton dimension 1.  Target sizes: [2505, 128].  Tensor sizes: [2505, 256]
+[2025-07-26 21:40:37] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 21:40:37] [INFO] 将使用新模型进行训练
+[2025-07-26 21:40:38] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 21:40:49] [INFO] 加载词汇表成功，大小: 2506
+[2025-07-26 21:40:50] [WARNING] 嵌入层词汇表大小变化: 2505 -> 2506
+[2025-07-26 21:40:50] [ERROR] 加载模型失败: The expanded size of the tensor (128) must match the existing size (256) at non-singleton dimension 1.  Target sizes: [2505, 128].  Tensor sizes: [2505, 256]
+[2025-07-26 21:40:50] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 21:40:50] [INFO] 将使用新模型进行训练
+[2025-07-26 21:40:51] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 21:41:09] [INFO] 加载词汇表成功，大小: 2506
+[2025-07-26 21:41:10] [WARNING] 嵌入层词汇表大小变化: 2505 -> 2506
+[2025-07-26 21:41:10] [ERROR] 加载模型失败: The expanded size of the tensor (128) must match the existing size (256) at non-singleton dimension 1.  Target sizes: [2505, 128].  Tensor sizes: [2505, 256]
+[2025-07-26 21:41:10] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 21:41:10] [INFO] 将使用新模型进行训练
+[2025-07-26 21:41:11] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-26 22:00:59] [INFO] 加载词汇表成功，大小: 2506
+[2025-07-26 22:01:00] [WARNING] 嵌入层词汇表大小变化: 2505 -> 2506
+[2025-07-26 22:01:00] [ERROR] 加载模型失败: The expanded size of the tensor (128) must match the existing size (256) at non-singleton dimension 1.  Target sizes: [2505, 128].  Tensor sizes: [2505, 256]
+[2025-07-26 22:01:00] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-26 22:01:00] [INFO] 将使用新模型进行训练
+[2025-07-26 22:01:01] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-27 18:04:26] [INFO] 加载词汇表成功，大小: 5740
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: embedding.weight torch.Size([5740, 256]) vs torch.Size([5740, 128])
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: lstm.weight_ih_l0 torch.Size([2048, 256]) vs torch.Size([1024, 128])
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: lstm.weight_hh_l0 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: lstm.bias_ih_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: lstm.bias_hh_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: lstm.weight_ih_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: lstm.weight_hh_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: lstm.bias_ih_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: lstm.bias_hh_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-27 18:04:27] [WARNING] 忽略不存在的参数: lstm.weight_ih_l2
+[2025-07-27 18:04:27] [WARNING] 忽略不存在的参数: lstm.weight_hh_l2
+[2025-07-27 18:04:27] [WARNING] 忽略不存在的参数: lstm.bias_ih_l2
+[2025-07-27 18:04:27] [WARNING] 忽略不存在的参数: lstm.bias_hh_l2
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: layer_norm.weight torch.Size([512]) vs torch.Size([256])
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: layer_norm.bias torch.Size([512]) vs torch.Size([256])
+[2025-07-27 18:04:27] [WARNING] 参数形状不匹配: fc.weight torch.Size([5740, 512]) vs torch.Size([5740, 256])
+[2025-07-27 18:04:27] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-27 18:04:28] [INFO] 检查记忆文件: memory\memory.json

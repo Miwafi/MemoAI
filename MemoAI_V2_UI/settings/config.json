@@ -1,0 +1,6 @@
+{
+  "model_path": "model/dialog_model.pth",
+  "use_gpu": true,
+  "temperature": 5.0,
+  "fetch_from_huggingface": false
+}
