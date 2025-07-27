@@ -1,4 +1,4 @@
-pip install PyQt5
+pip install ttkbootstrap
 pip install requests
 pip install beautifulsoup4
 pip install torch
