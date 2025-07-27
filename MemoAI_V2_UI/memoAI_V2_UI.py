@@ -11,6 +11,7 @@ import random
 import datetime
 import os
 import sys
+from modules.system_check import SystemChecker
 import re
 from urllib.parse import quote
 import requests
@@ -307,14 +308,24 @@ class LSTMDialogNet(nn.Module):
         super().__init__()
         # 添加embedding层定义
         self.embedding = nn.Embedding(vocab_size, config.embedding_dim)
+        # 定义LSTM层
+        self.lstm = nn.LSTM(
+            input_size=config.embedding_dim,
+            hidden_size=config.hidden_size,
+            num_layers=config.num_layers,
+            batch_first=True
+        )
         # 在LSTM层后添加层归一化
         self.layer_norm = nn.LayerNorm(config.hidden_size)
+        # 定义全连接层
+        self.fc = nn.Linear(config.hidden_size, vocab_size)
         
     def forward(self, x, hidden):
         x = self.embedding(x)
         out, hidden = self.lstm(x, hidden)
         out = self.layer_norm(out)  # 新增
         out = self.fc(out)
+        return out, hidden  # 添加返回语句
     
     def init_hidden(self, batch_size):
         """初始化隐藏状态"""
@@ -340,7 +351,7 @@ class LSTMDialogNet(nn.Module):
         if os.path.exists(path):
             try:
                 # 尝试加载模型并处理设备兼容性
-                state_dict = torch.load(path, map_location=config.device)
+                state_dict = torch.load(path, map_location=config.device, weights_only=False)
                 current_state = self.state_dict()
                 filtered_state = {}
                 
@@ -394,7 +405,7 @@ class LSTMDialogNet(nn.Module):
                     filtered_state[name] = param
                 
                 current_state.update(filtered_state)
-                self.load_state_dict(current_state)
+                self.load_state_dict(current_state, strict=False)
                 self.to(config.device)
                 log_event(f"模型已从 {path} 加载")
                 return True
@@ -563,7 +574,7 @@ class AICore:
             # 新增：加载预训练模型权重
             if os.path.exists(config.model_path):
                 try:
-                    state_dict = torch.load(config.model_path, map_location=config.device)
+                    state_dict = torch.load(config.model_path, map_location=config.device, weights_only=False)
                     self.model.load_state_dict(state_dict)
                     log_event("成功加载预训练模型权重")
                 except Exception as e:
@@ -1316,12 +1327,33 @@ class AICore:
                 # 添加温度参数调整概率分布
                 temperature = 0.5  # 降低温度使输出更确定
                 output = output.squeeze(1)
+                
+                # 修复1: 检查并处理无效值
+                output = torch.clamp(output, min=-1e10, max=1e10)  # 防止数值溢出
+                
+                # 应用温度缩放
                 output = F.softmax(output / temperature, dim=1)
                 
-                # 过滤低概率字符
+                # 修复2: 改进概率过滤和归一化
                 min_prob = 0.01
+                # 只保留概率最高的前N个选项，避免过度过滤
+                top_k = 50
+                if output.size(1) > top_k:
+                    values, indices = torch.topk(output, top_k)
+                    mask = torch.zeros_like(output)
+                    mask.scatter_(1, indices, 1)
+                    output = output * mask
+                
+                # 过滤低概率字符
                 output[output < min_prob] = 0
-                output = output / output.sum()  # 重新归一化
+                
+                # 安全归一化
+                total = output.sum()
+                if total > 0:
+                    output = output / total
+                else:
+                    # 当所有概率都被过滤时，使用均匀分布
+                    output = torch.ones_like(output) / output.size(1)
                 
                 top_idx = torch.multinomial(output, 1).item()
                 output_seq.append(top_idx)
@@ -1411,6 +1443,7 @@ class App:
         
         # 创建UI
         self.create_widgets()
+        self.pack_widgets()  # 确保有布局管理器调用
         
         # 启动系统自检
         self.run_system_check()
@@ -1438,12 +1471,12 @@ class App:
         self.style.configure('SystemSuccess.TLabel', background='#00cc66', foreground='white')   # 保留成功状态的绿色
         
         # 主框架
-        main_frame = ttk.Frame(self.root)
-        main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        self.main_frame = ttk.Frame(self.root)  # 添加self.前缀
+        self.main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
 
         # 右侧内容框架 - 垂直排列聊天区域和控制区域
-        right_frame = ttk.Frame(main_frame)
+        right_frame = ttk.Frame(self.main_frame)
         right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # 聊天框架
@@ -1470,20 +1503,20 @@ class App:
         self.chat_canvas.bind_all("<MouseWheel>", self._on_mousewheel)
         
         # 输入框架
-        input_frame = ttk.Frame(right_frame)
-        input_frame.pack(fill=tk.X, pady=(0, 10))
+        self.input_frame = ttk.Frame(right_frame)  # 添加self.前缀
+        self.input_frame.pack(fill=tk.X, pady=(0, 10))
 
         # 就绪状态标签
-        self.status_label = ttk.Label(input_frame, text=self.get_text('READY_STATUS'), foreground="green")
+        self.status_label = ttk.Label(self.input_frame, text=self.get_text('READY_STATUS'), foreground="green")
         self.status_label.pack(side=tk.LEFT, padx=(0, 10))
 
         # 用户输入框（缩短并居中）
-        self.user_input = ttk.Entry(input_frame, font=('SimHei', 10), width=40)  # 设置固定宽度
+        self.user_input = ttk.Entry(self.input_frame, font=('SimHei', 10), width=40)  # 设置固定宽度
         self.user_input.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
         self.user_input.bind("<Return>", lambda e: self.send_message() if self.user_input['state'] == 'normal' else None)
 
         # 发送按钮
-        self.send_btn = RoundedButton(input_frame, text=self.get_text('SEND_BTN'), command=lambda: self.send_message() if self.ai_state == 'idle' else None)
+        self.send_btn = RoundedButton(self.input_frame, text=self.get_text('SEND_BTN'), command=lambda: self.send_message() if self.ai_state == 'idle' else None)
         self.send_btn.pack(side=tk.LEFT)
         
         # 状态和控制框架
@@ -1519,6 +1552,19 @@ class App:
         self.quit_btn = RoundedButton(btn_frame, text="退出", command=self.quit_app)
         self.quit_btn.pack(side=tk.RIGHT, padx=5)
     
+    def pack_widgets(self):
+        """布局UI组件"""
+        # 布局主框架
+        self.main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        # 布局聊天历史区域
+        self.chat_history.pack(fill=tk.BOTH, expand=True)
+        # 布局输入区域
+        self.input_frame.pack(fill=tk.X, padx=10, pady=10)
+        # 布局发送按钮
+        self.send_btn.pack(side=tk.RIGHT, padx=10, pady=5)
+        # 布局用户输入框
+        self.user_input.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=10, pady=5)
+
 
     def set_language(self, lang):
         self.current_language = lang
@@ -1802,20 +1848,21 @@ class App:
         msg_label.pack(fill=tk.BOTH, expand=True)
 
         # 打字动画效果
+        # 打字动画效果
         if typing_animation and sender == "ai":
-            self._type_text_animation(msg_label, text, 0)
-        
-        # 强制刷新UI
-        self.chat_history.update_idletasks()
-        
-        # 滚动到底部
-        self.chat_canvas.after_idle(lambda: self.chat_canvas.yview_moveto(1.0))
+            # 修改1: 添加动画完成回调
+            self._type_text_animation(msg_label, text, 0, self.scroll_to_bottom)
+        else:
+            # 修改2: 非动画消息立即滚动
+            self.scroll_to_bottom()
     
-    def _type_text_animation(self, label, text, index):
+    def _type_text_animation(self, label, text, index, callback=None):
         if index < len(text):
             current_text = label.cget("text") + text[index]
             label.config(text=current_text)
-            self.root.after(30, self._type_text_animation, label, text, index + 1)
+            self.root.after(30, self._type_text_animation, label, text, index + 1, callback)
+        elif callback:
+            callback()
 
     def process_operations(self, expression):
         """处理四则运算请求"""
@@ -2221,15 +2268,13 @@ class App:
         if hasattr(self, 'check_window') and self.check_window.winfo_exists():
             self.check_window.destroy()
         self.root.destroy()
-    
-    def start_thought_processing(self):
-        """启动想法处理线程"""
-        self.thought_thread = threading.Thread(target=self._thought_generator, daemon=True)
-        self.thought_thread.start()
-        self.root.after(100, self._update_thought_display)
-    
-    
-    
+
+    def scroll_to_bottom(self):
+        """滚动到底部的专用方法"""
+        self.chat_history.update_idletasks()
+        self.chat_canvas.configure(scrollregion=self.chat_canvas.bbox("all"))
+        self.chat_canvas.yview_moveto(1.0)
+
     def update_ai_state(self, state):
         """更新AI状态并控制输入框可用性"""
         self.ai_state = state
@@ -2256,22 +2301,84 @@ class App:
 # 主程序入口
 if __name__ == "__main__":
     try:
-        # 系统自检
-        if not system_check():
-            sys.exit(1)
+        # 创建隐藏的主窗口
+        root = tk.Tk()
+        root.withdraw()  # 先隐藏主窗口
         
-        # 创建主窗口
-        root = ttkb.Window(themename="cosmo")
+        # 创建自检窗口
+        class SystemCheckWindow(tk.Toplevel):
+            def __init__(self, parent):
+                super().__init__(parent)
+                self.parent = parent
+                self.title("系统加载")
+                self.geometry("400x300")
+                self.resizable(False, False)
+                self.errors = []
+                
+                # 进度条（首位）
+                self.progress_var = tk.DoubleVar()
+                self.progress_bar = ttk.Progressbar(self, variable=self.progress_var, length=350)
+                self.progress_bar.pack(pady=20)
+                
+                # 检查项目标签（进度条下方）
+                self.check_label = ttk.Label(self, text="开始系统自检...")
+                self.check_label.pack(pady=10)
+                
+                # 执行检查
+                self.checks = [
+                    ("加载目录", SystemChecker.check_directories),
+            ("加载完成，请手动关闭窗口", SystemChecker.check_dependencies)
+                ]
+                self.current_check = 0
+                self.after(100, self.run_checks)
+                
+            def run_checks(self):
+                if self.current_check < len(self.checks):
+                    check_name, check_func = self.checks[self.current_check]
+                    self.check_label.config(text=f"{check_name}...")
+                    
+                    # 更新进度
+                    progress = (self.current_check / len(self.checks)) * 100
+                    self.progress_var.set(progress)
+                    
+                    # 执行检查
+                    try:
+                        if not check_func():
+                            self.errors.append(f"{check_name}失败")
+                    except Exception as e:
+                        self.errors.append(f"{check_name}错误: {str(e)}")
+                    
+                    self.current_check += 1
+                    self.after(500, self.run_checks)  # 延迟显示下一项
+                else:
+                    self.progress_var.set(100)
+                    self.complete_check()
+                
+            def complete_check(self):
+                if self.errors:
+                    self.check_label.config(text="自检发现异常，请联系开发者索要帮助")
+                    # 显示错误列表
+                    error_text = tk.Text(self, height=6, width=45, state=tk.NORMAL)
+                    error_text.pack(pady=10)
+                    error_text.insert(tk.END, "\n".join(self.errors))
+                    error_text.config(state=tk.DISABLED)
+                else:
+                    self.parent.title("MemoAI V2")
+                    self.parent.geometry("800x600")
+                    self.parent.option_add("*Font", "SimHei 10")
+        
+        # 显示自检窗口
+        check_window = SystemCheckWindow(root)
+        root.wait_window(check_window)  # 等待自检窗口关闭
+        
+        # 自检通过，初始化主应用
         root.title("MemoAI V2")
         root.geometry("800x600")
-        
-        # 确保中文显示正常
         root.option_add("*Font", "SimHei 10")
-        
-        # 创建应用实例
         app = App(root)
         
-        # 启动主循环
+        # 显示主窗口并启动事件循环
+        root.deiconify()
         root.mainloop()
     except Exception as e:
         # 捕获并记录启动异常
