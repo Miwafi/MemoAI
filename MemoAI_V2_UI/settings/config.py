@@ -21,7 +21,8 @@ class Config:
         self.embedding_dim = config_data.get('embedding_dim', 128)
         self.learning_rate = config_data.get('learning_rate', 0.001)
         self.fetch_from_huggingface = config_data.get('fetch_from_huggingface', False)
-        
+        self.batch_size = 32
+
         # 设备配置
         self.device = 'cuda' if (self.use_gpu and self._is_cuda_available()) else 'cpu'
 

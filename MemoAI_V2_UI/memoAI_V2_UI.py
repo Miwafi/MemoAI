@@ -65,7 +65,7 @@ def generate_response(self, input_text):
         return random.choice(template_responses)
     
     # 添加温度缩放增强多样性
-    logits = model_output / config.temperature
+    # logits = model_output / config.temperature
 # 添加基于规则的初始对话模板
 class DataManager:
     """数据管理类，负责记忆存储和加载"""
@@ -428,12 +428,27 @@ class AICore:
         self.is_training = False
         self.training_stop_event = threading.Event()
         self.loss_history = []
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "zh-CN,zh;q=0.9",
+            "Connection": "keep-alive"
+        }
         
         # 尝试加载现有模型
         self.model_loaded = self.model.load_model(config.model_path)
         if not self.model_loaded:
             log_event("警告：未加载任何模型，响应质量可能不佳", 'warning')
             log_event("将使用新模型进行训练")
+
+    def check_network(self):
+        """检查网络连接状态"""
+        try:
+            import requests
+            response = requests.get("https://www.baidu.com", timeout=5)
+            return response.status_code == 200, "网络连接正常"
+        except:
+            return False, "网络连接失败"
     
     def preprocess_data(self, memory=None):
         """预处理数据用于训练"""
@@ -599,13 +614,13 @@ class AICore:
         auto_train = epochs is None
         if auto_train:
             epochs = 3  # 自动训练使用3轮迭代
-            batch_size = min(config.batch_size * 2, 64)  # 增大batch_size加速训练
+            config.batch_size = min(config.batch_size * 2, 64)  # 增大batch_size加速训练
         
         # 新增：训练超时控制
         def train_with_timeout():
             # 设置训练超时（自动训练180秒，手动训练300秒）
             timeout = 180 if auto_train else 300
-            train_thread = threading.Thread(target=self.train, args=(epochs, progress_callback, batch_size if auto_train else None))
+            train_thread = threading.Thread(target=self.train, args=(epochs, progress_callback))
             train_thread.daemon = True
             train_thread.start()
             train_thread.join(timeout)
@@ -631,17 +646,20 @@ class AICore:
         if not self.loss_history:
             log_event("没有损失历史记录可供绘制", 'warning')
             return
-        
+
+        # 只保留 Windows 系统默认必装的中文字体
+        plt.rcParams["font.family"] = ["SimSun", "Microsoft YaHei"]  # 宋体优先，微软雅黑备选
+        plt.rcParams["axes.unicode_minus"] = False  # 确保负号正常显示
         plt.figure(figsize=(10, 6))
         plt.plot(range(1, len(self.loss_history)+1), self.loss_history, marker='o', linestyle='-', color='b')
-        plt.title('训练损失变化')
-        plt.xlabel('Epoch')
-        plt.ylabel('Loss')
+        plt.title('训练损失变化', fontproperties="SimHei")  # 直接指定字体
+        plt.xlabel('Epoch', fontproperties="SimHei")
+        plt.ylabel('Loss', fontproperties="SimHei")
         plt.grid(True)
         
         # 保存图像
         loss_plot_path = os.path.join(config.log_dir, 'loss_history.png')
-        plt.savefig(loss_plot_path)
+        plt.savefig(loss_plot_path, dpi=300)# 增加dpi确保清晰度
         plt.close()
         log_event(f"损失历史曲线已保存到 {loss_plot_path}")
     
@@ -709,35 +727,6 @@ class AICore:
         """自主学习，使用现有记忆进行训练"""
         log_event("开始自主学习...")
         return self.start_training_thread(epochs=5, progress_callback=progress_callback)
-    def online_learn(self, query):
-        online_knowledge = []
-        try:
-            # 网络请求逻辑
-            url = f"https://www.baidu.com/s?wd={quote(query)}"
-            response = requests.get(url, headers=self.headers, timeout=10)
-            response.raise_for_status()
-            soup = BeautifulSoup(response.text, 'html.parser')
-            results = soup.select('.result')
-
-            for result in results[:3]:  # 取前3条结果
-                title_tag = result.select_one('.t a')
-                summary_tag = result.select_one('.c-abstract')
-                if title_tag and summary_tag:
-                    title = title_tag.get_text(strip=True)
-                    summary = summary_tag.get_text(strip=True)
-                    online_knowledge.append({
-                        "user": f"什么是{title}?",
-                        "ai": summary
-                    })
-
-            log_event(f"成功获取 {len(online_knowledge)} 条新知识")
-            return online_knowledge
-
-        except Exception as e:
-            # 错误处理逻辑
-            log_event(f"联网获取知识失败: {str(e)}, URL: {url if 'url' in locals() else '未知'}", 'error')
-            print(f"[网络漫游]错误: {str(e)}, URL: {url if 'url' in locals() else '未知'}")
-            return None
 
         # 获取在线知识
         online_knowledge = fetch_online_knowledge()
