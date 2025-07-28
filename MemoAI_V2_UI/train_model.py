@@ -291,15 +291,24 @@ class ModelTrainer:
         logging.info('训练完成!')
         return True
 
-    def load_tr_corpus(self, folder_path='TR'):
+    def load_tr_corpus(self, folder_path=None):
         """加载TR文件夹中的文本文件"""
+        if folder_path is None:
+            # 使用相对于当前脚本文件的路径
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            folder_path = os.path.join(script_dir, 'TR')
+        
         # 获取绝对路径确保稳定性
         abs_folder_path = os.path.abspath(folder_path)
+        logging.info(f'尝试加载TR目录: {abs_folder_path}')
+        
         if not os.path.exists(abs_folder_path):
             logging.error(f'TR文件夹不存在: {abs_folder_path}')
             return []
         
         corpus = []  # 确保这是字符串列表
+        files_found = 0
+        files_processed = 0
         
         for filename in os.listdir(abs_folder_path):
             file_path = os.path.join(abs_folder_path, filename)
@@ -309,6 +318,8 @@ class ModelTrainer:
             # 只处理txt文件
             if not filename.lower().endswith('.txt'):
                 continue
+                
+            files_found += 1
             
             try:
                 # 尝试多种编码读取
@@ -328,23 +339,42 @@ class ModelTrainer:
             
                 # 读取全部文本并清洗
                 text = re.sub(r'\s+', ' ', text).strip()
+                if not text:
+                    logging.warning(f'文件内容为空: {filename}')
+                    continue
+                    
                 # 按标点符号分割句子（保留标点）
-                sentences = re.split(r'(。|！|？|，|；)', text)
+                sentences = re.split(r'(。|！|？|，|；|\.|!|\?|,)', text)
+                
                 # 重组句子（将标点与文本合并）
                 combined = []
-                for i in range(0, len(sentences), 2):
-                    if i+1 < len(sentences):
-                        # 确保只添加字符串，不添加元组
-                        combined.append(f'{sentences[i]}{sentences[i+1]}')
-                # 处理最后可能剩余的文本
-                if len(sentences) % 2 != 0:
-                    combined.append(sentences[-1])
-                # 确保只扩展字符串列表
-                corpus.extend(combined)
+                if len(sentences) == 1:
+                    # 如果没有标点符号，按固定长度切分
+                    text_content = sentences[0]
+                    chunk_size = 50  # 每50字符切分一段
+                    for i in range(0, len(text_content), chunk_size):
+                        chunk = text_content[i:i+chunk_size].strip()
+                        if chunk:
+                            combined.append(chunk)
+                else:
+                    # 正常处理有标点符号的情况
+                    for i in range(0, len(sentences), 2):
+                        if i+1 < len(sentences):
+                            combined.append(f'{sentences[i]}{sentences[i+1]}')
+                        elif i < len(sentences):
+                            combined.append(sentences[i])
                 
-                logging.info(f'加载文件: {filename}, 句子数: {len(combined)}')
+                # 确保只扩展字符串列表
+                valid_sentences = [s for s in combined if s.strip()]
+                corpus.extend(valid_sentences)
+                files_processed += 1
+                
+                logging.info(f'加载文件: {filename}, 句子数: {len(valid_sentences)}')
             except Exception as e:
                 logging.error(f'读取文件失败 {file_path}: {str(e)}')
+        
+        logging.info(f'总共找到 {files_found} 个txt文件，成功处理 {files_processed} 个')
+        logging.info(f'最终加载到的总句子数: {len(corpus)}')
         return corpus
 
     def prepare_training_data(self, corpus):
@@ -359,16 +389,44 @@ class ModelTrainer:
         
         # 将所有句子连接成一个长文本
         full_text = ' '.join(corpus)
-        # 按序列长度分割成输入-目标对
-        for i in range(0, len(full_text) - seq_length * 2, seq_length):
-            input_seq = self.encoder.encode(full_text[i:i+seq_length])
-            target_seq = self.encoder.encode(full_text[i+seq_length:i+seq_length*2])
+        text_length = len(full_text)
+        
+        logging.info(f'合并后的文本总长度: {text_length} 字符')
+        logging.info(f'序列长度: {seq_length}, 所需最小长度: {seq_length * 2}')
+        
+        if text_length < seq_length * 2:
+            logging.warning(f'文本长度不足({text_length} < {seq_length * 2})，使用整个文本作为单个样本')
+            # 如果文本太短，使用整个文本并填充
+            input_seq = self.encoder.encode(full_text)
+            # 创建对应的目标序列（偏移一个字符）
+            if len(full_text) > 1:
+                target_text = full_text[1:] + full_text[0]  # 循环移位
+                target_seq = self.encoder.encode(target_text)
+            else:
+                target_seq = input_seq
+            
             inputs.append(input_seq)
             targets.append(target_seq)
+        else:
+            # 正常分割
+            sample_count = 0
+            for i in range(0, len(full_text) - seq_length * 2, seq_length):
+                input_seq = self.encoder.encode(full_text[i:i+seq_length])
+                target_seq = self.encoder.encode(full_text[i+seq_length:i+seq_length*2])
+                inputs.append(input_seq)
+                targets.append(target_seq)
+                sample_count += 1
+            
+            logging.info(f'生成了 {sample_count} 个训练样本')
         
+        if not inputs:
+            logging.error('未能生成任何训练样本')
+            return None, None
+            
         inputs = torch.tensor(inputs, dtype=torch.long).to(self.config.device)
         targets = torch.tensor(targets, dtype=torch.long).to(self.config.device)
         
+        logging.info(f'最终训练数据形状: inputs={inputs.shape}, targets={targets.shape}')
         return inputs, targets
 
 if __name__ == '__main__':
