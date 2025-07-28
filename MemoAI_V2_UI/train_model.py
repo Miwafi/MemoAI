@@ -326,27 +326,25 @@ class ModelTrainer:
                     logging.error(f'所有编码均无法解码文件: {file_path}')
                     continue
             
-            # 读取全部文本并清洗
-            text = f.read()
-            # 移除多余空白和换行
-            text = re.sub(r'\s+', ' ', text).strip()
-            # 按标点符号分割句子（保留标点）
-            sentences = re.split(r'(。|！|？|，|；)', text)
-            # 重组句子（将标点与文本合并）
-            combined = []
-            for i in range(0, len(sentences), 2):
-                if i+1 < len(sentences):
-                    # 确保只添加字符串，不添加元组
-                    combined.append(f'{sentences[i]}{sentences[i+1]}')
-            # 处理最后可能剩余的文本
-            if len(sentences) % 2 != 0:
-                combined.append(sentences[-1])
-            # 确保只扩展字符串列表
-            corpus.extend(combined)
-            
-            logging.info(f'加载文件: {filename}, 句子数: {len(combined)}')
-        except Exception as e:
-            logging.error(f'读取文件失败 {file_path}: {str(e)}')
+                # 读取全部文本并清洗
+                text = re.sub(r'\s+', ' ', text).strip()
+                # 按标点符号分割句子（保留标点）
+                sentences = re.split(r'(。|！|？|，|；)', text)
+                # 重组句子（将标点与文本合并）
+                combined = []
+                for i in range(0, len(sentences), 2):
+                    if i+1 < len(sentences):
+                        # 确保只添加字符串，不添加元组
+                        combined.append(f'{sentences[i]}{sentences[i+1]}')
+                # 处理最后可能剩余的文本
+                if len(sentences) % 2 != 0:
+                    combined.append(sentences[-1])
+                # 确保只扩展字符串列表
+                corpus.extend(combined)
+                
+                logging.info(f'加载文件: {filename}, 句子数: {len(combined)}')
+            except Exception as e:
+                logging.error(f'读取文件失败 {file_path}: {str(e)}')
         return corpus
 
     def prepare_training_data(self, corpus):
