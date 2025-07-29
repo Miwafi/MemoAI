@@ -40,3 +40,98 @@
 [2025-07-29 09:53:07] [WARNING] 警告：未加载任何模型，响应质量可能不佳
 [2025-07-29 09:53:07] [INFO] 将使用新模型进行训练
 [2025-07-29 09:53:08] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-29 11:49:03] [INFO] 加载词汇表成功，大小: 3241
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: embedding.weight torch.Size([3241, 256]) vs torch.Size([3241, 128])
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: lstm.weight_ih_l0 torch.Size([2048, 256]) vs torch.Size([1024, 128])
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: lstm.weight_hh_l0 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: lstm.bias_ih_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: lstm.bias_hh_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: lstm.weight_ih_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: lstm.weight_hh_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: lstm.bias_ih_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: lstm.bias_hh_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:49:04] [WARNING] 忽略不存在的参数: lstm.weight_ih_l2
+[2025-07-29 11:49:04] [WARNING] 忽略不存在的参数: lstm.weight_hh_l2
+[2025-07-29 11:49:04] [WARNING] 忽略不存在的参数: lstm.bias_ih_l2
+[2025-07-29 11:49:04] [WARNING] 忽略不存在的参数: lstm.bias_hh_l2
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: layer_norm.weight torch.Size([512]) vs torch.Size([256])
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: layer_norm.bias torch.Size([512]) vs torch.Size([256])
+[2025-07-29 11:49:04] [WARNING] 参数形状不匹配: fc.weight torch.Size([3241, 512]) vs torch.Size([3241, 256])
+[2025-07-29 11:49:04] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-29 11:49:05] [INFO] 检查记忆文件: memory\memory.json
+[2025-07-29 11:52:47] [INFO] 加载词汇表成功，大小: 3241
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: embedding.weight torch.Size([3241, 256]) vs torch.Size([3241, 128])
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: lstm.weight_ih_l0 torch.Size([2048, 256]) vs torch.Size([1024, 128])
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: lstm.weight_hh_l0 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: lstm.bias_ih_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: lstm.bias_hh_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: lstm.weight_ih_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: lstm.weight_hh_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: lstm.bias_ih_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: lstm.bias_hh_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:52:48] [WARNING] 忽略不存在的参数: lstm.weight_ih_l2
+[2025-07-29 11:52:48] [WARNING] 忽略不存在的参数: lstm.weight_hh_l2
+[2025-07-29 11:52:48] [WARNING] 忽略不存在的参数: lstm.bias_ih_l2
+[2025-07-29 11:52:48] [WARNING] 忽略不存在的参数: lstm.bias_hh_l2
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: layer_norm.weight torch.Size([512]) vs torch.Size([256])
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: layer_norm.bias torch.Size([512]) vs torch.Size([256])
+[2025-07-29 11:52:48] [WARNING] 参数形状不匹配: fc.weight torch.Size([3241, 512]) vs torch.Size([3241, 256])
+[2025-07-29 11:52:48] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-29 11:52:49] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\memory\memory.json
+[2025-07-29 11:54:05] [INFO] 加载词汇表成功，大小: 3241
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: embedding.weight torch.Size([3241, 256]) vs torch.Size([3241, 128])
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: lstm.weight_ih_l0 torch.Size([2048, 256]) vs torch.Size([1024, 128])
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: lstm.weight_hh_l0 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: lstm.bias_ih_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: lstm.bias_hh_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: lstm.weight_ih_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: lstm.weight_hh_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: lstm.bias_ih_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: lstm.bias_hh_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:54:07] [WARNING] 忽略不存在的参数: lstm.weight_ih_l2
+[2025-07-29 11:54:07] [WARNING] 忽略不存在的参数: lstm.weight_hh_l2
+[2025-07-29 11:54:07] [WARNING] 忽略不存在的参数: lstm.bias_ih_l2
+[2025-07-29 11:54:07] [WARNING] 忽略不存在的参数: lstm.bias_hh_l2
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: layer_norm.weight torch.Size([512]) vs torch.Size([256])
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: layer_norm.bias torch.Size([512]) vs torch.Size([256])
+[2025-07-29 11:54:07] [WARNING] 参数形状不匹配: fc.weight torch.Size([3241, 512]) vs torch.Size([3241, 256])
+[2025-07-29 11:54:07] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-29 11:54:07] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_V2_UI\memory\memory.json
+[2025-07-29 11:55:30] [INFO] 加载词汇表成功，大小: 3241
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: embedding.weight torch.Size([3241, 256]) vs torch.Size([3241, 128])
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: lstm.weight_ih_l0 torch.Size([2048, 256]) vs torch.Size([1024, 128])
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: lstm.weight_hh_l0 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: lstm.bias_ih_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: lstm.bias_hh_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: lstm.weight_ih_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: lstm.weight_hh_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: lstm.bias_ih_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: lstm.bias_hh_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:55:32] [WARNING] 忽略不存在的参数: lstm.weight_ih_l2
+[2025-07-29 11:55:32] [WARNING] 忽略不存在的参数: lstm.weight_hh_l2
+[2025-07-29 11:55:32] [WARNING] 忽略不存在的参数: lstm.bias_ih_l2
+[2025-07-29 11:55:32] [WARNING] 忽略不存在的参数: lstm.bias_hh_l2
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: layer_norm.weight torch.Size([512]) vs torch.Size([256])
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: layer_norm.bias torch.Size([512]) vs torch.Size([256])
+[2025-07-29 11:55:32] [WARNING] 参数形状不匹配: fc.weight torch.Size([3241, 512]) vs torch.Size([3241, 256])
+[2025-07-29 11:55:32] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-29 11:55:32] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_V2_UI\memory\memory.json
+[2025-07-29 11:56:04] [INFO] 加载词汇表成功，大小: 3241
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: embedding.weight torch.Size([3241, 256]) vs torch.Size([3241, 128])
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: lstm.weight_ih_l0 torch.Size([2048, 256]) vs torch.Size([1024, 128])
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: lstm.weight_hh_l0 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: lstm.bias_ih_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: lstm.bias_hh_l0 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: lstm.weight_ih_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: lstm.weight_hh_l1 torch.Size([2048, 512]) vs torch.Size([1024, 256])
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: lstm.bias_ih_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: lstm.bias_hh_l1 torch.Size([2048]) vs torch.Size([1024])
+[2025-07-29 11:56:05] [WARNING] 忽略不存在的参数: lstm.weight_ih_l2
+[2025-07-29 11:56:05] [WARNING] 忽略不存在的参数: lstm.weight_hh_l2
+[2025-07-29 11:56:05] [WARNING] 忽略不存在的参数: lstm.bias_ih_l2
+[2025-07-29 11:56:05] [WARNING] 忽略不存在的参数: lstm.bias_hh_l2
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: layer_norm.weight torch.Size([512]) vs torch.Size([256])
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: layer_norm.bias torch.Size([512]) vs torch.Size([256])
+[2025-07-29 11:56:05] [WARNING] 参数形状不匹配: fc.weight torch.Size([3241, 512]) vs torch.Size([3241, 256])
+[2025-07-29 11:56:05] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-29 11:56:06] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_V2_UI\memory\memory.json

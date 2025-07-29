@@ -1712,7 +1712,7 @@ class App:
                     self.check_status.config(text="系统自检成功！", foreground="green")
                     log_to_terminal("=== 系统自检完成，所有组件正常 ===")
                     self.check_window.after(2000, self.check_window.destroy)  # 成功后自动关闭
-                    self.status_label.config(text="自检完成", foreground="green")
+                    # 使用系统消息替代不存在的status_label
                     self.add_message("system", "=== 系统自检完成 ===", custom_fg="#9933ff")
                 else:
                     import winsound
@@ -1751,15 +1751,23 @@ class App:
     
     def check_data_manager(self):
         """检查数据管理器状态"""
-        # 修复属性名错误：memory_file → memory_path
-        if hasattr(self.data_manager, 'memory_path'):
-            memory_path = self.data_manager.memory_path
-            # 添加详细日志输出
+        try:
+            # 使用MemoAI_V2_UI目录下的memory路径
+            memory_path = os.path.abspath(os.path.join('MemoAI_V2_UI', 'memory', 'memory.json'))
             log_event(f"检查记忆文件: {memory_path}")
             if os.path.exists(memory_path):
-                return True, f"数据管理器就绪 (记忆文件: {os.path.basename(memory_path)})"
-            return False, f"记忆文件不存在于: {memory_path}"
-        return False, "数据管理器未初始化"
+                file_size = os.path.getsize(memory_path)
+                return True, f"数据管理器就绪 (记忆文件: {os.path.basename(memory_path)}, 大小: {file_size}字节)"
+            
+            # 也检查当前目录下的memory
+            current_memory_path = os.path.abspath(os.path.join('memory', 'memory.json'))
+            if os.path.exists(current_memory_path):
+                file_size = os.path.getsize(current_memory_path)
+                return True, f"数据管理器就绪 (记忆文件: {os.path.basename(current_memory_path)}, 大小: {file_size}字节)"
+                
+            return False, f"记忆文件不存在于: {memory_path} 或 {current_memory_path}"
+        except Exception as e:
+            return False, f"检查记忆文件时出错: {str(e)}"
     
     def check_ai_model(self):
         """检查AI模型状态"""

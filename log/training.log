@@ -1652,3 +1652,234 @@
 2025-07-29 11:21:12,757 - INFO - Epoch 50/50, Average Loss: 3.0195
 2025-07-29 11:21:12,856 - INFO - 模型已保存到 model\dialog_model.pth
 2025-07-29 11:21:12,856 - INFO - 训练完成!
+2025-07-29 11:44:50,356 - INFO - 加载词汇表成功，大小: 3230
+2025-07-29 11:44:50,356 - INFO - 开始模型训练...
+2025-07-29 11:44:50,356 - INFO - 使用设备: cuda
+2025-07-29 11:44:50,357 - INFO - 尝试加载TR目录: f:\InformationTechnology\MemoAI\MemoAI_V2_UI\TR
+2025-07-29 11:44:50,358 - INFO - 加载文件: 本报北京6月24日电 （记者金正波）今年是中国人民抗日战争暨世界反法西.txt, 句子数: 172
+2025-07-29 11:44:50,358 - INFO - 总共找到 1 个txt文件，成功处理 1 个
+2025-07-29 11:44:50,358 - INFO - 最终加载到的总句子数: 172
+2025-07-29 11:44:50,358 - INFO - 合并后的文本总长度: 2918 字符
+2025-07-29 11:44:50,359 - INFO - 序列长度: 100, 所需最小长度: 200
+2025-07-29 11:44:50,405 - INFO - 生成了 28 个训练样本
+2025-07-29 11:44:50,490 - INFO - 最终训练数据形状: inputs=torch.Size([28, 100]), targets=torch.Size([28, 100])
+2025-07-29 11:44:50,490 - INFO - 最终词汇表大小: 3241
+2025-07-29 11:44:50,491 - INFO - 加载现有模型: model\dialog_model.pth
+2025-07-29 11:44:50,565 - WARNING - 词汇表大小变化: 模型3230 → 当前3241
+2025-07-29 11:44:52,253 - INFO - Epoch 1/50, Batch 0/2, Loss: 62.7637
+2025-07-29 11:44:52,300 - INFO - Epoch 1/50, Average Loss: 58.8349
+2025-07-29 11:44:52,349 - INFO - Epoch 2/50, Batch 0/2, Loss: 37.8043
+2025-07-29 11:44:52,386 - INFO - Epoch 2/50, Average Loss: 32.9576
+2025-07-29 11:44:52,426 - INFO - Epoch 3/50, Batch 0/2, Loss: 19.1983
+2025-07-29 11:44:52,463 - INFO - Epoch 3/50, Average Loss: 17.8666
+2025-07-29 11:44:52,503 - INFO - Epoch 4/50, Batch 0/2, Loss: 13.6039
+2025-07-29 11:44:52,540 - INFO - Epoch 4/50, Average Loss: 13.0833
+2025-07-29 11:44:52,573 - INFO - Epoch 5/50, Batch 0/2, Loss: 11.3879
+2025-07-29 11:44:52,603 - INFO - Epoch 5/50, Average Loss: 11.2733
+2025-07-29 11:44:52,636 - INFO - Epoch 6/50, Batch 0/2, Loss: 10.5239
+2025-07-29 11:44:52,665 - INFO - Epoch 6/50, Average Loss: 10.4996
+2025-07-29 11:44:52,699 - INFO - Epoch 7/50, Batch 0/2, Loss: 9.8538
+2025-07-29 11:44:52,730 - INFO - Epoch 7/50, Average Loss: 9.7329
+2025-07-29 11:44:52,762 - INFO - Epoch 8/50, Batch 0/2, Loss: 9.4404
+2025-07-29 11:44:52,793 - INFO - Epoch 8/50, Average Loss: 9.1229
+2025-07-29 11:44:52,827 - INFO - Epoch 9/50, Batch 0/2, Loss: 8.9004
+2025-07-29 11:44:52,857 - INFO - Epoch 9/50, Average Loss: 8.5841
+2025-07-29 11:44:52,891 - INFO - Epoch 10/50, Batch 0/2, Loss: 8.2260
+2025-07-29 11:44:52,923 - INFO - Epoch 10/50, Average Loss: 8.0755
+2025-07-29 11:44:52,956 - INFO - Epoch 11/50, Batch 0/2, Loss: 7.7047
+2025-07-29 11:44:52,987 - INFO - Epoch 11/50, Average Loss: 7.6667
+2025-07-29 11:44:53,022 - INFO - Epoch 12/50, Batch 0/2, Loss: 7.5765
+2025-07-29 11:44:53,052 - INFO - Epoch 12/50, Average Loss: 7.2978
+2025-07-29 11:44:53,087 - INFO - Epoch 13/50, Batch 0/2, Loss: 7.0427
+2025-07-29 11:44:53,117 - INFO - Epoch 13/50, Average Loss: 7.1272
+2025-07-29 11:44:53,149 - INFO - Epoch 14/50, Batch 0/2, Loss: 7.0964
+2025-07-29 11:44:53,180 - INFO - Epoch 14/50, Average Loss: 6.9136
+2025-07-29 11:44:53,212 - INFO - Epoch 15/50, Batch 0/2, Loss: 6.7319
+2025-07-29 11:44:53,243 - INFO - Epoch 15/50, Average Loss: 6.7349
+2025-07-29 11:44:53,276 - INFO - Epoch 16/50, Batch 0/2, Loss: 6.7225
+2025-07-29 11:44:53,306 - INFO - Epoch 16/50, Average Loss: 6.5154
+2025-07-29 11:44:53,338 - INFO - Epoch 17/50, Batch 0/2, Loss: 6.4199
+2025-07-29 11:44:53,368 - INFO - Epoch 17/50, Average Loss: 6.3586
+2025-07-29 11:44:53,399 - INFO - Epoch 18/50, Batch 0/2, Loss: 6.2913
+2025-07-29 11:44:53,429 - INFO - Epoch 18/50, Average Loss: 6.1854
+2025-07-29 11:44:53,461 - INFO - Epoch 19/50, Batch 0/2, Loss: 6.0011
+2025-07-29 11:44:53,491 - INFO - Epoch 19/50, Average Loss: 6.0260
+2025-07-29 11:44:53,524 - INFO - Epoch 20/50, Batch 0/2, Loss: 6.0702
+2025-07-29 11:44:53,554 - INFO - Epoch 20/50, Average Loss: 5.9408
+2025-07-29 11:44:53,586 - INFO - Epoch 21/50, Batch 0/2, Loss: 5.7169
+2025-07-29 11:44:53,617 - INFO - Epoch 21/50, Average Loss: 5.8237
+2025-07-29 11:44:53,649 - INFO - Epoch 22/50, Batch 0/2, Loss: 5.7012
+2025-07-29 11:44:53,679 - INFO - Epoch 22/50, Average Loss: 5.7636
+2025-07-29 11:44:53,711 - INFO - Epoch 23/50, Batch 0/2, Loss: 5.5850
+2025-07-29 11:44:53,742 - INFO - Epoch 23/50, Average Loss: 5.6269
+2025-07-29 11:44:53,774 - INFO - Epoch 24/50, Batch 0/2, Loss: 5.5743
+2025-07-29 11:44:53,804 - INFO - Epoch 24/50, Average Loss: 5.4940
+2025-07-29 11:44:53,836 - INFO - Epoch 25/50, Batch 0/2, Loss: 5.3373
+2025-07-29 11:44:53,867 - INFO - Epoch 25/50, Average Loss: 5.3715
+2025-07-29 11:44:53,899 - INFO - Epoch 26/50, Batch 0/2, Loss: 5.4488
+2025-07-29 11:44:53,929 - INFO - Epoch 26/50, Average Loss: 5.3027
+2025-07-29 11:44:53,961 - INFO - Epoch 27/50, Batch 0/2, Loss: 5.1949
+2025-07-29 11:44:53,994 - INFO - Epoch 27/50, Average Loss: 5.2656
+2025-07-29 11:44:54,030 - INFO - Epoch 28/50, Batch 0/2, Loss: 5.1214
+2025-07-29 11:44:54,061 - INFO - Epoch 28/50, Average Loss: 5.1889
+2025-07-29 11:44:54,093 - INFO - Epoch 29/50, Batch 0/2, Loss: 5.1140
+2025-07-29 11:44:54,125 - INFO - Epoch 29/50, Average Loss: 5.0400
+2025-07-29 11:44:54,157 - INFO - Epoch 30/50, Batch 0/2, Loss: 5.0741
+2025-07-29 11:44:54,187 - INFO - Epoch 30/50, Average Loss: 4.9833
+2025-07-29 11:44:54,219 - INFO - Epoch 31/50, Batch 0/2, Loss: 4.9650
+2025-07-29 11:44:54,249 - INFO - Epoch 31/50, Average Loss: 4.9217
+2025-07-29 11:44:54,282 - INFO - Epoch 32/50, Batch 0/2, Loss: 4.9132
+2025-07-29 11:44:54,313 - INFO - Epoch 32/50, Average Loss: 4.8770
+2025-07-29 11:44:54,348 - INFO - Epoch 33/50, Batch 0/2, Loss: 4.7695
+2025-07-29 11:44:54,381 - INFO - Epoch 33/50, Average Loss: 4.7523
+2025-07-29 11:44:54,412 - INFO - Epoch 34/50, Batch 0/2, Loss: 4.7754
+2025-07-29 11:44:54,443 - INFO - Epoch 34/50, Average Loss: 4.6958
+2025-07-29 11:44:54,476 - INFO - Epoch 35/50, Batch 0/2, Loss: 4.6272
+2025-07-29 11:44:54,506 - INFO - Epoch 35/50, Average Loss: 4.6508
+2025-07-29 11:44:54,538 - INFO - Epoch 36/50, Batch 0/2, Loss: 4.6765
+2025-07-29 11:44:54,569 - INFO - Epoch 36/50, Average Loss: 4.6222
+2025-07-29 11:44:54,600 - INFO - Epoch 37/50, Batch 0/2, Loss: 4.5884
+2025-07-29 11:44:54,631 - INFO - Epoch 37/50, Average Loss: 4.5390
+2025-07-29 11:44:54,663 - INFO - Epoch 38/50, Batch 0/2, Loss: 4.4310
+2025-07-29 11:44:54,698 - INFO - Epoch 38/50, Average Loss: 4.4423
+2025-07-29 11:44:54,734 - INFO - Epoch 39/50, Batch 0/2, Loss: 4.3532
+2025-07-29 11:44:54,764 - INFO - Epoch 39/50, Average Loss: 4.3866
+2025-07-29 11:44:54,796 - INFO - Epoch 40/50, Batch 0/2, Loss: 4.3561
+2025-07-29 11:44:54,827 - INFO - Epoch 40/50, Average Loss: 4.3375
+2025-07-29 11:44:54,860 - INFO - Epoch 41/50, Batch 0/2, Loss: 4.2713
+2025-07-29 11:44:54,893 - INFO - Epoch 41/50, Average Loss: 4.2646
+2025-07-29 11:44:54,925 - INFO - Epoch 42/50, Batch 0/2, Loss: 4.2378
+2025-07-29 11:44:54,956 - INFO - Epoch 42/50, Average Loss: 4.2358
+2025-07-29 11:44:54,991 - INFO - Epoch 43/50, Batch 0/2, Loss: 4.1384
+2025-07-29 11:44:55,026 - INFO - Epoch 43/50, Average Loss: 4.1419
+2025-07-29 11:44:55,062 - INFO - Epoch 44/50, Batch 0/2, Loss: 4.1422
+2025-07-29 11:44:55,094 - INFO - Epoch 44/50, Average Loss: 4.1232
+2025-07-29 11:44:55,130 - INFO - Epoch 45/50, Batch 0/2, Loss: 4.0669
+2025-07-29 11:44:55,163 - INFO - Epoch 45/50, Average Loss: 4.0429
+2025-07-29 11:44:55,202 - INFO - Epoch 46/50, Batch 0/2, Loss: 3.9696
+2025-07-29 11:44:55,238 - INFO - Epoch 46/50, Average Loss: 3.9504
+2025-07-29 11:44:55,273 - INFO - Epoch 47/50, Batch 0/2, Loss: 4.0125
+2025-07-29 11:44:55,307 - INFO - Epoch 47/50, Average Loss: 3.9419
+2025-07-29 11:44:55,342 - INFO - Epoch 48/50, Batch 0/2, Loss: 3.9118
+2025-07-29 11:44:55,373 - INFO - Epoch 48/50, Average Loss: 3.9107
+2025-07-29 11:44:55,408 - INFO - Epoch 49/50, Batch 0/2, Loss: 3.8595
+2025-07-29 11:44:55,440 - INFO - Epoch 49/50, Average Loss: 3.8160
+2025-07-29 11:44:55,474 - INFO - Epoch 50/50, Batch 0/2, Loss: 3.7368
+2025-07-29 11:44:55,507 - INFO - Epoch 50/50, Average Loss: 3.7974
+2025-07-29 11:44:56,070 - INFO - 模型已保存到 model\dialog_model.pth
+2025-07-29 11:44:56,070 - INFO - 训练完成!
+2025-07-29 11:45:03,465 - INFO - 加载词汇表成功，大小: 3241
+2025-07-29 11:45:03,465 - INFO - 开始模型训练...
+2025-07-29 11:45:03,465 - INFO - 使用设备: cuda
+2025-07-29 11:45:03,465 - INFO - 尝试加载TR目录: f:\InformationTechnology\MemoAI\MemoAI_V2_UI\TR
+2025-07-29 11:45:03,466 - INFO - 加载文件: 本报北京6月24日电 （记者金正波）今年是中国人民抗日战争暨世界反法西.txt, 句子数: 172
+2025-07-29 11:45:03,466 - INFO - 总共找到 1 个txt文件，成功处理 1 个
+2025-07-29 11:45:03,466 - INFO - 最终加载到的总句子数: 172
+2025-07-29 11:45:03,466 - INFO - 合并后的文本总长度: 2918 字符
+2025-07-29 11:45:03,467 - INFO - 序列长度: 100, 所需最小长度: 200
+2025-07-29 11:45:03,469 - INFO - 生成了 28 个训练样本
+2025-07-29 11:45:03,562 - INFO - 最终训练数据形状: inputs=torch.Size([28, 100]), targets=torch.Size([28, 100])
+2025-07-29 11:45:03,562 - INFO - 最终词汇表大小: 3241
+2025-07-29 11:45:03,562 - INFO - 加载现有模型: model\dialog_model.pth
+2025-07-29 11:45:04,879 - INFO - Epoch 1/50, Batch 0/2, Loss: 3.7307
+2025-07-29 11:45:04,926 - INFO - Epoch 1/50, Average Loss: 3.8693
+2025-07-29 11:45:04,977 - INFO - Epoch 2/50, Batch 0/2, Loss: 4.1163
+2025-07-29 11:45:05,025 - INFO - Epoch 2/50, Average Loss: 4.0081
+2025-07-29 11:45:05,059 - INFO - Epoch 3/50, Batch 0/2, Loss: 3.6448
+2025-07-29 11:45:05,089 - INFO - Epoch 3/50, Average Loss: 3.7521
+2025-07-29 11:45:05,122 - INFO - Epoch 4/50, Batch 0/2, Loss: 3.6442
+2025-07-29 11:45:05,154 - INFO - Epoch 4/50, Average Loss: 3.6966
+2025-07-29 11:45:05,191 - INFO - Epoch 5/50, Batch 0/2, Loss: 3.4466
+2025-07-29 11:45:05,223 - INFO - Epoch 5/50, Average Loss: 3.4804
+2025-07-29 11:45:05,257 - INFO - Epoch 6/50, Batch 0/2, Loss: 3.3966
+2025-07-29 11:45:05,287 - INFO - Epoch 6/50, Average Loss: 3.3280
+2025-07-29 11:45:05,320 - INFO - Epoch 7/50, Batch 0/2, Loss: 3.2388
+2025-07-29 11:45:05,350 - INFO - Epoch 7/50, Average Loss: 3.2079
+2025-07-29 11:45:05,382 - INFO - Epoch 8/50, Batch 0/2, Loss: 3.1294
+2025-07-29 11:45:05,413 - INFO - Epoch 8/50, Average Loss: 3.1389
+2025-07-29 11:45:05,448 - INFO - Epoch 9/50, Batch 0/2, Loss: 2.9830
+2025-07-29 11:45:05,479 - INFO - Epoch 9/50, Average Loss: 3.0281
+2025-07-29 11:45:05,512 - INFO - Epoch 10/50, Batch 0/2, Loss: 2.9535
+2025-07-29 11:45:05,544 - INFO - Epoch 10/50, Average Loss: 2.9113
+2025-07-29 11:45:05,577 - INFO - Epoch 11/50, Batch 0/2, Loss: 2.8165
+2025-07-29 11:45:05,608 - INFO - Epoch 11/50, Average Loss: 2.8185
+2025-07-29 11:45:05,641 - INFO - Epoch 12/50, Batch 0/2, Loss: 2.6976
+2025-07-29 11:45:05,671 - INFO - Epoch 12/50, Average Loss: 2.7293
+2025-07-29 11:45:05,703 - INFO - Epoch 13/50, Batch 0/2, Loss: 2.7036
+2025-07-29 11:45:05,733 - INFO - Epoch 13/50, Average Loss: 2.6972
+2025-07-29 11:45:05,766 - INFO - Epoch 14/50, Batch 0/2, Loss: 2.5942
+2025-07-29 11:45:05,796 - INFO - Epoch 14/50, Average Loss: 2.5921
+2025-07-29 11:45:05,828 - INFO - Epoch 15/50, Batch 0/2, Loss: 2.5010
+2025-07-29 11:45:05,859 - INFO - Epoch 15/50, Average Loss: 2.5130
+2025-07-29 11:45:05,891 - INFO - Epoch 16/50, Batch 0/2, Loss: 2.4649
+2025-07-29 11:45:05,922 - INFO - Epoch 16/50, Average Loss: 2.4516
+2025-07-29 11:45:05,954 - INFO - Epoch 17/50, Batch 0/2, Loss: 2.4837
+2025-07-29 11:45:05,985 - INFO - Epoch 17/50, Average Loss: 2.3893
+2025-07-29 11:45:06,020 - INFO - Epoch 18/50, Batch 0/2, Loss: 2.3246
+2025-07-29 11:45:06,051 - INFO - Epoch 18/50, Average Loss: 2.2900
+2025-07-29 11:45:06,084 - INFO - Epoch 19/50, Batch 0/2, Loss: 2.2637
+2025-07-29 11:45:06,114 - INFO - Epoch 19/50, Average Loss: 2.2879
+2025-07-29 11:45:06,149 - INFO - Epoch 20/50, Batch 0/2, Loss: 2.2158
+2025-07-29 11:45:06,182 - INFO - Epoch 20/50, Average Loss: 2.2033
+2025-07-29 11:45:06,214 - INFO - Epoch 21/50, Batch 0/2, Loss: 2.2017
+2025-07-29 11:45:06,245 - INFO - Epoch 21/50, Average Loss: 2.1386
+2025-07-29 11:45:06,278 - INFO - Epoch 22/50, Batch 0/2, Loss: 2.0967
+2025-07-29 11:45:06,308 - INFO - Epoch 22/50, Average Loss: 2.0827
+2025-07-29 11:45:06,341 - INFO - Epoch 23/50, Batch 0/2, Loss: 2.0303
+2025-07-29 11:45:06,371 - INFO - Epoch 23/50, Average Loss: 2.0417
+2025-07-29 11:45:06,404 - INFO - Epoch 24/50, Batch 0/2, Loss: 1.9972
+2025-07-29 11:45:06,434 - INFO - Epoch 24/50, Average Loss: 2.0124
+2025-07-29 11:45:06,466 - INFO - Epoch 25/50, Batch 0/2, Loss: 1.9374
+2025-07-29 11:45:06,496 - INFO - Epoch 25/50, Average Loss: 1.9510
+2025-07-29 11:45:06,528 - INFO - Epoch 26/50, Batch 0/2, Loss: 1.9203
+2025-07-29 11:45:06,559 - INFO - Epoch 26/50, Average Loss: 1.9282
+2025-07-29 11:45:06,593 - INFO - Epoch 27/50, Batch 0/2, Loss: 1.8876
+2025-07-29 11:45:06,626 - INFO - Epoch 27/50, Average Loss: 1.8740
+2025-07-29 11:45:06,658 - INFO - Epoch 28/50, Batch 0/2, Loss: 1.8133
+2025-07-29 11:45:06,691 - INFO - Epoch 28/50, Average Loss: 1.8289
+2025-07-29 11:45:06,724 - INFO - Epoch 29/50, Batch 0/2, Loss: 1.7750
+2025-07-29 11:45:06,757 - INFO - Epoch 29/50, Average Loss: 1.7949
+2025-07-29 11:45:06,794 - INFO - Epoch 30/50, Batch 0/2, Loss: 1.8115
+2025-07-29 11:45:06,829 - INFO - Epoch 30/50, Average Loss: 1.7514
+2025-07-29 11:45:06,863 - INFO - Epoch 31/50, Batch 0/2, Loss: 1.7901
+2025-07-29 11:45:06,896 - INFO - Epoch 31/50, Average Loss: 1.7263
+2025-07-29 11:45:06,931 - INFO - Epoch 32/50, Batch 0/2, Loss: 1.6849
+2025-07-29 11:45:06,964 - INFO - Epoch 32/50, Average Loss: 1.6687
+2025-07-29 11:45:07,000 - INFO - Epoch 33/50, Batch 0/2, Loss: 1.6978
+2025-07-29 11:45:07,034 - INFO - Epoch 33/50, Average Loss: 1.6375
+2025-07-29 11:45:07,068 - INFO - Epoch 34/50, Batch 0/2, Loss: 1.5923
+2025-07-29 11:45:07,101 - INFO - Epoch 34/50, Average Loss: 1.6066
+2025-07-29 11:45:07,134 - INFO - Epoch 35/50, Batch 0/2, Loss: 1.5529
+2025-07-29 11:45:07,165 - INFO - Epoch 35/50, Average Loss: 1.5883
+2025-07-29 11:45:07,199 - INFO - Epoch 36/50, Batch 0/2, Loss: 1.5621
+2025-07-29 11:45:07,230 - INFO - Epoch 36/50, Average Loss: 1.5483
+2025-07-29 11:45:07,263 - INFO - Epoch 37/50, Batch 0/2, Loss: 1.5685
+2025-07-29 11:45:07,295 - INFO - Epoch 37/50, Average Loss: 1.5253
+2025-07-29 11:45:07,327 - INFO - Epoch 38/50, Batch 0/2, Loss: 1.5186
+2025-07-29 11:45:07,357 - INFO - Epoch 38/50, Average Loss: 1.4874
+2025-07-29 11:45:07,389 - INFO - Epoch 39/50, Batch 0/2, Loss: 1.4817
+2025-07-29 11:45:07,420 - INFO - Epoch 39/50, Average Loss: 1.4610
+2025-07-29 11:45:07,452 - INFO - Epoch 40/50, Batch 0/2, Loss: 1.4538
+2025-07-29 11:45:07,483 - INFO - Epoch 40/50, Average Loss: 1.4328
+2025-07-29 11:45:07,516 - INFO - Epoch 41/50, Batch 0/2, Loss: 1.4390
+2025-07-29 11:45:07,546 - INFO - Epoch 41/50, Average Loss: 1.4127
+2025-07-29 11:45:07,578 - INFO - Epoch 42/50, Batch 0/2, Loss: 1.4177
+2025-07-29 11:45:07,608 - INFO - Epoch 42/50, Average Loss: 1.3744
+2025-07-29 11:45:07,642 - INFO - Epoch 43/50, Batch 0/2, Loss: 1.4379
+2025-07-29 11:45:07,672 - INFO - Epoch 43/50, Average Loss: 1.3849
+2025-07-29 11:45:07,705 - INFO - Epoch 44/50, Batch 0/2, Loss: 1.3664
+2025-07-29 11:45:07,736 - INFO - Epoch 44/50, Average Loss: 1.3762
+2025-07-29 11:45:07,770 - INFO - Epoch 45/50, Batch 0/2, Loss: 1.3551
+2025-07-29 11:45:07,802 - INFO - Epoch 45/50, Average Loss: 1.3547
+2025-07-29 11:45:07,835 - INFO - Epoch 46/50, Batch 0/2, Loss: 1.3160
+2025-07-29 11:45:07,865 - INFO - Epoch 46/50, Average Loss: 1.3064
+2025-07-29 11:45:07,898 - INFO - Epoch 47/50, Batch 0/2, Loss: 1.3395
+2025-07-29 11:45:07,928 - INFO - Epoch 47/50, Average Loss: 1.2979
+2025-07-29 11:45:07,961 - INFO - Epoch 48/50, Batch 0/2, Loss: 1.2727
+2025-07-29 11:45:07,992 - INFO - Epoch 48/50, Average Loss: 1.2960
+2025-07-29 11:45:08,026 - INFO - Epoch 49/50, Batch 0/2, Loss: 1.3106
+2025-07-29 11:45:08,059 - INFO - Epoch 49/50, Average Loss: 1.2560
+2025-07-29 11:45:08,091 - INFO - Epoch 50/50, Batch 0/2, Loss: 1.2621
+2025-07-29 11:45:08,122 - INFO - Epoch 50/50, Average Loss: 1.2299
+2025-07-29 11:45:08,189 - INFO - 模型已保存到 model\dialog_model.pth
+2025-07-29 11:45:08,190 - INFO - 训练完成!
