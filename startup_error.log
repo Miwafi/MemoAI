@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "f:\InformationTechnology\MemoAI\MemoAI_V2_UI\memoAI_V2_UI.py", line 2303, in <module>
+    app = App(root)
+  File "f:\InformationTechnology\MemoAI\MemoAI_V2_UI\memoAI_V2_UI.py", line 1434, in __init__
+    self.create_widgets()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "f:\InformationTechnology\MemoAI\MemoAI_V2_UI\memoAI_V2_UI.py", line 1496, in create_widgets
+    input_container = ttk.Frame(right_frame, style='InputContainer.TFrame')
+  File "C:\Users\mayn\AppData\Local\Programs\Python\Python313\Lib\site-packages\ttkbootstrap\style.py", line 5196, in __init__
+    ttkstyle = Bootstyle.update_ttk_widget_style(
+        self, style, **kwargs
+    )
+  File "C:\Users\mayn\AppData\Local\Programs\Python\Python313\Lib\site-packages\ttkbootstrap\style.py", line 5295, in update_ttk_widget_style
+    builder_method = builder.name_to_method(method_name)
+  File "C:\Users\mayn\AppData\Local\Programs\Python\Python313\Lib\site-packages\ttkbootstrap\style.py", line 1241, in name_to_method
+    func = getattr(StyleBuilderTTK, method_name)
+AttributeError: type object 'StyleBuilderTTK' has no attribute 'create_input_frame_style'. Did you mean: 'create_frame_style'?
+程序启动失败: type object 'StyleBuilderTTK' has no attribute 'create_input_frame_style'
