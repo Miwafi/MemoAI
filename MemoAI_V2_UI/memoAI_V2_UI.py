@@ -68,7 +68,7 @@ def generate_response(self, input_text):
 class DataManager:
     """数据管理类，负责记忆存储和加载"""
     def __init__(self, config):
-        self.memory_path = os.path.join(config.memory_dir, 'memory.json')
+        self.memory_path = os.path.abspath(os.path.join(config.memory_dir, 'memory.json'))
         self.memory = self.load_memory()
         self.config = config
         # 预加载语义相似度模型
@@ -1472,16 +1472,27 @@ class App:
         chat_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
         
         # 聊天历史滚动区域
-        self.chat_canvas = tk.Canvas(chat_frame)
+        self.chat_canvas = tk.Canvas(chat_frame, bg='#f5f5f5')
         self.chat_scrollbar = ttk.Scrollbar(chat_frame, orient=tk.VERTICAL, command=self.chat_canvas.yview)
         self.chat_history = ttk.Frame(self.chat_canvas, style='ChatFrame.TFrame')
         
-        self.chat_history.bind(
-            "<Configure>",
-            lambda e: self.chat_canvas.configure(scrollregion=self.chat_canvas.bbox("all"))
-        )
+        def _configure_canvas(event):
+            # 确保canvas宽度与frame匹配
+            canvas_width = event.width
+            self.chat_canvas.itemconfig(self.chat_canvas.find_all()[0], width=canvas_width-10)
+            self.chat_canvas.configure(scrollregion=self.chat_canvas.bbox("all"))
         
-        self.chat_canvas.create_window((0, 0), window=self.chat_history, anchor="nw")
+        def _configure_frame(event):
+            # 确保frame宽度与canvas匹配
+            canvas_width = self.chat_canvas.winfo_width()
+            if canvas_width > 0:
+                self.chat_canvas.itemconfig(self.chat_canvas_window, width=canvas_width-10)
+            self.chat_canvas.configure(scrollregion=self.chat_canvas.bbox("all"))
+        
+        self.chat_canvas.bind("<Configure>", _configure_canvas)
+        self.chat_history.bind("<Configure>", _configure_frame)
+        
+        self.chat_canvas_window = self.chat_canvas.create_window((0, 0), window=self.chat_history, anchor="nw")
         self.chat_canvas.configure(yscrollcommand=self.chat_scrollbar.set)
         
         self.chat_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -1508,6 +1519,10 @@ class App:
         self.send_btn = RoundedButton(self.input_frame, text=self.get_text('SEND_BTN'), 
                                     command=lambda: self.send_message_text() if self.ai_state == 'idle' else None)
         self.send_btn.pack(side=tk.LEFT, padx=(0, 5))
+
+        # 状态标签
+        self.status_label = ttk.Label(input_container, text=self.get_text('READY_STATUS'), foreground="green")
+        self.status_label.pack(anchor=tk.W, padx=10, pady=(0, 5))
         
         # 移除了状态和控制框架中的进度条
         
@@ -1809,11 +1824,11 @@ class App:
         """添加消息到聊天历史"""
         # 创建消息框架
         msg_frame = ttk.Frame(self.chat_history)
-        msg_frame.pack(fill=tk.X, padx=5, pady=5)
+        msg_frame.pack(fill=tk.X, padx=5, pady=5, anchor='n')
         
         # 创建消息内容框架
         content_frame = ttk.Frame(msg_frame)
-        content_frame.pack(fill=tk.BOTH, expand=True)
+        content_frame.pack(fill=tk.BOTH, expand=True, padx=5)
         
         # 设置样式
         bg_color = custom_bg if custom_bg else ('#0078d7' if sender == 'user' else '#ffffff' if sender == 'ai' else '#ffd700')
@@ -1844,7 +1859,7 @@ class App:
             msg_text.tag_add('ai', '1.0', 'end')
             
         msg_text.config(state=tk.DISABLED)  # 禁用编辑
-        msg_text.pack(fill=tk.BOTH, expand=True)
+        msg_text.pack(fill=tk.BOTH, expand=True, padx=(5, 15))
         
         # 添加评价按钮（仅AI消息）- 缩小并嵌入回复框下方
         if sender == "ai" and memory_index is not None:
@@ -1873,7 +1888,8 @@ class App:
         if typing_animation and sender == "ai":
             msg_text.config(state=tk.NORMAL)
             msg_text.delete('1.0', 'end')
-            self._type_text_animation_text(msg_text, text, 0, self.scroll_to_bottom)
+            msg_text.insert('1.0', text)
+            self.scroll_to_bottom()
         else:
             self.scroll_to_bottom()
     
