@@ -1768,20 +1768,13 @@ class App:
     def check_data_manager(self):
         """检查数据管理器状态"""
         try:
-            # 使用MemoAI_V2_UI目录下的memory路径
-            memory_path = os.path.abspath(os.path.join('MemoAI_V2_UI', 'memory', 'memory.json'))
+            memory_path = os.path.abspath(os.path.join('memory', 'memory.json'))
             log_event(f"检查记忆文件: {memory_path}")
             if os.path.exists(memory_path):
                 file_size = os.path.getsize(memory_path)
                 return True, f"数据管理器就绪 (记忆文件: {os.path.basename(memory_path)}, 大小: {file_size}字节)"
             
-            # 也检查当前目录下的memory
-            current_memory_path = os.path.abspath(os.path.join('memory', 'memory.json'))
-            if os.path.exists(current_memory_path):
-                file_size = os.path.getsize(current_memory_path)
-                return True, f"数据管理器就绪 (记忆文件: {os.path.basename(current_memory_path)}, 大小: {file_size}字节)"
-                
-            return False, f"记忆文件不存在于: {memory_path} 或 {current_memory_path}"
+            return False, f"记忆文件不存在于: {memory_path}"
         except Exception as e:
             return False, f"检查记忆文件时出错: {str(e)}"
     
@@ -2149,7 +2142,7 @@ class App:
         settings_frame.pack(fill=tk.BOTH, expand=True)
         
         # ===== 添加语言设置区域 =====
-        self.lang_setting_label = ttk.Label(settings_frame, text=self.translations[self.current_language]["LANG_SETTING"], font=('SimHei', 12, 'bold'))
+        self.lang_setting_label = ttk.Label(settings_frame, text=self.translation_manager.get_text("LANG_SETTING", self.current_language), font=('SimHei', 12, 'bold'))
         self.lang_setting_label.pack(anchor=tk.W, pady=(0, 10))
         lang_frame = ttk.Frame(settings_frame)
         lang_frame.pack(anchor=tk.W, pady=(0, 20))
@@ -2170,26 +2163,26 @@ class App:
         self.update_language_buttons()
         
         # ===== 添加网络漫游设置区域 =====
-        self.func_setting_label = ttk.Label(settings_frame, text=self.translations[self.current_language]["FUNC_SETTING"], font=('SimHei', 12, 'bold'))
+        self.func_setting_label = ttk.Label(settings_frame, text=self.translation_manager.get_text("FUNC_SETTING", self.current_language), font=('SimHei', 12, 'bold'))
         self.func_setting_label.pack(anchor=tk.W, pady=(15, 10))
         
         # 网络漫游开关
         self.settings_roaming_var = tk.BooleanVar(value=self.network_roaming_var.get())
-        self.roaming_check = ttk.Checkbutton(settings_frame, text=self.translations[self.current_language]['NETWORK_ROAMING'], variable=self.settings_roaming_var)
+        self.roaming_check = ttk.Checkbutton(settings_frame, text=self.translation_manager.get_text('NETWORK_ROAMING', self.current_language), variable=self.settings_roaming_var)
         self.roaming_check.pack(anchor=tk.W, pady=(0, 10))
         
         # GPU选项
         self.gpu_var = tk.BooleanVar(value=config.use_gpu)
-        self.gpu_check = ttk.Checkbutton(settings_frame, text=self.translations[self.current_language]['GPU_ACCEL'], variable=self.gpu_var, command=self.toggle_gpu)
+        self.gpu_check = ttk.Checkbutton(settings_frame, text=self.translation_manager.get_text('GPU_ACCEL', self.current_language), variable=self.gpu_var, command=self.toggle_gpu)
         self.gpu_check.pack(anchor=tk.W, padx=5, pady=2)
         
         # 添加HuggingFace数据开关
         self.huggingface_var = tk.BooleanVar(value=config.fetch_from_huggingface)
-        self.hf_check = ttk.Checkbutton(settings_frame, text=self.translations[self.current_language]['HF_DATA'], variable=self.huggingface_var)
+        self.hf_check = ttk.Checkbutton(settings_frame, text=self.translation_manager.get_text('HF_DATA', self.current_language), variable=self.huggingface_var)
         self.hf_check.pack(anchor=tk.W, padx=5, pady=2)
         
         # 温度设置
-        self.temp_setting_text = ttk.Label(settings_frame, text=self.translations[self.current_language]['TEMP_SETTING'])
+        self.temp_setting_text = ttk.Label(settings_frame, text=self.translation_manager.get_text('TEMP_SETTING', self.current_language))
         self.temp_setting_text.pack(anchor=tk.W, pady=10)
         
         temp_frame = ttk.Frame(settings_frame)
@@ -2228,7 +2221,7 @@ class App:
             self.settings_window.destroy()
             self.add_message("system", f"设置已保存，温度值: {temperature}")
         
-        self.apply_settings_btn = ttk.Button(self.settings_window, text=self.translations[self.current_language]['APPLY_BTN'], command=apply_settings)
+        self.apply_settings_btn = ttk.Button(self.settings_window, text=self.translation_manager.get_text('APPLY_BTN', self.current_language), command=apply_settings)
         self.apply_settings_btn.pack(side=tk.RIGHT, padx=20, pady=10)
 
 

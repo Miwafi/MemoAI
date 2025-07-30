@@ -1,9 +1,6 @@
 {
   "model_path": "model/dialog_model.pth",
   "use_gpu": true,
-  "temperature": 5.0,
-  "fetch_from_huggingface": false,
-  "memory_dir": "MemoAI_V2_UI/memory",
-  "log_dir": "MemoAI_V2_UI/log",
-  "vocab_path": "model/vocab.json"
+  "temperature": 5,
+  "fetch_from_huggingface": false
 }

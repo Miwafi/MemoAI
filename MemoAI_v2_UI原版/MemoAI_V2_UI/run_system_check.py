@@ -27,7 +27,7 @@ class SystemCheck:
             'status': status,
             'message': message
         })
-        print(f"[{timestamp}] {check_name}: {'✓' if status else '✗'} {message}")
+        print(f"[{timestamp}] {check_name}: {'PASS' if status else 'FAIL'} {message}")
     
     def check_data_manager(self):
         """检查数据管理器"""
@@ -127,9 +127,9 @@ class SystemCheck:
         failed_checks = [r for r in self.check_results if not r['status'] and '开始' not in r['check']]
         
         if not failed_checks:
-            print("✓ 所有检查项均通过，系统运行正常！")
+            print("[OK] 所有检查项均通过，系统运行正常！")
         else:
-            print("✗ 以下检查项失败：")
+            print("[ERROR] 以下检查项失败：")
             for check in failed_checks:
                 print(f"  - {check['check']}: {check['message']}")
         

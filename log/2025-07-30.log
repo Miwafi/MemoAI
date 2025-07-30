@@ -1,0 +1,40 @@
+[2025-07-30 12:28:50] [WARNING] 词汇表文件不存在，使用默认词汇表
+[2025-07-30 12:28:52] [ERROR] 模型文件不存在: model/dialog_model.pth
+[2025-07-30 12:28:52] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-30 12:28:52] [INFO] 将使用新模型进行训练
+[2025-07-30 12:28:52] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 12:30:40] [WARNING] 词汇表文件不存在，使用默认词汇表
+[2025-07-30 12:30:41] [ERROR] 模型文件不存在: model/dialog_model.pth
+[2025-07-30 12:30:41] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-30 12:30:41] [INFO] 将使用新模型进行训练
+[2025-07-30 12:30:41] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 12:32:23] [WARNING] 词汇表文件不存在，使用默认词汇表
+[2025-07-30 12:32:24] [ERROR] 模型文件不存在: model/dialog_model.pth
+[2025-07-30 12:32:24] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-30 12:32:24] [INFO] 将使用新模型进行训练
+[2025-07-30 12:32:24] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 12:34:17] [WARNING] 词汇表文件不存在，使用默认词汇表
+[2025-07-30 12:34:18] [ERROR] 模型文件不存在: model/dialog_model.pth
+[2025-07-30 12:34:18] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-30 12:34:18] [INFO] 将使用新模型进行训练
+[2025-07-30 12:34:19] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 12:35:43] [WARNING] 词汇表文件不存在，使用默认词汇表
+[2025-07-30 12:35:44] [ERROR] 模型文件不存在: model/dialog_model.pth
+[2025-07-30 12:35:44] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-30 12:35:44] [INFO] 将使用新模型进行训练
+[2025-07-30 12:35:45] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 12:40:49] [WARNING] 词汇表文件不存在，使用默认词汇表
+[2025-07-30 12:40:51] [ERROR] 模型文件不存在: model/dialog_model.pth
+[2025-07-30 12:40:51] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-30 12:40:51] [INFO] 将使用新模型进行训练
+[2025-07-30 12:40:51] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 13:31:32] [WARNING] 词汇表文件不存在，使用默认词汇表
+[2025-07-30 13:31:33] [ERROR] 模型文件不存在: model/dialog_model.pth
+[2025-07-30 13:31:33] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-30 13:31:33] [INFO] 将使用新模型进行训练
+[2025-07-30 13:31:33] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\memory\memory.json
+[2025-07-30 13:33:46] [WARNING] 词汇表文件不存在，使用默认词汇表
+[2025-07-30 13:33:47] [ERROR] 模型文件不存在: model/dialog_model.pth
+[2025-07-30 13:33:47] [WARNING] 警告：未加载任何模型，响应质量可能不佳
+[2025-07-30 13:33:47] [INFO] 将使用新模型进行训练
+[2025-07-30 13:33:47] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\memory\memory.json

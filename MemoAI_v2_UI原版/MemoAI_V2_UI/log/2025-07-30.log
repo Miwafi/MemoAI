@@ -30,3 +30,32 @@
 [2025-07-30 12:19:08] [INFO] 加载词汇表成功，大小: 37
 [2025-07-30 12:19:09] [INFO] 模型已从 model/dialog_model.pth 加载
 [2025-07-30 12:19:09] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_v2_UI原版\MemoAI_V2_UI\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 12:34:49] [INFO] 加载词汇表成功，大小: 37
+[2025-07-30 12:34:50] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-30 12:34:51] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_v2_UI原版\MemoAI_V2_UI\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 12:35:21] [ERROR] 保存记忆失败: [Errno 2] No such file or directory: 'F:\\InformationTechnology\\MemoAI\\MemoAI_v2_UI原版\\MemoAI_V2_UI\\MemoAI_V2_UI\\memory\\memory.json'
+[2025-07-30 12:36:15] [INFO] 加载词汇表成功，大小: 37
+[2025-07-30 12:36:16] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-30 12:36:17] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_v2_UI原版\MemoAI_V2_UI\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 13:42:58] [INFO] 加载词汇表成功，大小: 37
+[2025-07-30 13:42:59] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-30 13:43:00] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_v2_UI原版\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 13:43:42] [INFO] 推理时词汇表大小已更新: 37 -> 44，重新创建模型
+[2025-07-30 13:45:40] [INFO] 加载词汇表成功，大小: 44
+[2025-07-30 13:45:41] [WARNING] 嵌入层词汇表大小变化: 37 -> 44
+[2025-07-30 13:45:41] [WARNING] 全连接层词汇表大小变化: 37 -> 44
+[2025-07-30 13:45:41] [WARNING] 全连接层词汇表大小变化: 37 -> 44
+[2025-07-30 13:45:41] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-30 13:45:42] [INFO] 检查记忆文件: f:\InformationTechnology\MemoAI\MemoAI_v2_UI原版\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 13:48:25] [INFO] 加载词汇表成功，大小: 44
+[2025-07-30 13:48:26] [WARNING] 嵌入层词汇表大小变化: 37 -> 44
+[2025-07-30 13:48:26] [WARNING] 全连接层词汇表大小变化: 37 -> 44
+[2025-07-30 13:48:26] [WARNING] 全连接层词汇表大小变化: 37 -> 44
+[2025-07-30 13:48:26] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-30 13:48:26] [INFO] 检查记忆文件: F:\InformationTechnology\MemoAI\MemoAI_v2_UI原版\MemoAI_V2_UI\memory\memory.json
+[2025-07-30 13:50:24] [INFO] 加载词汇表成功，大小: 44
+[2025-07-30 13:50:25] [WARNING] 嵌入层词汇表大小变化: 37 -> 44
+[2025-07-30 13:50:25] [WARNING] 全连接层词汇表大小变化: 37 -> 44
+[2025-07-30 13:50:25] [WARNING] 全连接层词汇表大小变化: 37 -> 44
+[2025-07-30 13:50:25] [INFO] 模型已从 model/dialog_model.pth 加载
+[2025-07-30 13:50:25] [INFO] 检查记忆文件: f:\InformationTechnology\MemoAI\MemoAI_v2_UI原版\MemoAI_V2_UI\memory\memory.json
