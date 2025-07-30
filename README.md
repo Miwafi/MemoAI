@@ -50,7 +50,7 @@ AI生成内容仅供参考，请使用者自行甄别。因使用本文件引发
 | 钉钉 | 群号：139375004749 |
 
 ## 宣发视频（中文版）
-制作中
+[哔哩哔哩视频：HelloMemo](https://www.bilibili.com/video/BV1PihAz5EAR)
 
 =====
 
@@ -104,8 +104,8 @@ Join developer communities:
 | QQ Group | ID: 1017170337        |
 | DingTalk | ID: 139375004749      |
 
-## Promotional Video (English)
-Pending production
+## Promotional Video (Chinese)
+[bilibili video：HelloMemo](https://www.bilibili.com/video/BV1PihAz5EAR)
 
 =====
 
@@ -159,8 +159,8 @@ AI生成内容は参考情報です。使用に伴う**一切の結果につい�
 | QQグループ      | ID: 1017170337    |
 | DingTalk        | ID: 139375004749  |
 
-## 紹介動画 (日本語版)
-制作中
+## 紹介動画 (中国語版)
+[ビリビリのあにめ](https://www.bilibili.com/video/BV1PihAz5EAR)
 
 =====
 

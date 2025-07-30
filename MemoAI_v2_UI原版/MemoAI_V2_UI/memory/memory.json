@@ -278,5 +278,26 @@
     "ai": "你好",
     "is_approved": false,
     "is_disapproved": false
+  },
+  {
+    "timestamp": "2025-07-30 13:59:03",
+    "user": "什么是开源软件",
+    "ai": "根nt据e根根A用是么。o么ef什oo。，nkw d么用w",
+    "is_approved": false,
+    "is_disapproved": false
+  },
+  {
+    "timestamp": "2025-07-30 13:59:16",
+    "user": "什么是开源软件？",
+    "ai": "开源软件是指源代码可以被公众获取的软件，任何人都可以查看、修改和分发，遵循开源协议，如Linux操作系统、Python编程语言、Apache服务器等，开源软件促进了知识共享和技术创新",
+    "is_approved": false,
+    "is_disapproved": false
+  },
+  {
+    "timestamp": "2025-07-30 14:00:32",
+    "user": "什么是开源软件？",
+    "ai": "开源软件是指源代码可以被公众获取的软件，任何人都可以查看、修改和分发，遵循开源协议，如Linux操作系统、Python编程语言、Apache服务器等，开源软件促进了知识共享和技术创新",
+    "is_approved": false,
+    "is_disapproved": false
   }
 ]
