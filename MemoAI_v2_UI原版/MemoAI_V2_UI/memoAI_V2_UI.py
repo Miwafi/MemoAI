@@ -22,6 +22,10 @@ import matplotlib.pyplot as plt
 from modules.logger import log_event
 from settings.config import Config
 config = Config()
+
+# 初始化翻译管理器
+from laun import TranslationManager
+translation_manager = TranslationManager()
 # 配置和常量
 # 翻译文件
 
@@ -30,16 +34,16 @@ config = Config()
 # 系统自检
 def system_check():
     """系统环境自检"""
-    log_event(laun.laun['中文']['SYSCheck'])
+    log_event(translation_manager.get_text('SYSCheck', '中文'))
     
     # 检查必要目录
     for dir_path in [config.log_dir, config.memory_dir, 'model']:
         if not os.path.exists(dir_path):
             try:
                 os.makedirs(dir_path)
-                log_event(f"{laun.laun['中文']['CREATMenu']}: {dir_path}")
+                log_event(f"{translation_manager.get_text('CREATMenu', '中文')}: {dir_path}")
             except Exception as e:
-                log_event(f"{laun.laun['中文']['CREATError']}: {dir_path}, {laun.laun['中文']['ERROR']}: {str(e)}", 'error')
+                log_event(f"{translation_manager.get_text('CREATMenu', '中文')}: {dir_path}, {translation_manager.get_text('ERROR_TITLE', '中文')}: {str(e)}", 'error')
                 return False
     
     # 检查PyTorch
@@ -1408,7 +1412,7 @@ class App:
         self.root.minsize(1001, 563)     # 设置最低分辨率为1001:563
         
         self.current_language = '中文'  # 默认语言为中文
-        self.laun = laun.laun  # 初始化翻译字典
+        self.translation_manager = translation_manager  # 使用全局翻译管理器
         
         # 初始化数据管理器
         self.data_manager = DataManager(config)
@@ -1441,10 +1445,7 @@ class App:
     
     def get_text(self, key):
         """根据当前语言获取文本"""
-        # 获取当前语言的字典，如果不存在则使用中文
-        lang_dict = self.laun.get(self.current_language, self.laun['中文'])
-        # 返回对应键的文本，如果不存在则返回键本身
-        return lang_dict.get(key, key)
+        return self.translation_manager.get_text(key, self.current_language)
     
     def create_widgets(self):
         """创建UI组件"""
@@ -1601,19 +1602,19 @@ class App:
         if hasattr(self, 'settings_window') and self.settings_window.winfo_exists():
             # 更新标签文本
             if hasattr(self, 'lang_setting_label'):
-                self.lang_setting_label.config(text=self.translations[self.current_language]["LANG_SETTING"])
+                self.lang_setting_label.config(text=self.translation_manager.get_text("LANG_SETTING", self.current_language))
             if hasattr(self, 'func_setting_label'):
-                self.func_setting_label.config(text=self.translations[self.current_language]["FUNC_SETTING"])
+                self.func_setting_label.config(text=self.translation_manager.get_text("FUNC_SETTING", self.current_language))
             if hasattr(self, 'roaming_check'):
-                self.roaming_check.config(text=self.translations[self.current_language]['NETWORK_ROAMING'])
+                self.roaming_check.config(text=self.translation_manager.get_text('NETWORK_ROAMING', self.current_language))
             if hasattr(self, 'gpu_check'):
-                self.gpu_check.config(text=self.translations[self.current_language]['GPU_ACCEL'])
+                self.gpu_check.config(text=self.translation_manager.get_text('GPU_ACCEL', self.current_language))
             if hasattr(self, 'hf_check'):
-                self.hf_check.config(text=self.translations[self.current_language]['HF_DATA'])
+                self.hf_check.config(text=self.translation_manager.get_text('HF_DATA', self.current_language))
             if hasattr(self, 'temp_setting_text'):
-                self.temp_setting_text.config(text=self.translations[self.current_language]['TEMP_SETTING'])
+                self.temp_setting_text.config(text=self.translation_manager.get_text('TEMP_SETTING', self.current_language))
             if hasattr(self, 'apply_settings_btn'):
-                self.apply_settings_btn.config(text=self.translations[self.current_language]['APPLY_BTN'])
+                self.apply_settings_btn.config(text=self.translation_manager.get_text('APPLY_BTN', self.current_language))
     
     def _setup_fonts(self):
         """设置中文字体支持"""
