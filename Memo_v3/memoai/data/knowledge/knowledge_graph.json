@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    {
+      "id": "topic:人工智能最新进展",
+      "attributes": {
+        "type": "topic",
+        "name": "人工智能最新进展",
+        "last_studied": "2025-08-09T18:06:00.643500",
+        "last_updated": "2025-08-09T18:06:00.643514"
+      }
+    },
+    {
+      "id": "topic:python编程技巧",
+      "attributes": {
+        "type": "topic",
+        "name": "Python编程技巧",
+        "last_studied": "2025-08-09T18:06:00.643765",
+        "last_updated": "2025-08-09T18:06:00.643769"
+      }
+    },
+    {
+      "id": "topic:机器学习新算法",
+      "attributes": {
+        "type": "topic",
+        "name": "机器学习新算法",
+        "last_studied": "2025-08-09T18:06:00.643832",
+        "last_updated": "2025-08-09T18:06:00.643834"
+      }
+    }
+  ],
+  "edges": []
+}

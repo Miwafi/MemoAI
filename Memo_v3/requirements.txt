@@ -1,0 +1,25 @@
+# MemoAI 依赖项
+# 统一管理的依赖文件，合并了根目录和memoai目录的依赖
+
+# 基础依赖
+numpy==1.26.4
+pandas==2.2.1
+requests==2.31.0
+beautifulsoup4==4.12.3
+python-dotenv==1.0.1
+logging==0.4.9.6
+tqdm==4.66.4  # 合并自memoai/requirements.txt
+
+# 机器学习和深度学习
+torch==2.7.1  # 使用较新版本
+networkx==3.2.1
+sentencepiece==0.2.0
+
+# GUI相关
+PyQt5==5.15.10  # 合并自memoai/requirements.txt
+
+# GGUF模型支持
+gguf==0.17.1  # 使用可用的最新版本
+
+# 其他工具
+language-tool-python==2.7.1  # 合并自memoai/requirements.txt
