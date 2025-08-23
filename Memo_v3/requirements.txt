@@ -2,7 +2,7 @@
 # 统一管理的依赖文件，合并了根目录和memoai目录的依赖
 
 # 基础依赖
-numpy==1.26.4
+numpy>=1.26.4
 pandas==2.2.1
 requests==2.31.0
 beautifulsoup4==4.12.3

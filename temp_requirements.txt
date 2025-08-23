@@ -1,0 +1,11 @@
+numpy>=1.26.4
+pandas==2.2.1
+requests==2.31.0
+beautifulsoup4==4.12.3
+python-dotenv==1.0.1
+logging==0.4.9.6
+tqdm==4.66.4
+torch==2.7.1
+networkx==3.2.1
+gguf==0.17.1
+language-tool-python==2.7.1
