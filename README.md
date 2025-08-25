@@ -84,7 +84,7 @@ MemoAI者，智能之器也。集问答、修文、筹算诸能于一体，效�
 谈笑有鸿儒：
 | 平台 | 添加方式          |
 | :-- | :--------------- |
-| QQ群 | 群号：1017170337  |
+| QQ群 | 群号：1021759051  |
 | 钉钉 | 群号：139375004749 |
 
 ## 宣发皮影戏（现代汉语）
@@ -140,7 +140,7 @@ Technical documentation is under development and will be published via repositor
 Join developer communities:
 | Platform | Contact               |
 | :------ | :------------------- |
-| QQ Group | ID: 1017170337        |
+| QQ Group | ID: 1021759051        |
 | DingTalk | ID: 139375004749      |
 
 ## Promotional Video (Chinese)
@@ -195,7 +195,7 @@ AI生成内容は参考情報です。使用に伴う**一切の結果につい�
 開発コミュニティ:
 | プラットフォーム | 連絡先             |
 | :-------------- | :--------------- |
-| QQグループ      | ID: 1017170337    |
+| QQグループ      | ID: 1021759051    |
 | DingTalk        | ID: 139375004749  |
 
 ## 紹介動画 (中国語版)
