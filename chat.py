@@ -83,9 +83,36 @@ def load_chat_model(model_dir, device):
 
 # ================================================
 
+def find_latest_model(model_dir):
+    if not os.path.exists(model_dir):
+        return None
+    
+    model_folders = []
+    for folder in os.listdir(model_dir):
+        folder_path = os.path.join(model_dir, folder)
+        if os.path.isdir(folder_path):
+            if os.path.exists(os.path.join(folder_path, "config.json")) and \
+               os.path.exists(os.path.join(folder_path, "tokenizer.json")) and \
+               os.path.exists(os.path.join(folder_path, "model.safetensors")):
+                model_folders.append(folder_path)
+    
+    if not model_folders:
+        return None
+    
+    model_folders.sort(key=os.path.getmtime, reverse=True)
+    return model_folders[0]
+
+# ================================================
+
 if __name__ == "__main__":
     print("WafiGPT (Dev)")
-    model_dir = "./model/Fine-tuning_epoch_12"
+    model_dir = find_latest_model("./model")
+    if model_dir:
+        print(f"Loading latest model: {model_dir}")
+    else:
+        print("Error: No valid model found in ./model directory.")
+        print("Please run the training script first to generate a model.")
+        exit(1)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model, tokenizer, config = load_chat_model(model_dir, device)
     while True:

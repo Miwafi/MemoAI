@@ -415,25 +415,44 @@ def stage_train(stages, config):
 
 # ================================================
 
+# ================================================
+
+def find_txt_files(directory):
+    txt_files = []
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith(".txt"):
+                txt_files.append(os.path.join(root, file))
+    return txt_files
+
+# ================================================
+
 if __name__ == "__main__":
     torch.backends.cudnn.benchmark = True
     torch.backends.cuda.matmul.allow_tf32 = True
     
     data_dir = "./data"
     if os.path.exists(data_dir):
-        txt_files = [f for f in os.listdir(data_dir) if f.endswith(".txt")]
+        txt_files = find_txt_files(data_dir)
         if txt_files:
             stages = []
             for txt_file in txt_files:
-                stage_name = os.path.splitext(txt_file)[0]
+                stage_name = os.path.splitext(os.path.basename(txt_file))[0]
                 stages.append({
                     "stage_name": stage_name,
-                    "file_path": os.path.join(data_dir, txt_file),
+                    "file_path": txt_file,
                     "epochs": 10
                 })
+            print(f"Found {len(txt_files)} training files:")
+            for f in txt_files:
+                print(f"- {f}")
         else:
-            stages = [{"stage_name": "Fine-tuning", "file_path": "./data/daily_dataset_en_filter.txt", "epochs": 10}]
+            print(f"Error: No .txt files found in {data_dir} directory.")
+            print("Please add training text files to the data directory and try again.")
+            exit(1)
     else:
-        stages = [{"stage_name": "Fine-tuning", "file_path": "./data/daily_dataset_en_filter.txt", "epochs": 10}]
+        print(f"Error: Data directory {data_dir} does not exist.")
+        print("Please create the data directory and add training text files.")
+        exit(1)
     
     stage_train(stages, default_config)
