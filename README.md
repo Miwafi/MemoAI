@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/Janmast-eng/WafiGPT?style=social)](https://github.com/Janmast-eng/WafiGPT)
 
-**一个基于 PyQt5 的智能问答与记忆管理系统**
+**一个基于 PyTorch 的智能聊天系统**
 
 [🚀 快速开始](#快速开始) • [📖 使用指南](#使用指南) • [🛠️ 开发文档](#开发文档) • [🤝 贡献指南](#贡献指南)
 
@@ -31,10 +31,10 @@
 
 ## ✨ 特性
 
-- 🧮 **数学运算** - 内置基础数学计算功能
-- 🎨 **图形界面** - 基于 PyQt5 的现代化用户界面
-- 🔧 **可扩展性** - 支持自定义训练和模型调整  
-- 📝 **日志系统** - 完整的错误追踪和日志记录
+- � **AI 聊天** - 基于 PyTorch 的智能对话系统
+- 🔧 **模型训练** - 支持自定义数据集训练
+- 💾 **模型保存** - 使用 Safetensors 格式保存模型
+- ⚡ **高效训练** - 支持 8-bit 优化器和混合精度
 
 ---
 
@@ -44,17 +44,28 @@
 
 - **操作系统**: Windows 10+ / macOS 10.14+ / Linux (Ubuntu 18.04+)
 - **处理器**: x86/x64 架构
-- **内存**: 4GB RAM
-- **存储空间**: 至少 50MB 可用空间
+- **内存**: 8GB RAM
+- **存储空间**: 至少 100MB 可用空间
 - **Python 版本**: Python 3.11+
+
+### 推荐配置（用于训练）
+
+- **内存**: 16GB+ RAM
+- **GPU**: NVIDIA GPU (6GB+ 显存)
+- **CUDA**: 11.7+
 
 ### 依赖库
 
 ```
-PyQt5
-sys (内置)
-json (内置)
-其他依赖详见 requirements.txt
+torch
+bitsandbytes
+safetensors
+tqdm
+colorama
+re
+json
+os
+math
 ```
 
 ---
@@ -64,20 +75,30 @@ json (内置)
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/Janmast-eng/MemoAI.git
-cd MemoAI
+git clone https://github.com/Miwafi/WafiGPT.git
+cd WafiGPT
 ```
 
 ### 2. 安装依赖
 
 ```bash
-pip install -r requirements.txt
+pip install torch bitsandbytes safetensors tqdm colorama
 ```
 
-### 3. 运行程序
+### 3. 准备数据
+
+创建 `data` 目录并添加训练数据文件（.txt 格式）
+
+### 4. 训练模型
 
 ```bash
-python memoAI_V2_UI.py
+python train.py
+```
+
+### 5. 开始聊天
+
+```bash
+python chat.py
 ```
 
 ---
@@ -88,27 +109,25 @@ python memoAI_V2_UI.py
 
 | 功能            | 操作方法                             | 说明               |
 | --------------- | ------------------------------------ | ------------------ |
-| 🚀 **启动软件** | 双击 `chat.py` 或命令行运行  | 启动主程序界面     |
-
+| 🚀 **启动软件** | 运行 `python chat.py`                | 启动聊天界面       |
+| ⚙️ **训练模型** | 运行 `python train.py`               | 开始模型训练       |
+| 📝 **准备数据** | 在 `data` 目录添加 .txt 文件         | 提供训练数据       |
 
 ### 高级功能
 
 #### 自定义训练
 
-1. 准备训练数据
-2. 使用人工标注功能
-3. 调整模型参数
-4. 测试训练效果
+1. 在 `data` 目录添加训练数据文件（.txt 格式）
+2. 调整 `train.py` 中的配置参数
+3. 运行训练脚本
+4. 训练完成后会在 `model` 目录生成模型文件
 
-#### 错误处理
+#### 聊天参数调整
 
-如遇到问题，请收集以下信息：
-
-- 终端中的 `[ERROR]` 信息
-- `startup_error` 文件
-- `log` 文件夹内容
-
-发送至：📧 1942392307@qq.com
+在 `chat.py` 中可以调整以下参数：
+- `temperature`: 生成多样性（0.1-1.0）
+- `repetition_penalty`: 重复惩罚（0.8-1.2）
+- `presence_penalty`: 出现惩罚（-2.0-2.0）
 
 ---
 
@@ -118,20 +137,18 @@ python memoAI_V2_UI.py
 
 ```
 MemoAI/
-├── memoAI_V2_UI.py      # 主程序文件
-├── memory.json          # 记忆数据文件
-├── Cliner.py           # 清理工具（开发中）
-├── log/                # 日志文件夹
-├── requirements.txt    # 依赖列表
-└── README.md          # 项目说明
+├── train.py           # 模型训练脚本
+├── chat.py            # 聊天交互脚本
+├── README.md          # 项目说明
+└── model/            # 模型保存目录（自动生成）
 ```
 
 ### 核心模块
 
-- **UI 模块**: 基于 PyQt5 的用户界面
-- **AI 模块**: 问答处理和响应生成
-- **记忆模块**: 数据存储和检索
-- **日志模块**: 错误追踪和系统监控
+- **模型模块**: 基于 Transformer 的聊天模型
+- **训练模块**: 数据加载、模型训练和评估
+- **推理模块**: 模型加载和对话生成
+- **分词模块**: 文本分词和 token 转换
 
 ---
 
@@ -207,7 +224,7 @@ MemoAI/
 
 ### 🌟 如果这个项目对您有帮助，请给我们一个 Star！
 
-[![GitHub stars](https://img.shields.io/github/stars/Janmast-eng/MemoAI?style=social)](https://github.com/Miwafi/WafiGPT/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/Miwafi/WafiGPT?style=social)](https://github.com/Miwafi/WafiGPT/stargazers)
 
 **Made with ❤️ by MemoAI Team**
 
@@ -220,31 +237,31 @@ MemoAI/
 <details>
 <summary>🇺🇸 English Version</summary>
 
-# MemoAI
+# WafiGPT
 
-**An intelligent Q&A and memory management system based on PyQt5**
+**An intelligent chat system based on PyTorch**
 
 ## Features
 
-- 🤖 AI-powered automatic response system
-- 💾 Memory management with sample modification support
-- 🧮 Built-in mathematical calculation functions
-- 🎨 Modern GUI based on PyQt5
-- 🔧 Extensible with custom training capabilities
-- 📝 Comprehensive logging and error tracking
+- 🤖 AI-powered chat system
+- � Custom model training
+- 💾 Safetensors model format
+- ⚡ Efficient training with 8-bit optimizer and mixed precision
 
 ## Quick Start
 
 1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run: `python memoAI_V2_UI.py`
+2. Install dependencies: `pip install torch bitsandbytes safetensors tqdm colorama`
+3. Create `data` directory and add training files
+4. Train model: `python train.py`
+5. Start chatting: `python chat.py`
 
 ## System Requirements
 
 - Python 3.11+
-- PyQt5
-- 4GB RAM minimum
-- 50MB storage space
+- 8GB RAM minimum
+- NVIDIA GPU (6GB+ VRAM) for training
+- CUDA 11.7+
 
 For detailed documentation, please refer to the Chinese version above.
 
@@ -253,24 +270,24 @@ For detailed documentation, please refer to the Chinese version above.
 <details>
 <summary>🇯🇵 日本語版</summary>
 
-# MemoAI
+# WafiGPT
 
-**PyQt5 ベースのインテリジェント Q&A およびメモリ管理システム**
+**PyTorch ベースのインテリジェントチャットシステム**
 
 ## 特徴
 
-- 🤖 AI 駆動の自動応答システム
-- 💾 サンプル修正をサポートするメモリ管理
-- 🧮 内蔵数学計算機能
-- 🎨 PyQt5 ベースのモダン GUI
-- 🔧 カスタムトレーニング機能による拡張性
-- 📝 包括的なログとエラー追跡
+- 🤖 AI 搭載のチャットシステム
+- TK カスタムモデルトレーニング
+- 💾 Safetensors モデル形式
+- ⚡ 8ビットオプティマイザーとミックス精度による効率的なトレーニング
 
 ## クイックスタート
 
 1. リポジトリをクローン
-2. 依存関係をインストール: `pip install -r requirements.txt`
-3. 実行: `python memoAI_V2_UI.py`
+2. 依存関係をインストール: `pip install torch bitsandbytes safetensors tqdm colorama`
+3. `data` ディレクトリを作成してトレーニングファイルを追加
+4. モデルをトレーニング: `python train.py`
+5. チャットを開始: `python chat.py`
 
 詳細なドキュメントについては、上記の中国語版をご参照ください。
 
