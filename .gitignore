@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Model files
+model/
+dataset/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.venv/
+env/
+venv/
+
+# Logs
+*.log
+logs/
+
+# Large files
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.zip
+*.rar
+*.7z
+*.tar.gz
+
+# Temporary files
+temp/
+tmp/
+
+# Testing
+.pytest_cache/
+coverage/
+
+# Build
+build/
+dist/
+*.egg-info/
