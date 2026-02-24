@@ -2,11 +2,11 @@
 ## README由dudu-14贡献,在此向您表达感谢！（PR冲突导致无法合并）
 <div align="center">
 
-![WafiGPT Logo](https://img.shields.io/badge/WafiGPT-智能问答系统-blue?style=for-the-badge)
+![WafiGPT Logo](https://img.shields.io/badge/WafiGPT-重构了-blue?style=for-the-badge)
 
 [![Python Version](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/Janmast-eng/WafiGPT?style=social)](https://github.com/Janmast-eng/WafiGPT)
+[![GitHub Stars](https://img.shields.io/github/stars/Miwafi/WafiGPT?style=social)](https://github.com/Miwafi/WafiGPT)
 
 **一个基于 PyTorch 的智能聊天系统**
 
